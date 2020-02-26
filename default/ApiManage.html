@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
   <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+  <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
@@ -31,17 +32,17 @@
         <div class="bg-white p-4 col-10 mx-auto mx-md-0 col-lg-6">
           <h1>API查找</h1>
           <form class="form-inline d-flex justify-content-center">
-            <div class="input-group"> <input type="search" class="form-control" placeholder="please input" id="form6">
-              <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false"></button>
-                <div class="input-group-append"> <button class="btn btn-primary" type="button" contenteditable="true">Search</button> </div>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                  <a class="dropdown-item" href="#">name</a>
-                  <a class="dropdown-item" href="#">company</a>
-                  <a class="dropdown-item" href="#">email</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">全部匹配</a>
-                </div>
+            <div class="input-group"> <input type="text" class="form-control" placeholder="please input" id="searchContent">
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false"></button>
+              <button class="btn btn-primary" type="button" contenteditable="true" id="search">Search</button>
+              <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                <a class="dropdown-item" href="#">name</a>
+                <a class="dropdown-item" href="#">company</a>
+                <a class="dropdown-item" href="#">email</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">全部匹配</a>
               </div>
             </div>
           </form>
@@ -61,7 +62,7 @@
         </div>
         <div class="col-9">
           <div class="tab-content">
-            <div class="tab-pane fade" id="tabone" role="tabpanel">
+            <div class="tab-pane fade active show" id="tabone" role="tabpanel">
               <div class="table-responsive">
                 <table class="table table-bordered ">
                   <thead class="thead-dark">
@@ -73,31 +74,14 @@
                       <th>Versions</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <th class="">
-                        <div class="">
-                          <input type="checkbox" class="">
-                        </div>
-                      </th>
-                      <td>Jacob</td>
-                      <td>Thornton</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                    </tr>
+                  <tbody id="api">
                   </tbody>
                 </table>
               </div>
-              <ul class="pagination justify-content-center">
-                <li class="page-item"> <a class="page-link" href="#">Prev</a> </li>
-                <li class="page-item"> <a class="page-link" href="#">1</a> </li>
-                <li class="page-item"> <a class="page-link" href="#">2</a> </li>
-                <li class="page-item active"> <a class="page-link" href="#">3</a> </li>
-                <li class="page-item"> <a class="page-link" href="#">4</a> </li>
-                <li class="page-item"> <a class="page-link" href="#">Next</a> </li>
+              <ul class="pagination justify-content-center" id="footer">
               </ul>
             </div>
-            <div class="tab-pane fade active show" id="tabtwo" role="tabpanel">
+            <div class="tab-pane fade" id="tabtwo" role="tabpanel">
               <div class="mx-auto p-4 col-md-7">
                 <h1 class="mb-4 text-center">添加API</h1>
                 <form>
@@ -144,44 +128,106 @@
       </div>
     </div>
   </div>
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label class="btn btn-primary active">
-              <input type="radio" name="options" id="option1" autocomplete="off" checked=""> Radio On </label>
-            <label class="btn btn-primary">
-              <input type="radio" name="options" id="option2" autocomplete="off"> Radio Off </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="py-5 text-center">
-    <div class="container">
-      <div class="row">
-        <div class="mx-auto col-lg-6 col-10">
-          <h1>O my friend</h1>
-          <p class="mb-3">When, while the lovely valley teems with vapour around me, and the meridian sun strikes the upper surface of the impenetrable foliage of my trees.</p>
-          <form class="text-left">
-            <div class="form-group"> <label for="form16">Your Name</label> <input type="text" class="form-control" id="form16" placeholder="Johann W. Goethe"> </div>
-            <div class="form-group"> <label for="form17">Your Company</label> <input type="text" class="form-control" id="form17" placeholder="Werther Inc."> </div>
-            <div class="form-group"> <label for="form18">Your email</label> <input type="email" class="form-control" id="form18" placeholder="j.goethe@werther.com"> </div>
-            <div class="form-row">
-              <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="••••"> </div>
-              <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="••••"> </div>
-            </div>
-            <div class="form-group">
-              <div class="form-check"> <input class="form-check-input" type="checkbox" id="form21" value="on"> <label class="form-check-label" for="form21"> I Agree with <a href="#">Term and Conditions</a> of the service </label> </div>
-            </div> <button type="submit" class="btn btn-primary">Sign in</button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script>
+    var pageNum = 1;
+    var searchUrl = "";
+    var searchType = "";
+    $(function search(){
+      $("#search").click(function() {
+      if ($("#searchContent").val() == "") {
+        searchUrl = "http://localhost:8080/api/api/";
+        searchType = "get";
+        $.ajax({
+          url: searchUrl,
+          type: searchType,
+          data: {
+            "pageNum": pageNum
+          },
+          success: function(data) {
+            tableContent(data.list);
+            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
+            footerEnterAPIAll();
+          },
+          error: function() {
+            $("#api").empty();
+            alert("error!!!");
+          }
+        })
+      }
+    });
+    })
+
+    function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) {
+      var content = "";
+      if (!hasPreviousPage) {
+        $.each(navigatepageNums, function(i, val) {
+          if (i == 0) {
+            content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else if (i <= 3) {
+            content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else {
+            content += "<li class='page-item'> <a class='page-link' href='#'  data-pagenum=" + val + ">" + "Next" + "</a></li>"
+          }
+        })
+      } else if (!hasNextPage) {
+        $.each(navigatepageNums, function(i, val) {
+          if (i == 0) {
+            content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+          } else if (i <= 3) {
+            content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else {
+            content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          }
+        })
+      } else {
+        $.each(navigatepageNums, function(i, val) {
+          if (i == 0) {
+            content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+          } else if (i < 4) {
+            if (val != pageNum) {
+              content += "<li class='page-item' > <a class='page-link'  href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+            } else {
+              content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a>								</li>"
+            }
+          } else {
+            content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Next" + "</a></li>"
+          }
+        })
+      }
+      $("#footer").html(content)
+    }
+
+    function footerEnterAPIAll() {
+      $("#footer").click(function(event) {
+        var pageNum = $(event.target).data("pagenum");
+        $.ajax({
+          url:searchUrl,
+          type:searchType,
+          data:{
+            "pageNum":pageNum
+          },
+          success: function(data) {
+            tableContent(data.list);
+            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
+            footerEnterAPIAll();
+          },
+          error: function() {
+            $("#api").empty();
+            alert("error!!!");
+          }
+        })
+      })
+    }
+
+    function tableContent(list) {
+      var content = "";
+      $.each(list, function(i, val) {
+        content += "<tr><th><div><input type='checkbox'></div></th><td>" + list[i].name + "</td><td>" + list[i].descriptionBrief + "</td><td>" + list[i].category + "</td><td>" + list[i].versions + "</td></tr>";
+      })
+      $("#api").html(content);
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous" style=""></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 
