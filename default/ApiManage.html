@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
-  <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+  <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
   <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
@@ -102,10 +102,12 @@
                     <div class="form-group col-md-6"> <input type="text" class="form-control" id="addCategory"
                         name="category" placeholder="Category"> </div>
                   </div>
-                  <div class="form-group"> <textarea class="form-control" id="Description" rows="3" name="description"
+                  <div class="form-group">
+                    <textarea class="form-control" id="addDescription" rows="3" name="description"
                       placeholder="Description"></textarea> </div>
-                  <button id="addSubmit" class="btn btn-outline-primary btn-block">Add</button>
                 </form>
+                <button id="addSubmit" class="btn btn-outline-primary btn-block">Add</button>
+
               </div>
             </div>
           </div>
@@ -187,7 +189,13 @@
     </div>
   </div>
 
+  
+
+
+
+
   <script>
+
     // 定义全局变量方便下面进行页面刷新和实现页面跳转
     var pageNum = 1;
     var searchUrl = "";
@@ -251,10 +259,11 @@
             footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
             footerEnterAPI(data1);
           }
+          showResult("查询成功");
         },
         error: function () {
           $("#api").empty();
-          alert("error!!!");
+          showResult("error!!!");
         }
       })
     }
@@ -322,7 +331,7 @@
         },
         error: function () {
           $("#api").empty();
-          alert("error!!!");
+          showResult("刷新界面失败!!!");
         }
       })
     }
@@ -407,15 +416,15 @@
               dataType: "json",
               success: function (flag) {
                 if (flag) {
-                  alert("success!!!");
+                  showResult("更新成功!!!");
                   reFresh(data1);
                 } else {
-                  alert("更新失败");
+                  showResult("更新失败");
                 }
 
               },
               error: function () {
-                alert("更新失败error");
+                showResult("更新失败error");
               }
             })
 
@@ -423,7 +432,7 @@
           })
         },
         error: function () {
-          alert("更新失败!!!");
+          showResult("更新失败!!!");
         }
       })
 
@@ -443,15 +452,15 @@
           },
           success: function (flag) {
             if (flag) {
-              alert("success!!!");
+              showResult("删除成功!!!");
               reFresh(data1);
             } else {
-              alert("更新失败");
+              showResult("删除失败");
             }
 
           },
           error: function () {
-            alert("更新失败error");
+            showResult("删除失败");
           }
         })
       })
@@ -461,13 +470,20 @@
     // 实现添加API的功能
     function addAPI() {
       $("#addSubmit").click(function () {
+        var addName = $("#addName");
+        var addCategory = $("#addCategory");
+        var addDescription = $("#addDescription");
+        var addVersions = $("#addVersions");
+        if (addName.val() == "") {
+          showResult("请输入值")
+          return;
+        }
         var addData = {
-          "name": $("#addName").val(),
-          "category": $("#addCategory").val(),
-          "versions": $("#addVersions").val(),
-          "description": $("#addDescription").text(),
+          "name": addName.val(),
+          "category": addCategory.val(),
+          "versions": addVersions.val(),
+          "description": addDescription.val()
         };
-        alert(addData.description);
         if (addData.description.length == 0) {
           addData.descriptionBrief = "";
         } else if (addData.description.length > 300) {
@@ -479,21 +495,28 @@
           url: "http://localhost:8080/api/api/",
           type: "post",
           data: JSON.stringify(addData),
-          contentType: "application/json;charset=utf-8;",
-          dataType: "json",
+          contentType: "application/json;charset=utf-8",
+          dataType: "text",
           success: function (flag) {
+            addName.val("");
+            addCategory.val("");
+            addDescription.val("");
+            addVersions.val("");
             if (flag) {
-              alert("success!!!");
+              showResult("添加成功!!!");
             } else {
-              alert("添加失败");
+              showResult("添加失败");
             }
-
           },
           error: function () {
-            alert("添加失败error");
+            showResult("添加失败error");
           }
         })
       })
+    }
+
+    function showResult(result) {
+      $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
     }
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
