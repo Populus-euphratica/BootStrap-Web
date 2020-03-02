@@ -202,7 +202,6 @@
     var searchType = "";
     var searchValue = "";
     var data1 = {};
-    var operation = "";
     // 实现搜索功能
     function search() {
 
@@ -245,7 +244,6 @@
     $(document).ready(dropdownMenu());
     $(document).ready(search());
     $(document).ready(addAPI());
-    $(document).ready(controlTable());
     $(document).ready(APIManager());
     // 实现与服务器的沟通，主要为了减少代码量
     function ajaxAPI(data1) {
@@ -354,17 +352,10 @@
 
     }
     // 负责控制面板里编辑和删除功能的实现
-    function controlTable() {
-      operation = $("#operation .nav-link.active").data("operation");
-      $("#operation").click(function (event) {
-        // var operation = $(event.target).data("operation");
-        operation = $(event.target).data("operation");
-      })
-
-    }
 
     function APIManager() {
       $("#api").click(function (event) {
+        var operation = $("#operation .nav-link.active").data("operation");
         var id = $(event.target.parentNode).data("id");
         if (operation == "update") {
           updateAPI(id);
