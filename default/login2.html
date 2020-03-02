@@ -4,14 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
   <script src="../jquery/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
+    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+        data-toggle="collapse" data-target="#navbar12">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="#">
@@ -24,7 +27,8 @@
           <li class="nav-item"> <a class="nav-link text-primary" href="#">新闻动态</a> </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item"> <a href="#" id="state" data-state="user" class="nav-link text-primary"><i class="fa fa-user fa-fw"></i>Admin Sign</a> </li>
+          <li class="nav-item"> <a href="#" id="state" data-state="user" class="nav-link text-primary"><i
+                class="fa fa-user fa-fw"></i>Admin Sign</a> </li>
         </ul>
       </div>
     </div>
@@ -62,28 +66,35 @@
           </div>
         </div>
         <div class="col-md-4">
-          <form class="needs-validation" novalidate="">
+          <form class="needs-validation" novalidate="" id="loginFrom">
+            <h1 id="title" class="text-center">用户登录</h1>
             <div class="form-group">
               <label for="InputEmail">Email address</label>
-              <input type="email" class="form-control" id="InputEmail" aria-describedby="emailHelp" placeholder="name@example.com" required="">
+              <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                placeholder="name@example.com" required="true">
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-              <div class="valid-feedback" style=""> Looks good! </div>
-              <div class="invalid-feedback" style=""> Please select a valid state. </div>
+              <small id="emailNote" class="form-text text-muted"></small>
             </div>
             <div class="form-group">
               <label for="InputPassword">Password</label>
-              <input type="password" class="form-control" id="InputPassword" placeholder="your password" required="">
-              <div class="valid-feedback"> Looks good! </div>
-              <div class="invalid-feedback" style=""> Please select a valid state. </div>
+              <input type="password" class="form-control" id="password" placeholder="your password" required="true">
+              <small id="passwordNote" class="form-text text-muted"></small>
             </div>
-            <small class="form-text text-muted text-right">
-              <a href="#"> Recover password</a>
+            <div class="d-flex justify-content-between pb-3">
+              <small class="form-text text-muted text-left">
+                <a href="register.html">没有账户？注册一个</a>
+              </small>
+              <small class="form-text text-muted text-right">
+                <a href="#">忘记密码</a>
+              </small>
+            </div>
+            <div class="d-flex align-items-end flex-column">
               <div class="form-group form-check">
                 <input type="checkbox" class="form-check-input" id="remember">
                 <label class="form-check-label" for="remember">记住密码</label>
               </div>
-              <button type="submit" class="btn btn-primary " id="login">Submit</button>
-            </small>
+              <button type="submit" class="btn btn-primary ">登录</button>
+            </div>
             <div class="d-flex flex-row-reverse">
               <small id="error" class="text-muted pt-2"></small>
             </div>
@@ -95,7 +106,8 @@
   <div class="py-3">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 text-center d-md-flex align-items-center"> <i class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
+        <div class="col-md-12 text-center d-md-flex align-items-center"> <i
+            class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
           <ul class="nav mx-md-auto d-flex justify-content-center">
             <li class="nav-item"> <a class="nav-link active" href="#">Home</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
@@ -103,7 +115,8 @@
             <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
           </ul>
           <div class="row">
-            <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2"> <a href="#">
+            <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2"> <a
+                href="#">
                 <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
               </a> <a href="#">
                 <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
@@ -121,58 +134,56 @@
     </div>
   </div>
   <script style="">
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-      'use strict';
-      window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-          form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-            Login()
-            // var rep=/^[a-zA-Z0-9]+@(\d{3}|[a-zA-Z]{2,4}).[a-zA-Z]{2,3}$/;
-            // var email=$("#InputEmail").val();
-            // if (!rep.test(email)){
-            //     event.preventDefault();
-            //     event.stopPropagation();
-            // }
-          }, false);
-        });
-      }, false);
-    })();
-    $("#state").click(function() {
+    var email = $("#email");
+    var password = $("#password");
+    // 检查格式
+    function check() {
+      var rep = /^[a-zA-Z0-9]+@(\d{3}|[a-zA-Z]{2,4}).[a-zA-Z]{2,3}$/;
+      if (!rep.test(email.val())) {
+        email.focus();
+        $("#emailNote").text("邮箱格式不对！");
+        return false;
+      }
+      $("#emailNote").text("");
+      if (password.val() != ""||password.val()!=null||$.trim(password.val()).length == 0) {
+        password.focus();
+        $("#passwordNote").text("密码不能为空！")
+        return false;
+      }
+      $("#passwordNote").text("");
+
+      return true;
+    }
+    // 切换登录模式
+    $("#state").click(function () {
       if ($(this).data("state") == "user") {
         $(this).data("state", "admin");
+        $("#title").text("管理员登录");
         $(this).html("<i class='fa fa-user-circle-o' aria-hidden='true'></i>User Sign");
       } else if ($(this).data("state") == "admin") {
         $(this).data("state", "user");
+        $("#title").text("用户登录");
         $(this).html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>Admin Sign");
       }
     });
 
-    function Login() {
+    $(document).ready(remember());
+    // 登录
+    function loginWeb() {
       var state = $("#state").data("state");
-      var login = $("#login");
-      var email = $("#InputEmail").val();
-      var password = $("#InputPassword").val();
-      login.preventDefault();
-      login.stopPropagation();
+      var loginData = {
+        "email": email.val(),
+        "password": password.val()
+      };
       $.ajax({
         url: "http://localhost:8080/api/" + state + "/login",
         dataType: "json",
         type: "post",
-        data: {
-          "email": email,
-          "password": password
-        },
-        success: function(data) {
+        contentType: "application/json;charset=utf-8;",
+        data: JSON.stringify(loginData),
+        success: function (data) {
           if (data) {
+            alert(data)
             if (state == "user") {
               window.location.href = "home.html";
             } else if (state == "admin") {
@@ -182,13 +193,33 @@
             $("#error").html("账号或密码错误");
           }
         },
-        error: function() {
+        error: function () {
           alert("访问服务器失败");
         }
       })
     }
+    // 记住密码
+    function remember() {
+      if ($.cookie("email") && $.cookie("password")) {
+        email.val($.cookie("email"));
+        password.val($.cookie("password"));
+        $("#remember").attr("checked", 'checked');
+        alert(password)
+      }
+      $("#loginFrom").submit(function (e) {
+        e.preventDefault();
+        if ($("#remember").is(":checked")) {
+          $.cookie("email", email.val(), { path: "/", expires: 7 });
+          $.cookie("password", password.val(), { path: "/", expires: 7 });
+        } else {
+          $.cookie("email", null);
+          $.cookie("password", null);
+        }
+        loginWeb();
+      });
+    };
   </script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
 </body>
+
 
 </html>
