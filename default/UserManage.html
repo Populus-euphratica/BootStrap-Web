@@ -4,20 +4,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
+  <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container justify-content-center"> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar9">
+    <div class="container justify-content-center"> <button class="navbar-toggler navbar-toggler-right border-0"
+        type="button" data-toggle="collapse" data-target="#navbar9">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
         <ul class="navbar-nav">
           <li class="nav-item mx-2"> <a class="nav-link" href="#">Products</a> </li>
           <li class="nav-item mx-2"> <a class="nav-link" href="#">FAQ</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link navbar-brand mr-0 text-white" href="#"><i class="fa d-inline fa-lg fa-stop-circle-o"></i>
+          <li class="nav-item mx-2"> <a class="nav-link navbar-brand mr-0 text-white" href="#"><i
+                class="fa d-inline fa-lg fa-stop-circle-o"></i>
               <b> BRAND</b></a> </li>
           <li class="nav-item mx-2"> <a class="nav-link" href="#">About us</a> </li>
           <li class="nav-item mx-2"> <a class="nav-link" href="#">Contacts </a> </li>
@@ -25,22 +29,27 @@
       </div>
     </div>
   </nav>
-  <div class="py-5 text-center" style="	background-image: url(image/image4.jpg);	background-position: right bottom;	background-size: cover;	background-repeat: repeat;	background-attachment: fixed;">
+  <div class="py-5 text-center"
+    style="	background-image: url(image/image4.jpg);	background-position: right bottom;	background-size: cover;	background-repeat: repeat;	background-attachment: fixed;">
     <div class="container">
       <div class="row justify-content-center align-items-center">
         <div class="bg-white p-4 col-10 mx-auto mx-md-0 col-lg-6">
           <h1>用户查找</h1>
           <form class="form-inline d-flex justify-content-center">
-            <div class="input-group"> <input type="search" class="form-control" placeholder="please input" id="form6">
+            <div class="input-group"> <input type="search" class="form-control" placeholder="please input"
+                id="searchContent">
               <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-expanded="false"></button>
-                <div class="input-group-append"> <button class="btn btn-primary" type="button" contenteditable="true">Search</button> </div>
-                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                  <a class="dropdown-item" href="#">name</a>
-                  <a class="dropdown-item" href="#">company</a>
-                  <a class="dropdown-item" href="#">email</a>
+                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                  data-toggle="dropdown" aria-expanded="false"></button>
+                <div class="input-group-append"> <button class="btn btn-primary" type="button" contenteditable="true"
+                    id="search">Search</button> </div>
+                <div class="dropdown-menu" id="dropdownMenu" x-placement="bottom-start"
+                  style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                  <a class="dropdown-item" data-menu="name">name</a>
+                  <a class="dropdown-item" data-menu="company">company</a>
+                  <a class="dropdown-item" data-menu="email">email</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">全部匹配</a>
+                  <a class="dropdown-item" data-menu="all">全部查询</a>
                 </div>
               </div>
             </div>
@@ -53,47 +62,60 @@
     <div class="container">
       <div class="row">
         <div class="col-3">
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item"> <a href="" class="nav-link" data-toggle="pill" data-target="#tabone">编辑/删除</a> </li>
-            <li class="nav-item" style=""> <a class="nav-link active" href="" data-toggle="pill" data-target="#tabtwo">新建用户</a> </li>
+          <ul class="nav nav-pills flex-column" id="operation">
+            <li class="nav-item"> <a href="" class="nav-link active" data-toggle="pill" data-target="#tabone"
+                data-operation="update">编辑</a> </li>
+            <li class="nav-item"> <a href="" class="nav-link" data-toggle="pill" data-target="#tabone"
+                data-operation="delete">删除</a> </li>
+            <li class="nav-item" style=""> <a class="nav-link " href="" data-toggle="pill" data-target="#tabtwo"
+                data-operation="add">新建用户</a> </li>
           </ul>
         </div>
         <div class="col-9">
           <div class="tab-content">
-            <div class="tab-pane fade" id="tabone" role="tabpanel">
+            <div class="tab-pane fade active show" id="tabone" role="tabpanel">
               <div class="table-responsive">
                 <table class="table table-bordered ">
                   <thead class="thead-dark">
                     <tr>
+                      <th>#</th>
                       <th>User Name</th>
                       <th>Company</th>
                       <th>Email</th>
                       <th>Password</th>
                     </tr>
                   </thead>
-                  <tbody>
-                    <tr>
-                      <td>Larry</td>
-                      <td>the Bird</td>
-                      <td>Cell</td>
-                      <td>Cell</td>
-                    </tr>
+                  <tbody id="api">
                   </tbody>
                 </table>
               </div>
+              <div id="footerParent"></div>
             </div>
-            <div class="tab-pane fade active show" id="tabtwo" role="tabpanel">
+            <div class="tab-pane fade" id="tabtwo" role="tabpanel">
               <div class="mx-auto col-lg-6 col-10">
                 <h1 class="text-center">新建用户</h1>
-                <form class="text-left">
-                  <div class="form-group"> <label for="form16">Your Name</label> <input type="text" class="form-control" id="form16" placeholder="name" required="required"> </div>
-                  <div class="form-group"> <label for="form17">Your Company</label> <input type="text" class="form-control" id="form17" placeholder="company"> </div>
-                  <div class="form-group"> <label for="form18">Your email</label> <input type="email" class="form-control" id="form18" placeholder="name@example.com" required="required"> </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password" class="form-control" id="form19" placeholder="password" required="required"> </div>
-                    <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password" class="form-control" id="form20" placeholder="password" required="required"> </div>
+                <form class="text-left" id="addFrom">
+                  <div class="form-group"> <label for="addName">Your Name</label> <input type="text"
+                      class="form-control" id="addName" placeholder="name" required="required">
+                    <small id="nameNote1" class="form-text text-muted"></small>
                   </div>
-                  <button type="submit" class="btn btn-outline-primary btn-block">Add</button>
+                  <div class="form-group"> <label for="addCompany">Your Company</label> <input type="text"
+                      class="form-control" id="addCompany" placeholder="company"> </div>
+                  <div class="form-group"> <label for="addEmail">Your email</label> <input type="email"
+                      class="form-control" id="addEmail" placeholder="name@example.com" required="required">
+                    <small id="emailNote1" class="form-text text-muted"></small>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col-md-6"> <label for="addPassword">Password</label> <input type="password"
+                        class="form-control" id="addPassword" placeholder="password" required="required">
+                      <small id="passwordNote1" class="form-text text-muted"></small>
+                    </div>
+                    <div class="form-group col-md-6"> <label for="addConfirmPassword">Confirm Password</label> <input
+                        type="password" class="form-control" id="addConfirmPassword" placeholder="confirmPassword"
+                        required="required"> </div>
+
+                  </div>
+                  <button type="submit" class="btn btn-outline-primary btn-block">添加</button>
                 </form>
               </div>
             </div>
@@ -102,14 +124,64 @@
       </div>
     </div>
   </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">编辑API</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- <div class="mx-auto p-4 col-md-7"> -->
+          <h1 class="text-center">编辑用户</h1>
+          <form class="text-left">
+            <div class="form-group"> <label for="updateName">Your Name</label> <input type="text" class="form-control"
+                id="updateName" placeholder="name" required="required">
+              <small id="nameNote2" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group"> <label for="updateCompany">Your Company</label> <input type="text"
+                class="form-control" id="updateCompany" placeholder="company"> </div>
+            <div class="form-group"> <label for="updateEmail">Your email</label> <input type="email"
+                class="form-control" id="updateEmail" placeholder="name@example.com" required="required">
+              <small id="emailNote2" class="form-text text-muted"></small>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6"> <label for="updatePassword">Password</label> <input type="password"
+                  class="form-control" id="updatePassword" placeholder="password" required="required">
+                <small id="passwordNote2" class="form-text text-muted"></small>
+              </div>
+              <div class="form-group col-md-6"> <label for="updateConfirmPassword">Confirm Password</label> <input
+                  type="password" class="form-control" id="updateConfirmPassword" placeholder="confirmPassword"
+                  required="required">
+              </div>
+
+            </div>
+
+          </form>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="determine" class="btn btn-outline-primary btn-block"
+            data-dismiss="modal">编辑</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
   <div class="py-3">
     <div class="container">
       <div class="row">
-        <div class="col-md-12 text-center d-md-flex align-items-center"> <i class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
+        <div class="col-md-12 text-center d-md-flex align-items-center"> <i
+            class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
           <ul class="nav mx-md-auto d-flex justify-content-center">
             <li class="nav-item"> <a class="nav-link active" href="#">Home</a> </li>
             <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
@@ -117,7 +189,8 @@
             <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
           </ul>
           <div class="row">
-            <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2"> <a href="#">
+            <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2"> <a
+                href="#">
                 <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
               </a> <a href="#">
                 <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
@@ -135,5 +208,415 @@
     </div>
   </div>
 </body>
+
+
+
+<script>
+
+
+  // 定义全局变量方便下面进行页面刷新和实现页面跳转
+  var pageNum = 1;
+  var searchUrl = "";
+  var searchType = "";
+  var searchValue = "";
+  var data1 = {};
+  // 实现搜索功能
+  function search() {
+
+    $("#search").click(function () {
+      var searchContent = $.trim($("#searchContent").val());
+      if (searchContent == "") {
+        searchUrl = "http://localhost:8080/api/user/";
+        searchType = "get";
+        data1 = {
+          "pageNum": pageNum
+        };
+        ajaxAPI(data1);
+      } else if (searchValue == "name") {
+        searchUrl = "http://localhost:8080/api/user/name";
+        searchType = "get";
+        data1 = {
+          "name": searchContent,
+          "pageNum": pageNum
+        };
+        ajaxAPI(data1);
+      } else if (searchValue == "company") {
+        searchUrl = "http://localhost:8080/api/user/company";
+        searchType = "get";
+        data1 = {
+          "company": searchContent,
+          "pageNum": pageNum
+        };
+        ajaxAPI(data1);
+      } else if (searchValue == "email") {
+        searchUrl = "http://localhost:8080/api/user/email";
+        searchType = "get";
+        data1 = {
+          "email": searchContent
+        };
+        ajaxAPI(data1);
+      } else {
+        searchUrl = "http://localhost:8080/api/user/all";
+        searchType = "get";
+        data1 = {
+          "val": searchContent,
+          "pageNum": pageNum
+        };
+        ajaxAPI(data1);
+      }
+    });
+  }
+  $(document).ready(dropdownMenu());
+  $(document).ready(search());
+  $(document).ready(addUser());
+  $(document).ready(userManager());
+  // 实现与服务器的沟通，主要为了减少代码量
+  function ajaxAPI(data1) {
+    $.ajax({
+      url: searchUrl,
+      type: searchType,
+      data: data1,
+      success: function (data) {
+        if (searchValue == "email") {
+          tableContent({ data });
+          return;
+        } else {
+          tableContent(data.list);
+        }
+        if (data.pages > 1) {
+          footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
+          footerEnterAPI(data1);
+        }
+        showResult("查询成功");
+      },
+      error: function () {
+        $("#api").empty();
+        showResult("error!!!");
+      }
+    })
+  }
+  // 实现页脚在界面的显示
+  function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) {
+    var content = "<ul class='pagination justify-content-center' id='footer'>";
+    if (!hasPreviousPage) {
+      $.each(navigatepageNums, function (i, val) {
+        if (i == 0) {
+          content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        } else if (i <= 3) {
+          content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        } else {
+          content += "<li class='page-item'> <a class='page-link' href='#'  data-pagenum=" + val + ">" + "Next" + "</a></li>"
+        }
+      })
+    } else if (!hasNextPage) {
+      $.each(navigatepageNums, function (i, val) {
+        if (i == 0) {
+          content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+        } else if (i < Object.keys(navigatepageNums).length - 1) {
+          content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        } else {
+          content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        }
+      })
+    } else {
+      $.each(navigatepageNums, function (i, val) {
+        if (i == 0) {
+          content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+        } else if (i < 4) {
+          if (val != pageNum) {
+            content += "<li class='page-item' > <a class='page-link'  href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else {
+            content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a>								</li>"
+          }
+        } else {
+          content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Next" + "</a></li>"
+        }
+      })
+    }
+    content += "</ul>";
+    $("#footerParent").html(content)
+  }
+  // 实现根据页脚进行跳转的功能
+  function footerEnterAPI(data1) {
+    $("#footer").click(function (event) {
+      pageNum = $(event.target).data("pagenum");
+      reFresh(data1);
+    })
+  }
+  // 刷新界面
+  function reFresh(data1) {
+    data1.pageNum = pageNum;
+    $.ajax({
+      url: searchUrl,
+      type: searchType,
+      data: data1,
+      success: function (data) {
+        tableContent(data.list);
+        if (data.pages > 1) {
+          footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
+          footerEnterAPI(data1);
+        }
+      },
+      error: function () {
+        $("#api").empty();
+        showResult("刷新界面失败!!!");
+      }
+    })
+  }
+  // 获取搜索下拉菜单的选项值
+  function dropdownMenu() {
+    $("#dropdownMenu").click(function (event) {
+      searchValue = $(event.target).data("menu");
+    })
+  }
+  // 根据列表填充表格内容
+  function tableContent(list) {
+    var content = "";
+    $.each(list, function (i, val) {
+      content += "<tr data-id=" + list[i].id + "><th><input type='checkbox'></th><td data-toggle='modal' data-target='#exampleModal'>" + list[i].name +
+        "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].company + "</td><td data-toggle='modal' data-target='#exampleModal'>"
+        + list[i].email + "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].password + "</td></tr>";
+    })
+    $("#api").html(content);
+    $("#footerParent").empty();
+
+  }
+  // 负责控制面板里编辑和删除功能的实现
+
+  function userManager() {
+    $("#api").click(function (event) {
+      var operation = $("#operation .nav-link.active").data("operation");
+      var id = $(event.target.parentNode).data("id");
+      if (operation == "update") {
+        updateUser(id);
+      } else if (operation == "delete") {
+        deleteUser(id);
+      }
+    })
+  }
+  // 实现更新User功能
+  function updateUser(id) {
+
+    $.ajax({
+      url: "http://localhost:8080/api/user/id",
+      type: "get",
+      data: {
+        "id": id
+      },
+      success: function (data) {
+        var updateName = $("#updateName");
+        var updateCompany = $("#updateCompany");
+        var updateEmail = $("#updateEmail");
+        var updatePassword = $("#updatePassword");
+        var updateConfirmPassword = $("#updateConfirmPassword");
+        updateName.val(data.name);
+        updateCompany.val(data.company);
+        updateEmail.val(data.email);
+        updatePassword.val(data.password);
+        updateConfirmPassword.val(data.password);
+        $("#determine").off();
+        $("#determine").click(function () {
+          var updateData = {
+            "name": updateName.val(),
+            "company": updateCompany.val(),
+            "email": updateEmail.val(),
+            "password": updatePassword.val(),
+            "id": id
+          };
+          if (!check(updateName, updateEmail, updatePassword, updateConfirmPassword, "update")) {
+            return false;
+          }
+          $.ajax({
+            url: "http://localhost:8080/api/user/email",
+            type: "get",
+            data: {
+              "email": updateEmail.val()
+            },
+            success: function (emailDate) {
+              if (emailDate.id != null && emailDate.id != id) {
+                $("#emailNote2").text("该邮箱已被其他人使用");
+                updateName.focus();
+                return false;
+              } else {
+                $.ajax({
+                  url: "http://localhost:8080/api/user/id",
+                  type: "put",
+                  data: JSON.stringify(updateData),
+                  contentType: "application/json;charset=utf-8;",
+                  dataType: "json",
+                  success: function (flag) {
+                    if (flag) {
+                      showResult("更新成功!!!");
+                      reFresh(data1);
+                    } else {
+                      showResult("更新失败");
+                    }
+
+                  },
+                  error: function () {
+                    showResult("更新失败error");
+                  }
+                })
+
+              }
+            },
+            error: function () {
+              showResult("更新失败error");
+            }
+          })
+
+
+
+        })
+      },
+      error: function () {
+        showResult("更新失败!!!");
+      }
+    })
+
+  }
+  // 实现删除User的功能
+  function deleteUser(id) {
+
+    $(".modal-title").text("删除用户");
+    $(".modal-body").html("<p>您确定要删除该用户吗？</p>");
+    $("#determine").text("删除");
+    $("#determine").off();
+    $("#determine").click(function () {
+      $.ajax({
+        url: "http://localhost:8080/api/user/id",
+        type: "delete",
+        data: {
+          "id": id
+        },
+        success: function (flag) {
+          if (flag) {
+            showResult("删除成功!!!");
+            reFresh(data1);
+          } else {
+            showResult("删除失败");
+          }
+
+        },
+        error: function () {
+          showResult("删除失败");
+        }
+      })
+    })
+
+
+  }
+  // 实现添加User的功能
+  function addUser() {
+    $("#addFrom").submit(function (e) {
+      e.preventDefault();
+      var addName = $("#addName");
+      var addCompany = $("#addCompany");
+      var addEmail = $("#addEmail");
+      var addPassword = $("#addPassword");
+      var addConfirmPassword = $("#addConfirmPassword");
+
+      var addData = {
+        "name": $.trim(addName.val()),
+        "company": $.trim(addCompany.val()),
+        "email": $.trim(addEmail.val()),
+        "password": $.trim(addPassword.val()),
+      };
+      if (!check(addName, addEmail, addPassword, addConfirmPassword, "add")) {
+        return false;
+      }
+      $.ajax({
+        url: "http://localhost:8080/api/user/email",
+        type: "get",
+        data: {
+          "email": $.trim(addEmail.val())
+        },
+        success: function (emailDate) {
+          if (emailDate.id != null) {
+            $("#emailNote1").text("该邮箱已被其他人使用");
+            addEmail.focus();
+            return false;
+          } else {
+            $.ajax({
+              url: "http://localhost:8080/api/user/",
+              type: "post",
+              data: JSON.stringify(addData),
+              contentType: "application/json;charset=utf-8",
+              dataType: "text",
+              success: function (flag) {
+                addName.val("");
+                addCompany.val("");
+                addEmail.val("");
+                addPassword.val("");
+                addConfirmPassword.val("");
+                if (flag) {
+                  showResult("添加成功!!!");
+                } else {
+                  showResult("添加失败");
+                }
+              },
+              error: function () {
+                showResult("添加失败error");
+              }
+            })
+          }
+        },
+        error: function () {
+          showResult("更新失败error");
+        }
+      })
+
+    })
+  }
+
+  function check(name, email, password, confirmPassword, manager) {
+    var emailNote = $("#emailNote1");
+    var passwordNote = $("#passwordNote1");
+    var nameNote = $("#nameNote1");
+    if (manager == "update") {
+      var emailNote = $("#emailNote2");
+      var passwordNote = $("#passwordNote2");
+      var nameNote = $("#nameNote2");
+    }
+
+    if ($.trim(name.val()) == "") {
+      name.focus();
+      nameNote.text("请输入名称!");
+      return false;
+    }
+    nameNote.text("");
+    var rep = /^[a-zA-Z0-9]+@(\d{3}|[a-zA-Z]{2,4}).[a-zA-Z]{2,3}$/;
+    if (!rep.test(email.val())) {
+      email.focus();
+      emailNote.text("邮箱格式不对！");
+      return false;
+    }
+
+    emailNote.text("");
+    if (password.val() != confirmPassword.val()) {
+      password.focus();
+      passwordNote.text("密码不一致！")
+      return false;
+    }
+    if ($.trim(password.val()) == "") {
+      password.focus();
+      passwordNote.text("密码不能为空！")
+      return false;
+    }
+    passwordNote.text("");
+
+    return true;
+  }
+
+  function showResult(result) {
+    // $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
+    alert(result);
+  }
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+  integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 </html>

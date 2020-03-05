@@ -145,7 +145,7 @@
         return false;
       }
       $("#emailNote").text("");
-      if (password.val() != ""||password.val()!=null||$.trim(password.val()).length == 0) {
+      if (password.val() != "" || password.val() != null || $.trim(password.val()).length == 0) {
         password.focus();
         $("#passwordNote").text("密码不能为空！")
         return false;
@@ -183,12 +183,24 @@
         data: JSON.stringify(loginData),
         success: function (data) {
           if (data) {
-            alert(data)
-            if (state == "user") {
-              window.location.href = "home.html";
-            } else if (state == "admin") {
-              window.location.href = "UserManage.html";
-            }
+            $.ajax({
+              url: "http://localhost:8080/api/" + state + "/email",
+              type: "get",
+              data: {
+                "email": email.val()
+              },
+              success: function(data){
+                sessionStorage.setItem("login", "true");
+                sessionStorage.setItem("state",state);
+                sessionStorage.setItem("stateData",JSON.stringify(data));
+                if (state == "user") {
+                  window.location.href = "home.html";
+                } else if (state == "admin") {
+                  window.location.href = "UserManage.html";
+                }
+              }
+            })
+
           } else {
             $("#error").html("账号或密码错误");
           }

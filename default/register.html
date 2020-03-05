@@ -36,27 +36,31 @@
           <h1>注册用户账号</h1>
           <p class="mb-3">请您完成以下各项信息的填写，我们会保障您的个人隐私不会泄露及滥用。</p>
           <form class="text-left" id="registerUser">
-            <div class="form-group"> <label for="form16">Your Name</label> <input type="text" class="form-control"
-                id="name" placeholder="name" required="required"> </div>
-            <div class="form-group"> <label for="form17">Your Company</label> <input type="text" class="form-control"
+            <div class="form-group"> <label for="userName">Your Name</label> 
+              <input type="text" class="form-control" id="userName" placeholder="name" required="required">
+              <small id="nameNote" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group"> <label for="company">Your Company</label> <input type="text" class="form-control"
                 id="company" placeholder="company"> </div>
-            <div class="form-group"> <label for="form18">Your email</label> <input type="email" class="form-control"
-                id="email" placeholder="name@example.com" required="required"> 
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                <small id="emailNote" class="form-text text-muted"></small>
-              </div>
+            <div class="form-group"> <label for="email">Your email</label> <input type="email" class="form-control"
+                id="email" placeholder="name@example.com" required="required">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <small id="emailNote" class="form-text text-muted"></small>
+            </div>
             <div class="form-row">
-              <div class="form-group col-md-6"> <label for="form19">Password</label> <input type="password"
-                  class="form-control" id="password" required="required"> </div>
-              <div class="form-group col-md-6"> <label for="form20">Confirm Password</label> <input type="password"
-                  class="form-control" id="confirmPassword" required="required"> </div>
-              <small id="passwordNote" class="form-text text-muted"></small>
+              <div class="form-group col-md-6"> <label for="password"">Password</label> <input type="password"
+                  class="form-control" id="password" required="required"> 
+                  <small id="passwordNote" class="form-text text-muted"></small>
+                </div>
+              <div class="form-group col-md-6"> <label for="confirmPassword">Confirm Password</label> <input
+                  type="password" class="form-control" id="confirmPassword" required="required"> </div>
+              
             </div>
             <div class="d-flex justify-content-center">
-              <button  type="submit" class="btn btn-primary">注册</button>
+              <button type="submit" class="btn btn-primary">注册</button>
             </div>
           </form>
-          
+
         </div>
       </div>
     </div>
@@ -93,57 +97,96 @@
   </div>
 
   <script>
+    
+    var email = $("#email");
+    var userName = $("#userName");
+    var company = $("#company");
+    var nameNote = $("#nameNote");
+    var password = $("#password");
+    var passwordNote = $("#passwordNote");
+    var emailNote = $("#emailNote");
     $(document).ready(registerUser());
+
+
     function check() {
+      if ($.trim(userName.val()) == "") {
+        userName.focus();
+        nameNote.text("请输入名称!");
+        return false;
+      }
+      nameNote.text("");
       var rep = /^[a-zA-Z0-9]+@(\d{3}|[a-zA-Z]{2,4}).[a-zA-Z]{2,3}$/;
-      var email = $("#email");
-      if (!rep.test(email.val())) {
+      if (!rep.test($.trim(email.val()))) {
         email.focus();
-        $("#emailNote").text("邮箱格式不对！");
+        emailNote.text("邮箱格式不对！");
         return false;
       }
-      $("#emailNote").text("");
-      if($("#password").val()!=$("#confirmPassword").val()){
-        $("#passwordNote").text("密码不一致！")
+      emailNote.text("");
+      if (password.val() != $("#confirmPassword").val()) {
+        passwordNote.text("密码不一致！")
         return false;
       }
-      $("#passwordNote").text("");
+      if ($.trim(password.val()) == "") {
+        password.focus();
+        passwordNote.text("密码不能为空！")
+        return false;
+      }
+      passwordNote.text("");
 
       return true;
     }
+
+
     function registerUser() {
-      $("#registerUser").submit(function(e){
-        if(!check()){
+      $("#registerUser").submit(function (e) {
+        e.preventDefault();
+        if (!check()) {
           return false;
         }
-        e.preventDefault();
-        var registerDate={
-          "name":$("#name").val(),
-          "company":$("#company").val(),
-          "email":$("#email").val(),
-          "password":$("#password").val()
-        };
 
+        var registerDate = {
+          "name": $.trim(userName.val()),
+          "company": $.trim(company.val()),
+          "email": $.trim(email.val()),
+          "password": $.trim(password.val())
+        };
         $.ajax({
-          url:"http://localhost:8080/api/user/",
-          type:"post",
-          data:JSON.stringify(registerDate),
-          contentType: "application/json;charset=utf-8;",
-          dataType: "json",
-          success:function(data){
-            alert(data.istrue)
-            if(data.istrue){
-              alert("注册成功！");
-              window.location.href = "login2.html";
-            }else{
-              $("#emailNote").text(data.reason);
+          url: "http://localhost:8080/api/user/email",
+          type: "get",
+          data: {
+            "email": $.trim(email.val())
+          },
+          success: function (emailDate) {
+            if (emailDate.id != null) {
+              emailNote.text("该邮箱已被其他人使用");
+              email.focus();
+              return;
+            } else {
+              $.ajax({
+                url: "http://localhost:8080/api/user/",
+                type: "post",
+                data: JSON.stringify(registerDate),
+                contentType: "application/json;charset=utf-8;",
+                dataType: "json",
+                success: function (data) {
+                  if (data) {
+                    alert("注册成功！");
+                    window.location.href = "login.html";
+                  } else {
+                    alert("注册失败！");
+                  }
+                },
+                error: function () {
+                  alert("连接服务器出错！");
+                }
+              })
             }
           },
-          error:function(){
+          error: function () {
             alert("连接服务器出错！");
           }
         })
-        
+
       })
     }
   </script>
@@ -153,10 +196,6 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')"
-    style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">
-    Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block"
-      alt="Pingendo logo" height="16"></pingendo>
 </body>
 
 </html>
