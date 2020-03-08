@@ -2,6 +2,7 @@
 
 // 定义全局变量方便下面进行页面刷新和实现页面跳转
 var pageNum = 1;
+var pageSize=8;
 var searchUrl = "";
 var searchType = "";
 var searchValue = "";
@@ -11,11 +12,13 @@ function search() {
 
   $("#search").click(function () {
     var searchContent = $.trim($("#searchContent").val());
+    pageNum=1;
     if (searchContent == "") {
       searchUrl = "http://localhost:8080/api/api/";
       searchType = "get";
       data1 = {
-        "pageNum": pageNum
+        "pageNum": pageNum,
+        "pageSize":pageSize
       };
       ajaxAPI(data1);
     } else if (searchValue == "name") {
@@ -23,7 +26,8 @@ function search() {
       searchType = "get";
       data1 = {
         "name": searchContent,
-        "pageNum": pageNum
+        "pageNum": pageNum,
+        "pageSize":pageSize
       };
       ajaxAPI(data1);
     } else if (searchValue == "category") {
@@ -31,7 +35,8 @@ function search() {
       searchType = "get";
       data1 = {
         "category": searchContent,
-        "pageNum": pageNum
+        "pageNum": pageNum,
+        "pageSize":pageSize
       };
       ajaxAPI(data1);
     } else {
@@ -39,7 +44,8 @@ function search() {
       searchType = "get";
       data1 = {
         "val": searchContent,
-        "pageNum": pageNum
+        "pageNum": pageNum,
+        "pageSize":pageSize
       };
       ajaxAPI(data1);
     }
@@ -75,35 +81,35 @@ function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) 
   if (!hasPreviousPage) {
     $.each(navigatepageNums, function (i, val) {
       if (i == 0) {
-        content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        content += "<li class='page-item active'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
       } else if (i <= 3) {
-        content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
       } else {
-        content += "<li class='page-item'> <a class='page-link' href='#'  data-pagenum=" + val + ">" + "Next" + "</a></li>"
+        content += "<li class='page-item'> <a class='page-link'   data-pagenum=" + val + ">" + "Next" + "</a></li>"
       }
     })
   } else if (!hasNextPage) {
     $.each(navigatepageNums, function (i, val) {
       if (i == 0) {
-        content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+        content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + "Prev" + "</a></li>"
       } else if (i < Object.keys(navigatepageNums).length - 1) {
-        content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
       } else {
-        content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+        content += "<li class='page-item active'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
       }
     })
   } else {
     $.each(navigatepageNums, function (i, val) {
       if (i == 0) {
-        content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+        content += "<li class='page-item'> <a class='page-link'   data-pagenum=" + val + ">" + "Prev" + "</a></li>"
       } else if (i < 4) {
         if (val != pageNum) {
-          content += "<li class='page-item' > <a class='page-link'  href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          content += "<li class='page-item' > <a class='page-link'   data-pagenum=" + val + ">" + val + "</a></li>"
         } else {
-          content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a>								</li>"
+          content += "<li class='page-item active'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a>								</li>"
         }
       } else {
-        content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Next" + "</a></li>"
+        content += "<li class='page-item'> <a class='page-link'   data-pagenum=" + val + ">" + "Next" + "</a></li>"
       }
     })
   }

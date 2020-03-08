@@ -225,6 +225,7 @@
 
     $("#search").click(function () {
       var searchContent = $.trim($("#searchContent").val());
+      pageNum=1;
       if (searchContent == "") {
         searchUrl = "http://localhost:8080/api/user/";
         searchType = "get";
