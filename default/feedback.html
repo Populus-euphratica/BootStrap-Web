@@ -118,12 +118,21 @@
       var data = {
         "theme": $.trim(theme.val()),
         "content": $.trim(content.text()),
-        "istrue": false
+        "istrue": false,
+        "email":stateData.email,
+        "userid":stateData.id
       }
       $.ajax({
         url: "http://localhost:8080/api/feedBack/",
         type: "post",
-        data:
+        data:data,
+        success:function(falg){
+          if(falg){
+            showResult("发送成功！");
+          }else{
+            showResult("发送失败");
+          }
+        }
       })
     })
   }
@@ -141,6 +150,11 @@
     contentNote.val("")
     return true;
   }
+
+  function showResult(result) {
+  $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
+}
+
 </script>
 
 </html>

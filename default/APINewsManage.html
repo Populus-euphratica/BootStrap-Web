@@ -24,15 +24,14 @@
           <b> BRAND</b>
         </a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"> <a class="nav-link" href="#">API管理</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">用户管理</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">资讯管理</a> </li>
-          <li class="nav-item"><a class="nav-link" href="#">综合数据</a></li>
+          <li class="nav-item"> <a class="nav-link" href="ApiManage.html">API管理</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="UserManage.html">用户管理</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="APINewsManage.html">资讯管理</a> </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-bell-o"
                 aria-hidden="true"></i>Message</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log in</a>
+          <li class="nav-item"> <a id="state"class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log in</a>
           </li>
         </ul>
       </div>
@@ -50,8 +49,7 @@
               <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                   data-toggle="dropdown" aria-expanded="false"></button>
-                <div class="input-group-append"> <button class="btn btn-primary" id="search" type="button"
-                    contenteditable="true">Search</button> </div>
+                <div class="input-group-append"> <button class="btn btn-primary" id="search" type="button">Search</button> </div>
                 <div class="dropdown-menu" id="dropdownMenu" x-placement="bottom-start"
                   style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                   <a class="dropdown-item" data-menu="name" href="#">资讯名称</a>
@@ -186,6 +184,25 @@
     var searchType = "";
     var searchValue = "";
     var data1 = {};
+
+
+    var stateData=JSON.parse(sessionStorage.getItem("stateData"));
+    $(document).ready(init());
+    function init(){
+      
+      var login=sessionStorage.getItem("login");
+      if(login!="true"||typeof(stateData) == "undefined"||$.isEmptyObject(stateData)){
+        window.location.href="Login.html";
+      }
+      
+      $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>"+stateData.name);
+      
+      
+    }
+
+
+
+
     // 实现搜索功能
     function search() {
 
