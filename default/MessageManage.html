@@ -4,13 +4,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css">
-  <link rel="stylesheet" href="https://static.pingendo.com/bootstrap/bootstrap-4.3.1.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    type="text/css">
+  <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
+  <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
   <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button" data-toggle="collapse" data-target="#navbar12">
+    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+        data-toggle="collapse" data-target="#navbar12">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="#">
@@ -24,8 +27,10 @@
           <li class="nav-item"><a class="nav-link" href="#">综合数据</a></li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-bell-o" aria-hidden="true"></i>Message</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log in</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-bell-o"
+                aria-hidden="true"></i>Message</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log in</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -37,47 +42,54 @@
           <div class="row">
             <div class="col-4">
               <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active" id="list-coming-list" data-toggle="list" href="#list-coming" role="tab" aria-controls="home" aria-selected="true">待处理消息 <span class="badge badge-success badge-pill">14</span>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active"
+                  id="list-comingApply-list" data-toggle="list" href="#list-comingApply" role="tab" aria-controls="home"
+                  aria-selected="true">申请管理员 <span class="badge badge-success badge-pill">14</span>
                 </a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" id="list-already-list" data-toggle="list" href="#list-already" role="tab" aria-controls="profile" aria-selected="false">已处理消息 </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                  id="list-alreadyApply-list" data-toggle="list" href="#list-alreadyApply" role="tab"
+                  aria-controls="profile" aria-selected="false">已处理申请 </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                  id="list-alreadyFeedback-list" data-toggle="list" href="#list-alreadyFeedback" role="tab"
+                  aria-controls="profile" aria-selected="false">未处理反馈 </a>
+                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                  id="list-alreadyFeedback-list" data-toggle="list" href="#list-alreadyFeeback" role="tab"
+                  aria-controls="profile" aria-selected="false">已处理反馈 </a>
               </div>
             </div>
             <div class="col-8">
               <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade active show" id="list-coming" role="tabpanel" aria-labelledby="list-home-list" style="">
-                  <div class="col-md-12 pb-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title"><b>申请管理员账号</b></h5>
-                        <p class="card-text">info</p>
-                        <a href="#" class="card-link">同意</a>
-                        <a href="#" class="card-link">拒绝</a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-md-12 pb-3">
-                    <div class="card">
-                      <div class="card-body">
-                        <h5 class="card-title"><b>申请管理员账号</b></h5>
-                        <p class="card-text">info</p>
-                        <a href="#" class="card-link">同意</a>
-                        <a href="#" class="card-link">拒绝</a>
-                      </div>
-                    </div>
-                  </div>
+                <div class="tab-pane fade active show" id="list-comingApply" role="tabpanel"
+                  aria-labelledby="list-comingApply-list"></div>
+                <div class="tab-pane fade" aria-labelledby="list-alreadyApply-list" id="list-alreadyApply"
+                  role="tabpanel">..2
                 </div>
-                <div class="tab-pane fade" aria-labelledby="list-profile-list" id="list-already" role="tabpanel">..2</div>
+                <div class="tab-pane fade" id="list-comingFeedback" role="tabpanel"
+                  aria-labelledby="list-comingFeeback-list"></div>
+                <div class="tab-pane fade" aria-labelledby="list-alreadyFeeback-list" id="list-alreadyFeedback"
+                  role="tabpanel">..2
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous" style=""></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous" style=""></script>
-  <pingendo onclick="window.open('https://pingendo.com/', '_blank')" style="cursor:pointer;position: fixed;bottom: 20px;right:20px;padding:4px;background-color: #00b0eb;border-radius: 8px; width:220px;display:flex;flex-direction:row;align-items:center;justify-content:center;font-size:14px;color:white">Made with Pingendo Free&nbsp;&nbsp;<img src="https://pingendo.com/site-assets/Pingendo_logo_big.png" class="d-block" alt="Pingendo logo" height="16"></pingendo>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
+      style=""></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+      style=""></script>
 </body>
+<script>
+
+
+  function updateApplyContent() {
+    var content = "<div class='col-md-12 pb-3'><div class='card'><div class='card-body'><h5 class='card-title'><b>申请管理员账号</b></h5>"
+      + "<p class='card-text'>info</p><a href='#' class='card-link'>同意</a><a href='#' class='card-link'>拒绝</a></div></div></div>";
+    return content;
+  }
+</script>
 
 </html>

@@ -20,9 +20,10 @@
           <b> BRAND</b>
         </a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"> <a class="nav-link text-primary" href="api.html" contenteditable="true">WebAPI</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="home.html">首页</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="#">资讯动态</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="Feedback.html">意见反馈</a></li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="Home.html">首页</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="APINews.html">资讯动态</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="Search.html">WebAPI</a> </li>
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item"> <a href="#" id="state" data-state="User" class="nav-link text-primary">
@@ -145,8 +146,8 @@
     function init(){
       
       var login=sessionStorage.getItem("login");
-      if(login!="true"){
-        window.location.href="login.html";
+      if(login!="true"||typeof(stateData) == "undefined"||$.isEmptyObject(stateData)){
+        window.location.href="Login.html";
       }
       
       $("#state").html("<i class='fa fa-user-circle-o' aria-hidden='true'></i>"+stateData.name);
