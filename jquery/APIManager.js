@@ -2,7 +2,7 @@
 
 // 定义全局变量方便下面进行页面刷新和实现页面跳转
 var pageNum = 1;
-var pageSize=8;
+var pageSize = 8;
 var searchUrl = "";
 var searchType = "";
 var searchValue = "";
@@ -12,13 +12,13 @@ function search() {
 
   $("#search").click(function () {
     var searchContent = $.trim($("#searchContent").val());
-    pageNum=1;
+    pageNum = 1;
     if (searchContent == "") {
       searchUrl = "http://localhost:8080/api/api/";
       searchType = "get";
       data1 = {
         "pageNum": pageNum,
-        "pageSize":pageSize
+        "pageSize": pageSize
       };
       ajaxAPI(data1);
     } else if (searchValue == "name") {
@@ -27,7 +27,7 @@ function search() {
       data1 = {
         "name": searchContent,
         "pageNum": pageNum,
-        "pageSize":pageSize
+        "pageSize": pageSize
       };
       ajaxAPI(data1);
     } else if (searchValue == "category") {
@@ -36,7 +36,7 @@ function search() {
       data1 = {
         "category": searchContent,
         "pageNum": pageNum,
-        "pageSize":pageSize
+        "pageSize": pageSize
       };
       ajaxAPI(data1);
     } else {
@@ -45,7 +45,7 @@ function search() {
       data1 = {
         "val": searchContent,
         "pageNum": pageNum,
-        "pageSize":pageSize
+        "pageSize": pageSize
       };
       ajaxAPI(data1);
     }
@@ -168,8 +168,16 @@ function APIManager() {
     var operation = $("#operation .nav-link.active").data("operation");
     var id = $(event.target.parentNode).data("id");
     if (operation == "update") {
+
+      $(".modal-title").val = "编辑API";
+      $(".modal-body").html(updateAPIModel());
+      $("#determine").text("编辑");
       updateAPI(id);
     } else if (operation == "delete") {
+
+      $(".modal-title").val = "删除API";
+      $(".modal-body").html("<p>您确定要删除这条API吗？</p>");
+      $("#determine").text("删除");
       deleteAPI(id);
     }
   })
@@ -241,8 +249,6 @@ function updateAPI(id) {
 // 实现删除API的功能
 function deleteAPI(id) {
 
-  $(".modal-title").val = "删除API";
-  $(".modal-body").html("<p>您确定要删除这条API吗？</p>");
   $("#determine").off();
   $("#determine").click(function () {
     $.ajax({
@@ -315,6 +321,18 @@ function addAPI() {
     })
   })
 }
+
+
+function updateAPIModel() {
+  var content = "<h1 class='mb-4 text-center'>编辑API</h1><form><div class='form-group'> <input type='text' class='form-control' id='updateName' name='name'"
+    + "placeholder='API Name' required='required'> </div><div class='form-row'><div class='form-group col-md-6'> <input type='text' class='form-control'"
+    + " id='updateVersions' name='versions' placeholder='Versions'> </div><div class='form-group col-md-6'> <input type='text' class='form-control'"
+    + " id='updateCategory'name='category' placeholder='Category'> </div></div><div class='form-group'> <textarea class='form-control' id='updateDescription' name='description' rows='3'"
+    + "placeholder='Description'></textarea> </div></form>"
+  return content;
+}
+
+
 
 function showResult(result) {
   $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();

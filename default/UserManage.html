@@ -137,32 +137,6 @@
           </button>
         </div>
         <div class="modal-body">
-          <!-- <div class="mx-auto p-4 col-md-7"> -->
-          <h1 class="text-center">编辑用户</h1>
-          <form class="text-left">
-            <div class="form-group"> <label for="updateName">Your Name</label> <input type="text" class="form-control"
-                id="updateName" placeholder="name" required="required">
-              <small id="nameNote2" class="form-text text-muted"></small>
-            </div>
-            <div class="form-group"> <label for="updateCompany">Your Company</label> <input type="text"
-                class="form-control" id="updateCompany" placeholder="company"> </div>
-            <div class="form-group"> <label for="updateEmail">Your email</label> <input type="email"
-                class="form-control" id="updateEmail" placeholder="name@example.com" required="required">
-              <small id="emailNote2" class="form-text text-muted"></small>
-            </div>
-            <div class="form-row">
-              <div class="form-group col-md-6"> <label for="updatePassword">Password</label> <input type="password"
-                  class="form-control" id="updatePassword" placeholder="password" required="required">
-                <small id="passwordNote2" class="form-text text-muted"></small>
-              </div>
-              <div class="form-group col-md-6"> <label for="updateConfirmPassword">Confirm Password</label> <input
-                  type="password" class="form-control" id="updateConfirmPassword" placeholder="confirmPassword"
-                  required="required">
-              </div>
-
-            </div>
-
-          </form>
 
         </div>
         <div class="modal-footer">
@@ -225,7 +199,7 @@
 
     $("#search").click(function () {
       var searchContent = $.trim($("#searchContent").val());
-      pageNum=1;
+      pageNum = 1;
       if (searchContent == "") {
         searchUrl = "http://localhost:8080/api/user/";
         searchType = "get";
@@ -389,8 +363,14 @@
       var operation = $("#operation .nav-link.active").data("operation");
       var id = $(event.target.parentNode).data("id");
       if (operation == "update") {
+        $(".modal-title").text("编辑用户");
+        $(".modal-body").html(updateUserModel());
+        $("#determine").text("编辑");
         updateUser(id);
       } else if (operation == "delete") {
+        $(".modal-title").text("删除用户");
+        $(".modal-body").html("<p>您确定要删除该用户吗？</p>");
+        $("#determine").text("删除");
         deleteUser(id);
       }
     })
@@ -479,9 +459,7 @@
   // 实现删除User的功能
   function deleteUser(id) {
 
-    $(".modal-title").text("删除用户");
-    $(".modal-body").html("<p>您确定要删除该用户吗？</p>");
-    $("#determine").text("删除");
+
     $("#determine").off();
     $("#determine").click(function () {
       $.ajax({
@@ -607,6 +585,18 @@
     passwordNote.text("");
 
     return true;
+  }
+
+
+  function updateUserModel() {
+    var content = "<h1 class='text-center'>编辑用户</h1><form class='text-left'><div class='form-group'> <label for='updateName'>Your Name</label> <input type='text' class='form-control'"
+      + "id='updateName' placeholder='name' required='required'><small id='nameNote2' class='form-text text-muted'></small></div><div class='form-group'> <label for='updateCompany'>Your"
+      + " Company</label> <input type='text'class='form-control' id='updateCompany' placeholder='company'> </div><div class='form-group'> <label for='updateEmail'>Your email</label> "
+      + "<input type='email'class='form-control' id='updateEmail' placeholder='name@example.com' required='required'><small id='emailNote2' class='form-text text-muted'></small>"
+      + "</div><div class='form-row'><div class='form-group col-md-6'> <label for='updatePassword'>Password</label> <input type='password'class='form-control' id='updatePassword' "
+      + "placeholder='password' required='required'><small id='passwordNote2' class='form-text text-muted'></small></div><div class='form-group col-md-6'> <label for='updateConf"
+      + "irmPassword'>Confirm Password</label> <input type='password' class='form-control' id='updateConfirmPassword' placeholder='confirmPassword' required='required'></div></div></form>"
+    return content;
   }
 
   function showResult(result) {

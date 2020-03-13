@@ -8,6 +8,9 @@
     type="text/css">
   <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
   <script src="../jquery/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -23,7 +26,7 @@
         <ul class="navbar-nav mx-auto">
           <li class="nav-item"> <a class="nav-link" href="#">API管理</a> </li>
           <li class="nav-item"> <a class="nav-link" href="#">用户管理</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">新闻管理</a> </li>
+          <li class="nav-item"> <a class="nav-link" href="#">资讯管理</a> </li>
           <li class="nav-item"><a class="nav-link" href="#">综合数据</a></li>
         </ul>
         <ul class="navbar-nav">
@@ -40,9 +43,10 @@
     <div class="container">
       <div class="row justify-content-center align-items-center" style="">
         <div class="bg-white p-4 col-10 mx-auto mx-md-0 col-lg-6">
-          <h1>新闻查找</h1>
+          <h1>资讯查找</h1>
           <form class="form-inline d-flex justify-content-center">
-            <div class="input-group"> <input type="search" class="form-control" placeholder="please input" id="form6">
+            <div class="input-group"> <input type="search" class="form-control" placeholder="please input"
+                id="searchContent">
               <div class="btn-group">
                 <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                   data-toggle="dropdown" aria-expanded="false"></button>
@@ -52,6 +56,7 @@
                   style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                   <a class="dropdown-item" data-menu="name" href="#">资讯名称</a>
                   <a class="dropdown-item" data-menu="author" href="#">作者</a>
+                  <a class="dropdown-item" data-menu="category" href="#">类别</a>
                   <a class="dropdown-item" data-menu="date" href="#">日期</a>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" data-menu="dateSection" href="#">日期区间</a>
@@ -67,10 +72,15 @@
     <div class="container">
       <div class="row">
         <div class="col-3">
-          <ul class="nav nav-pills flex-column">
-            <li class="nav-item" style=""> <a href="" class="nav-link active" data-toggle="pill"
-                data-target="#tabone">查看新闻</a> </li>
-            <li class="nav-item" style=""> <a class="nav-link" href="" data-toggle="pill" data-target="#tabtwo">发布新闻</a>
+          <ul class="nav nav-pills flex-column" id="operation">
+            <li class="nav-item" style=""> <a href="" class="nav-link active" data-toggle="pill" data-operation="select"
+                data-target="#tabone">查看资讯</a> </li>
+            <li class="nav-item" style=""> <a href="" class="nav-link" data-toggle="pill" data-operation="update"
+                data-target="#tabone">编辑资讯</a> </li>
+            <li class="nav-item" style=""> <a href="" class="nav-link" data-toggle="pill" data-operation="delete"
+                data-target="#tabone">删除资讯</a> </li>
+            <li class="nav-item" style=""> <a class="nav-link" href="" data-toggle="pill" data-operation="add"
+                data-target="#tabtwo">发布资讯</a>
             </li>
           </ul>
         </div>
@@ -78,40 +88,28 @@
           <div class="tab-content">
             <div class="tab-pane fade active show" id="tabone" role="tabpanel">
               <div id="tab1" class="d-flex justify-content-center">
-                <div class="card mb-3" style="max-width: 540px;">
-                  <div class="row no-gutters">
-                    <div class="col-md-4 align-self-center">
-                      <img src="image/image4.jpg" class="card-img " alt="...">
-                    </div>
-                    <div class="col-md-8">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                          additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
                 <div id="footerParent">
                 </div>
               </div>
             </div>
             <div class="tab-pane fade" id="tabtwo" role="tabpanel">
               <div class="mx-auto p-4 col-md-7">
-                <h1 class="mb-4 text-center">发布新闻</h1>
-                <form>
-                  <div class="form-group"> <input type="text" class="form-control" id="form33" placeholder="新闻名称"
-                      required="required"> </div>
+                <h1 class="mb-4 text-center">发布资讯</h1>
+                <form id="addFrom">
+                  <div class="form-group"> <input type="text" class="form-control" id="addName" placeholder="资讯名称"
+                      required="required"> <small id="nameNote1"></small></div>
+                  <div class="form-group"> <input type="text" class="form-control" id="addCategory" placeholder="资讯类别"
+                      required="required"> <small id="categoryNote1"></small></div>
                   <div class="form-row">
-                    <div class="form-group col-md-6"> <input type="text" class="form-control" id="form27"
-                        placeholder="作者"> </div>
-                    <div class="form-group col-md-6"> <input type="date" class="form-control" id="form28"
-                        placeholder="时间"> </div>
+                    <div class="form-group col-md-6"> <input type="text" class="form-control" id="addAuthor"
+                        placeholder="作者"> <small id="authorNote1"></small></div>
+                    <div class="form-group col-md-6"> <input type="date" class="form-control" id="addDate"
+                        placeholder="时间"> <small id="dateNote1"></small></div>
                   </div>
-                  <div class="form-group"> <textarea class="form-control" id="form35" rows="10"
-                      placeholder="正文内容"></textarea> </div> <button type="submit"
-                    class="btn btn-outline-primary btn-block">Add</button>
+                  <div class="form-group"> <textarea class="form-control" id="addContent" rows="15"
+                      placeholder="正文内容"></textarea> </div>
+                  <button type="submit" class="btn btn-outline-primary btn-block">发布</button>
                 </form>
               </div>
             </div>
@@ -120,346 +118,503 @@
       </div>
     </div>
   </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">编辑API资讯</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="determine" class="btn btn-outline-primary btn-block"
+            data-dismiss="modal">确定</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <div class="py-3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center d-md-flex align-items-center"> <i
+            class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
+          <ul class="nav mx-md-auto d-flex justify-content-center">
+            <li class="nav-item"> <a class="nav-link active" href="#">Home</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
+            <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
+          </ul>
+          <div class="row">
+            <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2"> <a
+                href="#">
+                <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
+              </a> <a href="#">
+                <i class="d-block fa fa-twitter text-muted fa-lg ml-2"></i>
+              </a> </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p class="mt-2 mb-0">© 2014-2018 Pingendo. All rights reserved</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
   <script>
-    
 
-// 定义全局变量方便下面进行页面刷新和实现页面跳转
-var pageNum = 1;
-var searchUrl = "";
-var searchType = "";
-var searchValue = "";
-var data1 = {};
-// 实现搜索功能
-function search() {
 
-  $("#search").click(function () {
-    var searchContent = $("#searchContent").val();
-    if (searchContent == "") {
-      searchUrl = "http://localhost:8080/api/apiNews/";
-      searchType = "get";
-      data1 = {
-        "pageNum": pageNum
-      };
-      ajaxAPI(data1);
-    } else if (searchValue == "name") {
-      searchUrl = "http://localhost:8080/api/apiNews/name";
-      searchType = "get";
-      data1 = {
-        "name": searchContent,
-        "pageNum": pageNum
-      };
-      ajaxAPI(data1);
-    } else if (searchValue == "author") {
-      searchUrl = "http://localhost:8080/api/apiNews/author";
-      searchType = "get";
-      data1 = {
-        "author": searchContent,
-        "pageNum": pageNum
-      };
-      ajaxAPI(data1);
-    } else if (searchValue == "data") {
-      searchUrl = "http://localhost:8080/api/apiNews/data";
-      searchType = "get";
-      data1 = {
-        "data": searchContent,
-        "pageNum": pageNum
-      };
-      ajaxAPI(data1);
-    }else if (searchValue == "dateSection") {
-      searchUrl = "http://localhost:8080/api/apiNews/dateSection";
-      searchType = "get";
-      data1 = {
-        "dateSection": searchContent,
-        "pageNum": pageNum
-      };
-      ajaxAPI(data1);
-    }else {
-      searchUrl = "http://localhost:8080/api/apiNews/all";
-      searchType = "get";
-      data1 = {
-        "val": searchContent,
-        "pageNum": pageNum
-      };
-      ajaxAPI(data1);
-    }
-  });
-}
-$(document).ready(dropdownMenu());
-$(document).ready(search());
-$(document).ready(addAPI());
-$(document).ready(APIManager());
-// 实现与服务器的沟通，主要为了减少代码量
-function ajaxAPI(data1) {
-  $.ajax({
-    url: searchUrl,
-    type: searchType,
-    data: data1,
-    success: function (data) {
-      tableContent(data.list);
-      if (data.pages > 1) {
-        footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-        footerEnterAPI(data1);
-      }
-      showResult("查询成功");
-    },
-    error: function () {
-      $("#tab1").empty();
-      showResult("error!!!");
-    }
-  })
-}
-// 实现页脚在界面的显示
-function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) {
-  var content = "<ul class='pagination justify-content-center' id='footer'>";
-  if (!hasPreviousPage) {
-    $.each(navigatepageNums, function (i, val) {
-      if (i == 0) {
-        content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
-      } else if (i <= 3) {
-        content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
-      } else {
-        content += "<li class='page-item'> <a class='page-link' href='#'  data-pagenum=" + val + ">" + "Next" + "</a></li>"
-      }
-    })
-  } else if (!hasNextPage) {
-    $.each(navigatepageNums, function (i, val) {
-      if (i == 0) {
-        content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
-      } else if (i < Object.keys(navigatepageNums).length - 1) {
-        content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
-      } else {
-        content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
-      }
-    })
-  } else {
-    $.each(navigatepageNums, function (i, val) {
-      if (i == 0) {
-        content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
-      } else if (i < 4) {
-        if (val != pageNum) {
-          content += "<li class='page-item' > <a class='page-link'  href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+    // 定义全局变量方便下面进行页面刷新和实现页面跳转
+    var pageNum = 1;
+    var searchUrl = "";
+    var searchType = "";
+    var searchValue = "";
+    var data1 = {};
+    // 实现搜索功能
+    function search() {
+
+      $("#search").click(function () {
+        var searchContent = $.trim($("#searchContent").val());
+        pageNum = 1;
+        if (searchContent == "") {
+          searchUrl = "http://localhost:8080/api/apiNews/";
+          searchType = "get";
+          data1 = {
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
+        } else if (searchValue == "name") {
+          searchUrl = "http://localhost:8080/api/apiNews/name";
+          searchType = "get";
+          data1 = {
+            "name": searchContent,
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
+        } else if (searchValue == "author") {
+          searchUrl = "http://localhost:8080/api/apiNews/author";
+          searchType = "get";
+          data1 = {
+            "author": searchContent,
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
+        } else if (searchValue == "category") {
+          searchUrl = "http://localhost:8080/api/apiNews/category";
+          searchType = "get";
+          data1 = {
+            "category": searchContent,
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
+        } else if (searchValue == "data") {
+          searchUrl = "http://localhost:8080/api/apiNews/data";
+          searchType = "get";
+          data1 = {
+            "data": searchContent,
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
+        } else if (searchValue == "dateSection") {
+          searchUrl = "http://localhost:8080/api/apiNews/dateSection";
+          searchType = "get";
+          data1 = {
+            "dateSection": searchContent,
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
         } else {
-          content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a>								</li>"
+          searchUrl = "http://localhost:8080/api/apiNews/all";
+          searchType = "get";
+          data1 = {
+            "val": searchContent,
+            "pageNum": pageNum
+          };
+          ajaxAPI(data1);
         }
+      });
+    }
+    $(document).ready(dropdownMenu());
+    $(document).ready(search());
+    $(document).ready(addAPINews());
+    $(document).ready(APINewsManager());
+
+    // 实现与服务器的沟通，主要为了减少代码量
+    function ajaxAPI(data1) {
+      $.ajax({
+        url: searchUrl,
+        type: searchType,
+        data: data1,
+        success: function (data) {
+          tableContent(data.list);
+          if (data.pages > 1) {
+            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
+            footerEnterAPI(data1);
+          }
+          showResult("查询成功");
+        },
+        error: function () {
+          $("#tab1").empty();
+          showResult("error!!!");
+        }
+      })
+    }
+    // 实现页脚在界面的显示
+    function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) {
+      var content = "<ul class='pagination justify-content-center' id='footer'>";
+      if (!hasPreviousPage) {
+        $.each(navigatepageNums, function (i, val) {
+          if (i == 0) {
+            content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else if (i <= 3) {
+            content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else {
+            content += "<li class='page-item'> <a class='page-link' href='#'  data-pagenum=" + val + ">" + "Next" + "</a></li>"
+          }
+        })
+      } else if (!hasNextPage) {
+        $.each(navigatepageNums, function (i, val) {
+          if (i == 0) {
+            content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+          } else if (i < Object.keys(navigatepageNums).length - 1) {
+            content += "<li class='page-item'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          } else {
+            content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+          }
+        })
       } else {
-        content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Next" + "</a></li>"
+        $.each(navigatepageNums, function (i, val) {
+          if (i == 0) {
+            content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Prev" + "</a></li>"
+          } else if (i < 4) {
+            if (val != pageNum) {
+              content += "<li class='page-item' > <a class='page-link'  href='#' data-pagenum=" + val + ">" + val + "</a></li>"
+            } else {
+              content += "<li class='page-item active'> <a class='page-link' href='#' data-pagenum=" + val + ">" + val + "</a>								</li>"
+            }
+          } else {
+            content += "<li class='page-item'> <a class='page-link'  href='#' data-pagenum=" + val + ">" + "Next" + "</a></li>"
+          }
+        })
       }
-    })
-  }
-  content += "</ul>";
-  $("#footerParent").html(content)
-}
-// 实现根据页脚进行跳转的功能
-function footerEnterAPI(data1) {
-  $("#footer").click(function (event) {
-    pageNum = $(event.target).data("pagenum");
-    reFresh(data1);
-  })
-}
-// 刷新界面
-function reFresh(data1) {
-  data1.pageNum = pageNum;
-  $.ajax({
-    url: searchUrl,
-    type: searchType,
-    data: data1,
-    success: function (data) {
-      tableContent(data.list);
-      if (data.pages > 1) {
-        footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-        footerEnterAPI(data1);
-      }
-    },
-    error: function () {
-      $("#tab1").empty();
-      showResult("刷新界面失败!!!");
+      content += "</ul>";
+      $("#footerParent").html(content)
     }
-  })
-}
-// 获取搜索下拉菜单的选项值
-function dropdownMenu() {
-  $("#dropdownMenu").click(function (event) {
-    searchValue = $(event.target).data("menu");
-  })
-}
-// 根据列表填充表格内容
-function tableContent(list) {
-  var content = "";
-  $.each(list, function (i, val) {
-    content += "<tr data-id=" + list[i].id + "><th><input type='checkbox'></th><td data-toggle='modal' data-target='#exampleModal'>" + list[i].name +
-      "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].descriptionBrief + "</td><td data-toggle='modal' data-target='#exampleModal'>"
-      + list[i].category + "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].versions + "</td></tr>";
-  })
-  $("#api").html(content);
-  $("#footerParent").empty();
-
-}
-// 负责控制面板里编辑和删除功能的实现
-
-function APIManager() {
-  $("#api").click(function (event) {
-    var operation = $("#operation .nav-link.active").data("operation");
-    var id = $(event.target.parentNode).data("id");
-    if (operation == "update") {
-      updateAPI(id);
-    } else if (operation == "delete") {
-      deleteAPI(id);
+    // 实现根据页脚进行跳转的功能
+    function footerEnterAPI(data1) {
+      $("#footer").click(function (event) {
+        pageNum = $(event.target).data("pagenum");
+        reFresh(data1);
+      })
     }
-  })
-}
-// 实现更新API功能
-function updateAPI(id) {
+    // 刷新界面
+    function reFresh(data1) {
+      data1.pageNum = pageNum;
+      $.ajax({
+        url: searchUrl,
+        type: searchType,
+        data: data1,
+        success: function (data) {
+          tableContent(data.list);
+          if (data.pages > 1) {
+            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
+            footerEnterAPI(data1);
+          }
+        },
+        error: function () {
+          $("#tab1").empty();
+          showResult("刷新界面失败!!!");
+        }
+      })
+    }
+    // 获取搜索下拉菜单的选项值
+    function dropdownMenu() {
+      $("#dropdownMenu").click(function (event) {
+        searchValue = $(event.target).data("menu");
+      })
+    }
+    // 根据列表填充表格内容
+    function tableContent(list) {
+      var content = "<ul class='list-group list-group-flush'>";
+      $.each(list, function (i, val) {
+        content += "<li class='list-group-item list-group-item-action' data-id=" + val.id + "><div class='d-flex w-100 justify-content-between'><h5 class='mb-1'>" + val.name + "</h5>"
+          + "<small>" + val.date + "</small></div><p class='mb-1'>" + val.contentBrief + "</p><div class='d-flex w-100 justify-content-between'><small>" + val.author + "</small><small>" + val.category + "</small></div></li>";
+      })
+      content += "</ul>"
+      $("#tab1").html(content);
+      $("#footerParent").empty();
 
-  $.ajax({
-    url: "http://localhost:8080/api/api/id",
-    type: "get",
-    data: {
-      "id": id
-    },
-    success: function (data) {
-      var updateName = $("#updateName");
-      var updateCategory = $("#updateCategory");
-      var updateDescription = $("#updateDescription");
-      var updateVersions = $("#updateVersions");
-      updateName.val(data.name);
-      updateCategory.val(data.category);
-      updateVersions.val(data.versions);
-      updateDescription.text(data.description);
+    }
+    // 负责控制面板里编辑和删除功能的实现
+
+    function APINewsManager() {
+      $("#tab1").click(function (event) {
+        var operation = $("#operation .nav-link.active").data("operation");
+        var id = $(event.target).parents("li").data("id");
+        if (operation == "update") {
+          $(".modal-title").text("编辑API资讯");
+          $(".modal-body").html(updateAPINewsModel());
+          $("#determine").text("编辑");
+          updateAPINews(id);
+        } else if (operation == "delete") {
+          $(".modal-title").text("删除API资讯");
+          $(".modal-body").html("<p>您确定要删除这条API资讯吗？</p>");
+          $("#determine").text("删除");
+          deleteAPINews(id);
+        } else if (operation == "add") {
+          addAPINews();
+        }
+      })
+    }
+
+
+
+
+
+    // 实现更新API功能
+    function updateAPINews(id) {
+
+      $.ajax({
+        url: "http://localhost:8080/api/apiNews/id",
+        type: "get",
+        data: {
+          "id": id
+        },
+        success: function (apiNews) {
+
+          var updateName = $("#updateName");
+          var updateCategory = $("#updateCategory");
+          var updateAuthor = $("#updateAuthor");
+          var updateDate = $("#updateDate");
+          var updateContent = $("#updateContent");
+          updateName.val(apiNews.name);
+          updateCategory.val(apiNews.category);
+          updateAuthor.val(apiNews.author);
+          updateDate.val(apiNews.date);
+          updateContent.text(apiNews.content);
+
+          $('#exampleModal').modal('show');
+          $("#determine").off();
+          $("#determine").click(function () {
+            if (!check(updateName, updateCategory, updateAuthor, updateDate, "update")) {
+              return false;
+            }
+            var updateData = {
+              "name": updateName.val(),
+              "category": updateCategory.val(),
+              "author": updateAuthor.val(),
+              "date": updateDate.val(),
+              "content": updateContent.text()
+            };
+            if (updateData.content.length == 0) {
+              updateData.contentBrief = "";
+            } else if (updateData.content.length > 300) {
+              updateData.contentBrief = updateData.content.substring(0, 200) + "...";
+            } else {
+              updateData.contentBrief = updateData.content;
+            }
+            apiNews = {};
+            $.ajax({
+              url: "http://localhost:8080/api/api/id",
+              type: "put",
+              data: JSON.stringify(updateData),
+              contentType: "application/json;charset=utf-8;",
+              dataType: "json",
+              success: function (flag) {
+                if (flag) {
+                  showResult("更新成功!!!");
+                  reFresh(data1);
+                } else {
+                  showResult("更新失败");
+                }
+
+              },
+              error: function () {
+                showResult("更新失败error");
+              }
+            })
+
+
+          })
+        },
+        error: function () {
+          showResult("更新失败!!!");
+        }
+      })
+
+    }
+    // 实现删除API的功能
+    function deleteAPINews(id) {
+
+
       $("#determine").off();
+      $('#exampleModal').modal('show');
       $("#determine").click(function () {
-        var updateData = {
-          "name": updateName.val(),
-          "category": updateCategory.val(),
-          "versions": updateVersions.val(),
-          "description": updateDescription.text(),
-          "id": data.id
-        };
-        if (updateData.description.length == 0) {
-          updateData.descriptionBrief = "";
-        } else if (updateData.description.length > 300) {
-          updateData.descriptionBrief = updateData.description.substring(0, 200) + "...";
-        } else {
-          updateData.descriptionBrief = updateData.description;
-        }
-        data = {};
         $.ajax({
-          url: "http://localhost:8080/api/api/id",
-          type: "put",
-          data: JSON.stringify(updateData),
-          contentType: "application/json;charset=utf-8;",
-          dataType: "json",
+          url: "http://localhost:8080/api/apiNews/id",
+          type: "delete",
+          data: {
+            "id": id
+          },
           success: function (flag) {
             if (flag) {
-              showResult("更新成功!!!");
+              showResult("删除成功!!!");
               reFresh(data1);
             } else {
-              showResult("更新失败");
+              showResult("删除失败");
             }
 
           },
           error: function () {
-            showResult("更新失败error");
+            showResult("删除失败");
+          }
+        })
+      })
+
+
+    }
+    // 实现添加API的功能
+    function addAPINews() {
+      $("#addFrom").submit(function (event) {
+        event.preventDefault();
+        var addName = $("#addName");
+        var addCategory = $("#addCategory");
+        var addAuthor = $("#addAuthor");
+        var addDate = $("#addDate");
+        var addContent = $("#addContent");
+
+        var addData = {
+          "name": $.trim(addName.val()),
+          "category": $.trim(addCategory.val()),
+          "author": $.trim(addAuthor.val()),
+          "date": $.trim(addDate.val()),
+          "content": $.trim(addContent.val())
+        };
+        if (!check(addName, addCategory, addAuthor, addDate, "add")) {
+          return false;
+        }
+        if (addData.content.length == 0) {
+          addData.contentBrief = "";
+        } else if (addData.content.length > 300) {
+          addData.contentBrief = addData.content.substring(0, 200) + "...";
+        } else {
+          addData.contentBrief = addData.content;
+        }
+
+        $.ajax({
+          url: "http://localhost:8080/api/apiNews/",
+          type: "post",
+          data: JSON.stringify(addData),
+          contentType: "application/json;charset=utf-8",
+          dataType: "text",
+          success: function (flag) {
+            addName = "";
+            addCategory = "";
+            addAuthor = "";
+            addDate = "";
+            addContent = "";
+            if (flag) {
+              showResult("添加成功!!!");
+            } else {
+              showResult("添加失败");
+            }
+          },
+          error: function () {
+            showResult("添加失败error");
           }
         })
 
 
       })
-    },
-    error: function () {
-      showResult("更新失败!!!");
     }
-  })
 
-}
-// 实现删除API的功能
-function deleteAPI(id) {
 
-  $(".modal-title").val = "删除API";
-  $(".modal-body").html("<p>您确定要删除这条API吗？</p>");
-  $("#determine").off();
-  $("#determine").click(function () {
-    $.ajax({
-      url: "http://localhost:8080/api/api/id",
-      type: "delete",
-      data: {
-        "id": id
-      },
-      success: function (flag) {
-        if (flag) {
-          showResult("删除成功!!!");
-          reFresh(data1);
-        } else {
-          showResult("删除失败");
-        }
+    function check(name, category, author, date, manager) {
+      var nameNote;
+      var categoryNote;
+      var dateNote;
+      var authorNote;
 
-      },
-      error: function () {
-        showResult("删除失败");
+      if (manager == "update") {
+        nameNote = $("#nameNote2");
+        categoryNote = $("#categoryNote2");
+        dateNote = $("#dateNote2");
+        authorNote = $("#authorNote2");
+      } else {
+        nameNote = $("#nameNote1");
+        categoryNote = $("#categoryNote1");
+        dateNote = $("#dateNote1");
+        authorNote = $("#authorNote1");
       }
-    })
-  })
 
-
-}
-// 实现添加API的功能
-function addAPI() {
-  $("#addSubmit").click(function () {
-    var addName = $("#addName");
-    var addCategory = $("#addCategory");
-    var addDescription = $("#addDescription");
-    var addVersions = $("#addVersions");
-    if (addName.val() == "") {
-      showResult("请输入值")
-      return;
-    }
-    var addData = {
-      "name": addName.val(),
-      "category": addCategory.val(),
-      "versions": addVersions.val(),
-      "description": addDescription.val()
-    };
-    if (addData.description.length == 0) {
-      addData.descriptionBrief = "";
-    } else if (addData.description.length > 300) {
-      addData.descriptionBrief = addData.description.substring(0, 200) + "...";
-    } else {
-      addData.descriptionBrief = addData.description;
-    }
-    $.ajax({
-      url: "http://localhost:8080/api/api/",
-      type: "post",
-      data: JSON.stringify(addData),
-      contentType: "application/json;charset=utf-8",
-      dataType: "text",
-      success: function (flag) {
-        addName.val("");
-        addCategory.val("");
-        addDescription.val("");
-        addVersions.val("");
-        if (flag) {
-          showResult("添加成功!!!");
-        } else {
-          showResult("添加失败");
-        }
-      },
-      error: function () {
-        showResult("添加失败error");
+      if ($.trim(name.val()) == "") {
+        name.focus();
+        nameNote.text("请输入名称!");
+        return false;
       }
-    })
-  })
-}
+      nameNote.text("");
 
-function showResult(result) {
-  $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
-}
+      if ($.trim(category.val()) == "") {
+        category.focus();
+        categoryNote.text("请输入类别!");
+        return false;
+      }
+      categoryNote.text("");
+
+      if ($.trim(date.val()) == "") {
+        date.focus();
+        dateNote.text("请输入日期!");
+        return false;
+      }
+      dateNote.text("");
+
+      if ($.trim(author.val()) == "") {
+        author.focus();
+        authorNote.text("请输入作者!");
+        return false;
+      }
+      authorNote.text("");
+
+      return true;
+    }
+
+
+    function updateAPINewsModel() {
+      var content = "<h1 class='mb-4 text-center'>编辑资讯</h1><form><div class='form-group'> <input type='text' class='form-control' id='updateName' placeholder='资讯名称'"
+        + "required='required'> <small id='nameNote2'></small></div><div class='form-group'> <input type='text' class='form-control' id='updateCategory' placeholder='资讯类别'"
+        + "required='required'><small id='categoryNote2'></small> </div><div class='form-row'><div class='form-group col-md-6'> <input type='text' class='form-control' id='updateAuthor'"
+        + "placeholder='作者'></div><small id='authorNote2'></small><div class='form-group col-md-6'> <input type='date' class='form-control' id='updateDate'placeholder='时间'>"
+        + "</div><small id='dateNote2'></small></div><div class='form-group'> <textarea class='form-control' id='updateContent' rows='15'placeholder='正文内容'></textarea>"
+        + "</div></form>";
+      return content;
+    }
+
+
+    function showResult(result) {
+      $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
+    }
 
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
     crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
+
 </body>
 
 </html>
