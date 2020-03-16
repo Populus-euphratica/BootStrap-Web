@@ -92,7 +92,8 @@
               <div class="input-group-prepend">
                 <span class="input-group-text">回复内容：</span>
               </div>
-              <textarea class="form-control" aria-label="With textarea" id="replyContent" rows="10" placeholder="回复内容"></textarea>
+              <textarea class="form-control" aria-label="With textarea" id="replyContent" rows="10"
+                placeholder="回复内容"></textarea>
             </div>
           </div>
           <div class="modal-footer">
@@ -123,13 +124,15 @@
   var data1 = "";
   var updatePlace;
   var replyContent = $("#replyContent");
+  var updateFalg = true;
+  var updateStr = "footerParentComingApply";
   $(document).ready(messageManage());
   $(document).ready(messageInit());
   $(document).ready(numInit());
   $(document).ready(clickApply());
   $(document).ready(clickFeedBack());
 
-// 激发未处理申请事件
+  // 激发未处理申请事件
   function messageInit() {
     $("#list-comingApply-list").click();
   }
@@ -145,6 +148,8 @@
           istrue: false,
           pageNum: pageNum
         }
+        updateFalg = true;
+        updateStr = "footerParentComingApply";
         updatePlace = $("#list-comingApply");
         updateApply();
       } else if (operation == "alreadyApply") {
@@ -154,7 +159,9 @@
           istrue: true,
           pageNum: pageNum
         }
+        updateFalg = true;
         updatePlace = $("#list-alreadyApply");
+        updateStr = "footerParentAlreadyApply";
         updateApply();
       } else if (operation == "comingFeedBack") {
         searchUrl = "http://localhost:8080/api/feedBack/istrue";
@@ -163,7 +170,9 @@
           istrue: false,
           pageNum: pageNum
         }
+        updateFalg = false;
         updatePlace = $("#list-comingFeedBack");
+        updateStr = "footerParentComingFeedBack";
         updateFeedBack();
       } else if (operation == "alreadyFeedBack") {
         searchUrl = "http://localhost:8080/api/feedBack/istrue";
@@ -172,12 +181,14 @@
           istrue: true,
           pageNum: pageNum
         }
+        updateFalg = false;
         updatePlace = $("#list-alreadyFeedBack");
+        updateStr = "footerParentAlreadyFeedBack";
         updateFeedBack();
       }
     })
   }
-// 初始化未处理消息数目
+  // 初始化未处理消息数目
   function numInit() {
     $.ajax({
       url: "http://localhost:8080/api/applyForAdmin/istrue/sum",
@@ -208,7 +219,7 @@
   }
 
 
-// 更新申请面板内容
+  // 更新申请面板内容
   function updateApplyContent(list) {
     var content = "";
     $.each(list, function (i, val) {
@@ -218,7 +229,7 @@
         + val.password + "'><a href='#' data-agree-apply='yes' class='card-link'>同意</a><a href='#' data-agree-apply='no' class='card-link mr-3'>拒绝</a></div></div></div></div>";
 
     })
-    content += "<div id='footerParent'></div>";
+    content += "<div id='" + updateStr + "'></div>";
     return content;
   }
 
@@ -227,14 +238,14 @@
     var content = "";
     $.each(list, function (i, val) {
       content += "<div class='col-md-12 pb-3'><div class='card'><div class='card-body'><div class='d-flex w-100 justify-content-between'><h5 class='card-title'><strong>" + val.theme + "</strong></h5>"
-        + "<small>" + val.date + "</small></div><p class='card-text'>反馈内容：" + val.content + "</p><div  class='row justify-content-end'><p class='text-muted'>——来自" + val.company + "公司的" + val.name + "</p></div>"
-        + "<div  class='row justify-content-end' data-id='" + val.id + "' data-email='"+val.email+"'><a href='#' data-agree-reply='yes' class='card-link'>回复</a><a href='#' data-agree-reply='no' class='card-link'>忽略</a></div></div></div></div>";
+        + "<small>" + val.date + "</small></div><p class='card-text'>反馈内容：" + val.content + "</p><div  class='row justify-content-end'><p class='text-muted'>——来自" + val.company + "的" + val.name + "</p></div>"
+        + "<div  class='row justify-content-end' data-id='" + val.id + "' data-email='" + val.email + "'><a href='#' data-agree-reply='yes' class='card-link'>回复</a><a href='#' data-agree-reply='no' class='card-link'>忽略</a></div></div></div></div>";
     })
 
-    content += "<div id='footerParent'></div>";
+    content += "<div id='" + updateStr + "'></div>";
     return content;
   }
-// 申请面板点击处理逻辑
+  // 申请面板点击处理逻辑
   function clickApply() {
     $(document).on("click", "a[data-agree-apply]", function () {
       var apply = $(this.parentNode);
@@ -249,17 +260,17 @@
         istrue = false;
       }
       replyContent.val(str);
-      applyManage(apply, istrue, str);
+      applyManage(apply, istrue);
     })
   }
 
-// 反馈面板点击处理逻辑
+  // 反馈面板点击处理逻辑
   function clickFeedBack() {
     $(document).on("click", "a[data-agree-reply]", function () {
       var apply = $(this.parentNode);
       var choose = $(this).data("agree-reply");
-      var id=apply.data("id");
-      var email=apply.data("email");
+      var id = apply.data("id");
+      var email = apply.data("email");
       var istrue = true;
       if (choose === "yes") {
         istrue = true;
@@ -267,12 +278,12 @@
         istrue = false;
       }
       replyContent.val("我们很重视您的反馈，我们会认真考虑并作出改进的！再次感谢您提出的宝贵意见。")
-      feedBackManage(email, istrue,id);
+      feedBackManage(email, istrue, id);
 
     })
   }
-// 实现发送邮件以及更新feedBack数据库记录
-  function feedBackManage(email, istrue,id) {
+  // 实现发送邮件以及更新feedBack数据库记录
+  function feedBackManage(email, istrue, id) {
     $('#exampleModal').modal('show');
     $("#determine").click(function () {
       if (!istrue) {
@@ -283,7 +294,7 @@
         type: "put",
         data: {
           "reply": replyContent.val(),
-          "id":id
+          "id": id
         },
         success: function (falg) {
           if (falg) {
@@ -307,69 +318,91 @@
     })
 
   }
-// 实现发送邮件以及更新apply数据库记录
-  function applyManage(apply, istrue, str) {
-
-
+  // 实现发送邮件以及更新apply数据库记录
+  function applyManage(apply, istrue) {
     $('#exampleModal').modal('show');
     $("#determine").off();
     $("#determine").click(function () {
-      $.ajax({
-        url: "http://localhost:8080/api/applyForAdmin/id",
-        type: "put",
-        data: {
-          "decide": istrue,
-          "istrue": true,
-          "id": apply.data("id")
-        },
-        success: function () {
+      if (istrue) {
+        $.ajax({
+          url: "http:localhost:8080/api/admin/email",
+          type: "get",
+          data: {
+            "email": $.trim(apply.data("email"))
+          },
+          success: function (emailDate) {
+            if (emailDate.id != null) {
+              emailNote.text("该邮箱已被其他人使用");
+              email.focus();
+              return;
+            } else {
 
-          if (istrue) {
-            var adminDate = {
-              "name": apply.data("name"),
-              "email": apply.data("email"),
-              "password": apply.data("password")
-            };
-            $.ajax({
-              url: "http://localhost:8080/api/admin",
-              type: "post",
-              data: JSON.stringify(adminDate),
-              contentType: "application/json;charset=utf-8",
-              dataType: "json",
-              success: function (falg) {
-                if (falg) {
-                  alert("添加成功!");
-
-                  var emailData = {
-                    "content":replyContent.val(),
-                    "to": apply.data("email")
-                  };
-                  sendEmail(emailData);
-                } else {
-                  alert("添加失败!");
+              var adminData = {
+                "name": apply.data("name"),
+                "email": apply.data("email"),
+                "password": apply.data("password")
+              };
+              $.ajax({
+                url: "http://localhost:8080/api/admin/apply?decide=true&id=" + apply.data("id"),
+                type: "post",
+                data: JSON.stringify(adminData),
+                contentType: "application/json;charset=utf-8",
+                // dataType: "json",
+                success: function (falg) {
+                  if (falg) {
+                    alert("添加成功!");
+                    var emailData = {
+                      "content": replyContent.val(),
+                      "to": apply.data("email")
+                    };
+                    sendEmail(emailData);
+                  } else {
+                    alert("添加失败!");
+                  }
+                },
+                error: function () {
+                  alert("连接服务器失败!");
                 }
-              },
-              error: function () {
-                alert("连接服务器失败!");
-              }
-            })
-          } else {
-            var emailData = {
-              "content": replyContent.val(),
-              "to": apply.data("email")
-            };
-            sendEmail(emailData);
+              })
+            }
+          },
+          error: function () {
+            alert("连接服务器失败!");
           }
-        },
-        error: function () {
-          alert("连接服务器失败!");
-        }
-      })
+        })
 
+      }
+      else {
+
+        $.ajax({
+          url: "http://localhost:8080/api/applyForAdmin/id",
+          type: "put",
+          data: {
+            "decide": false,
+            "id": apply.data("id")
+          },
+          success: function (falg) {
+            if (falg) {
+              alert("操作成功！")
+            } else {
+              alert("操作失败！")
+            }
+          },
+          error: function () {
+            alert("连接服务器失败!");
+          }
+        })
+        var emailData = {
+          "content": replyContent.val(),
+          "to": apply.data("email")
+        };
+        sendEmail(emailData);
+      }
     })
-
   }
 
+
+  // 发送邮件
   function sendEmail(data) {
     console.log(data)
     $.ajax({
@@ -388,6 +421,15 @@
       }
     })
   }
+
+  function updateManage() {
+    if (updateFalg) {
+      updateApply()
+    } else {
+      updateFeedBack()
+    }
+  }
+
   // 获取申请的分页数据
   function updateApply() {
     $.ajax({
@@ -396,18 +438,22 @@
       data: data1,
       success: function (data) {
         if (data.total != 0) {
-          updatePlace.html(updateApplyContent(data.list));
+          updatePlace.html(updateApplyContent(data.list, updateStr));
+
           if (data.pages > 1) {
-            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-            footerEnterAPI(data1);
+            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums, $("#" + updateStr + ""));
+            footerEnterAPI();
           }
         } else {
           updatePlace.html("<h1>这里什么都没有，去别的地方看看吧</h1>");
         }
+      },
+      error: function () {
+        return false;
       }
     })
   }
-    // 获取反馈的分页数据
+  // 获取反馈的分页数据
   function updateFeedBack() {
     $.ajax({
       url: searchUrl,
@@ -415,10 +461,10 @@
       data: data1,
       success: function (data) {
         if (data.total != 0) {
-          updatePlace.html(updateFeedBackContent(data.list));
+          updatePlace.html(updateFeedBackContent(data.list, updateStr));
           if (data.pages > 1) {
-            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-            footerEnterAPI(data1);
+            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums, $("#" + updateStr + ""));
+            footerEnterAPI();
           }
         } else {
           updatePlace.html("<h1>这里什么都没有，去别的地方看看吧</h1>");
@@ -426,10 +472,10 @@
       }
     })
   }
-  
+
   // 实现页脚在界面的显示
-  function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) {
-    var content = "<ul class='pagination justify-content-center' id='footer'>";
+  function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums, footer) {
+    var content = "<ul class='pagination justify-content-center' data-footer='footer'>";
     if (!hasPreviousPage) {
       $.each(navigatepageNums, function (i, val) {
         if (i == 0) {
@@ -466,34 +512,22 @@
       })
     }
     content += "</ul>";
-    $("#footerParent").html(content)
+    footer.html(content)
   }
   // 实现根据页脚进行跳转的功能
-  function footerEnterAPI(data1) {
-    $("#footer").click(function (event) {
+  function footerEnterAPI() {
+    $("ul[data-footer]").click(function (event) {
       pageNum = $(event.target).data("pagenum");
-      reFresh(data1);
+      data1.pageNum = pageNum;
+      reFresh();
     })
   }
   // 刷新界面
-  function reFresh(data1) {
-    data1.pageNum = pageNum;
-    $.ajax({
-      url: searchUrl,
-      type: searchType,
-      data: data1,
-      success: function (data) {
-        tableContent(data.list);
-        if (data.pages > 1) {
-          footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-          footerEnterAPI(data1);
-        }
-      },
-      error: function () {
-        $("#api").empty();
-        showResult("刷新界面失败!!!");
-      }
-    })
+  function reFresh() {
+
+    if (!updateManage()) {
+      updatePlace.html("");
+    }
   }
 </script>
 

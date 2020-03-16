@@ -175,7 +175,7 @@
     }
 
     function updateAdminContent() {
-      var content = "<label>Reason</label><textarea class='form-control' id='reason' rows='3' placeholder='您需要告知我们，您注册该账号的原因。'></textarea>";
+      var content = "<label>Reason</label><textarea class='form-control' maxlength='290'id='reason' rows='3' placeholder='您需要告知我们，您注册该账号的原因。'></textarea>";
       title.html("注册管理员账号");
       $("#reasonGroup").html(content);
       $("#companyGroup").empty();
