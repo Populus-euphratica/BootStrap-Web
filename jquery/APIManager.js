@@ -8,19 +8,31 @@ var searchType = "";
 var searchValue = "";
 var data1 = {};
 
-var stateData=JSON.parse(sessionStorage.getItem("stateData"));
-$(document).ready(init());
-function init(){
-  
-  var login=sessionStorage.getItem("login");
-  if(login!="true"||typeof(stateData) == "undefined"||$.isEmptyObject(stateData)){
-    window.location.href="Login.html";
+  // 登录的管理员信息初始化
+  var stateData = JSON.parse(sessionStorage.getItem("stateData"));
+  $(document).ready(init());
+  function init() {
+
+    var login = sessionStorage.getItem("login");
+    if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)) {
+      window.location.href = "Login.html";
+    }
+
+    $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
+    messageNum()
   }
-  
-  $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>"+stateData.name);
-  
-  
-}
+// 获取未处理消息总数
+  function messageNum(){
+    $.ajax({
+      url:"http://localhost:8080/api/admin/message/sum",
+      type:"get",
+      success:function(messageNum){
+        if(messageNum>0){
+          $("#message").html("<i class='fa fa-bell-o' aria-hidden='true'></i>Message");
+        }
+      }
+    })
+  }
 
 // 实现搜索功能
 function search() {
@@ -141,6 +153,7 @@ function footerEnterAPI(data1) {
 // 刷新界面
 function reFresh(data1) {
   data1.pageNum = pageNum;
+  messageNum();
   $.ajax({
     url: searchUrl,
     type: searchType,

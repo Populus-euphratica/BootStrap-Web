@@ -21,15 +21,15 @@
           <b> BRAND</b>
         </a>
         <ul class="navbar-nav mx-auto">
-          <li class="nav-item"> <a class="nav-link" href="#">API管理</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">用户管理</a> </li>
-          <li class="nav-item"> <a class="nav-link" href="#">新闻管理</a> </li>
-          <li class="nav-item"><a class="nav-link" href="#">综合数据</a></li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="ApiManage.html">API管理</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="UserManage.html">用户管理</a> </li>
+          <li class="nav-item"> <a class="nav-link text-primary" href="APINewsManage.html">资讯管理</a> </li>
         </ul>
         <ul class="navbar-nav">
-          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-bell-o"
+          <li class="nav-item"> <a id="message" class="nav-link text-primary" href="MessageManage.html"><i class="fa fa-bell-slash-o"
                 aria-hidden="true"></i>Message</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log in</a>
+          <li class="nav-item"> <a id="state" class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log
+              in</a>
           </li>
         </ul>
       </div>
@@ -44,13 +44,14 @@
               <div class="list-group" id="list-tab" role="tablist">
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active"
                   id="list-comingApply-list" data-toggle="list" href="#list-comingApply" role="tab" aria-controls="home"
-                  aria-selected="true" data-operation="comingApply">申请管理员 </a>
+                  aria-selected="true" data-operation="comingApply">申请管理员 <div id="applyNum"></div></a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                   id="list-alreadyApply-list" data-toggle="list" href="#list-alreadyApply" role="tab"
                   aria-controls="profile" aria-selected="false" data-operation="alreadyApply">已处理申请 </a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                   id="list-comingFeedBack-list" data-toggle="list" href="#list-comingFeedBack" role="tab"
-                  aria-controls="profile" aria-selected="false" data-operation="comingFeedBack">未处理反馈 </a>
+                  aria-controls="profile" aria-selected="false" data-operation="comingFeedBack">未处理反馈 <div
+                    id="feedBackNum"></div></a>
                 <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
                   id="list-alreadyFeedBack-list" data-toggle="list" href="#list-alreadyFeedBack" role="tab"
                   aria-controls="profile" aria-selected="false" data-operation="alreadyFeedBack">已处理反馈 </a>
@@ -97,17 +98,13 @@
             </div>
           </div>
           <div class="modal-footer">
-            <button type="button" id="determine" class="btn btn-outline-primary btn-block"
-              data-dismiss="modal">确定</button>
+            <button type="button" id="determine" class="btn btn-outline-primary btn-block" data-dismiss="modal"><i
+                class=" fa fa-send-o (alias)"></i>确定</button>
           </div>
 
         </div>
       </div>
     </div>
-
-
-
-
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
       integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
@@ -126,6 +123,38 @@
   var replyContent = $("#replyContent");
   var updateFalg = true;
   var updateStr = "footerParentComingApply";
+
+
+
+
+
+  // 登录的管理员信息初始化
+  var stateData = JSON.parse(sessionStorage.getItem("stateData"));
+  $(document).ready(init());
+  function init() {
+
+    var login = sessionStorage.getItem("login");
+    if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)) {
+      window.location.href = "Login.html";
+    }
+
+    $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
+    messageNum()
+  }
+// 获取未处理消息总数
+  function messageNum(){
+    $.ajax({
+      url:"http://localhost:8080/api/admin/message/sum",
+      type:"get",
+      success:function(messageNum){
+        if(messageNum>0){
+          $("#message").html("<i class='fa fa-bell-o' aria-hidden='true'></i>Message");
+        }
+      }
+    })
+  }
+
+
   $(document).ready(messageManage());
   $(document).ready(messageInit());
   $(document).ready(numInit());
@@ -198,7 +227,7 @@
       },
       success: function (data) {
         if (data > 0) {
-          $("#list-comingApply-list").append("<span class='badge badge-success badge-pill'>" + data + "</span>");
+          $("#applyNum").html("<span class='badge badge-success badge-pill'>" + data + "</span>");
         }
       }
     });
@@ -210,11 +239,10 @@
       },
       success: function (data) {
         if (data > 0) {
-          $("#list-comingFeedBack-list").append("<span class='badge badge-success badge-pill'>" + data + "</span>");
+          $("#feedBackNum").html("<span class='badge badge-success badge-pill'>" + data + "</span>");
         }
       }
     });
-
 
   }
 
@@ -524,7 +552,8 @@
   }
   // 刷新界面
   function reFresh() {
-
+    numInit();
+    messageNum();
     if (!updateManage()) {
       updatePlace.html("");
     }
