@@ -6,7 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     type="text/css">
-  <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+  <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+  <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+  <script src="assets/js/navbar-ontop.js"></script>
   <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
@@ -28,7 +32,7 @@
         </ul>
         <ul class="navbar-nav">
           <li class="nav-item"> <a href="#" id="state" data-state="User" class="nav-link text-primary">
-            <i class='fa fa-user-circle-o' aria-hidden='true'></i>User Sign</a> </li>
+              <i class='fa fa-user-circle-o' aria-hidden='true'></i>User Sign</a> </li>
         </ul>
       </div>
     </div>
@@ -106,288 +110,16 @@
     </div>
   </div>
 
-  <script>
-
-
-    // 定义全局变量方便下面进行页面刷新和实现页面跳转
-    var pageNum = 1;
-    var pageSize=8;
-    var searchUrl = "";
-    var searchType = "";
-    var searchValue = "";
-    var data1 = {};
-
-
-
-    var stateData=JSON.parse(sessionStorage.getItem("stateData"));
-    $(document).ready(init());
-    function init(){
-      
-      var login=sessionStorage.getItem("login");
-      if(login!="true"||typeof(stateData) == "undefined"||$.isEmptyObject(stateData)){
-        window.location.href="Login.html";
-      }
-      
-      $("#state").html("<i class='fa fa-user-circle-o' aria-hidden='true'></i>"+stateData.name);
-      
-      
-    }
-
-
-
-    // 实现搜索功能
-    function search() {
-
-      $("#Serchfrom").submit(function (e) {
-        e.preventDefault();
-        var searchContent = $.trim($("#searchContent").val());
-        pageNum = 1;
-        if (searchContent == "") {
-          searchUrl = "http://localhost:8080/api/api/";
-          searchType = "get";
-          data1 = {
-            "pageNum": pageNum,
-            "pageSize":pageSize
-          };
-          ajaxAPI(data1);
-          searchInit("http://localhost:8080/api/api/recommend/");
-        } else if (searchValue == "name") {
-          searchUrl = "http://localhost:8080/api/api/name";
-          searchType = "get";
-          data1 = {
-            "name": searchContent,
-            "pageNum": pageNum,
-            "pageSize":pageSize
-          };
-          ajaxAPI(data1);
-          searchInit("http://localhost:8080/api/api/recommend/name");
-        } else if (searchValue == "category") {
-          searchUrl = "http://localhost:8080/api/api/category";
-          searchType = "get";
-          data1 = {
-            "category": searchContent,
-            "pageNum": pageNum,
-            "pageSize":pageSize
-          };
-          ajaxAPI(data1);
-          searchInit("http://localhost:8080/api/api/recommend/category");
-        } else {
-          searchUrl = "http://localhost:8080/api/api/all";
-          searchType = "get";
-          data1 = {
-            "val": searchContent,
-            "pageNum": pageNum,
-            "pageSize":pageSize
-          };
-          ajaxAPI(data1);
-          searchInit("http://localhost:8080/api/api/recommend/all");
-        }
-      });
-    }
-    $(document).ready(dropdownMenu());
-    $(document).ready(search());
-    $(document).ready(searchClickInit());
-    $(document).ready(searchCollectionInit());
-    $(document).ready(updateClickNum());
-    // 实现与服务器的沟通，主要为了减少代码量
-    function ajaxAPI(data1) {
-      $.ajax({
-        url: searchUrl,
-        type: searchType,
-        data: data1,
-        success: function (data) {
-          cardContent($("#api"), data.list);
-          if (data.pages > 1) {
-            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-            footerEnterAPI(data1);
-          }
-          showResult("查询成功");
-        },
-        error: function () {
-          $("#api").empty();
-          showResult("error!!!");
-        }
-      })
-    }
-    // 实现页脚在界面的显示
-    function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) {
-      var content = "<ul class='pagination justify-content-center' id='footer'>";
-      if (!hasPreviousPage) {
-        $.each(navigatepageNums, function (i, val) {
-          if (i == 0) {
-            content += "<li class='page-item active'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
-          } else if (i <= 3) {
-            content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
-          } else {
-            content += "<li class='page-item'> <a class='page-link'   data-pagenum=" + val + ">" + "Next" + "</a></li>"
-          }
-        })
-      } else if (!hasNextPage) {
-        $.each(navigatepageNums, function (i, val) {
-          if (i == 0) {
-            content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + "Prev" + "</a></li>"
-          } else if (i < Object.keys(navigatepageNums).length - 1) {
-            content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
-          } else {
-            content += "<li class='page-item active'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a></li>"
-          }
-        })
-      } else {
-        $.each(navigatepageNums, function (i, val) {
-          if (i == 0) {
-            content += "<li class='page-item'> <a class='page-link'   data-pagenum=" + val + ">" + "Prev" + "</a></li>"
-          } else if (i < 4) {
-            if (val != pageNum) {
-              content += "<li class='page-item' > <a class='page-link'   data-pagenum=" + val + ">" + val + "</a></li>"
-            } else {
-              content += "<li class='page-item active'> <a class='page-link'  data-pagenum=" + val + ">" + val + "</a>								</li>"
-            }
-          } else {
-            content += "<li class='page-item'> <a class='page-link'  data-pagenum=" + val + ">" + "Next" + "</a></li>"
-          }
-        })
-      }
-      content += "</ul>";
-      $("#footerParent").html(content)
-    }
-    // 实现根据页脚进行跳转的功能
-    function footerEnterAPI(data1) {
-      $("#footer").click(function (event) {
-        pageNum = $(event.target).data("pagenum");
-        reFresh(data1);
-      })
-    }
-    // 刷新界面
-    function reFresh(data1) {
-      data1.pageNum = pageNum;
-      $.ajax({
-        url: searchUrl,
-        type: searchType,
-        data: data1,
-        success: function (data) {
-          cardContent($("#api"), data.list);
-          if (data.pages > 1) {
-            footerContent(data.pageNum, data.hasPreviousPage, data.hasNextPage, data.navigatepageNums);
-            footerEnterAPI(data1);
-          }
-        },
-        error: function () {
-          $("#api").empty();
-          showResult("刷新界面失败!!!");
-        }
-      })
-    }
-    // 获取搜索下拉菜单的选项值
-    function dropdownMenu() {
-      $("#dropdownMenu").click(function (event) {
-        searchValue = $(event.target).data("menu");
-      })
-    }
-    // 根据列表填充卡片内容
-    function cardContent(place, list) {
-      var content = "";
-      $.each(list, function (i, val) {
-        if (i % 4 == 0) {
-        content += "<div class=' py-3'>"
-          // content += "<div class='row'>"
-          content += "<div class='card-deck'>";
-        }
-        content += "<div class='card' data-id=" + list[i].id + "><div class='card-body'><h5 class='card-title'><strong>" + list[i].name + "</strong></h5>"
-          + "<h6 class='card-subtitle my-2 text-muted'>" + list[i].category + "</h6>"
-          + "<p class='card-text'>" + list[i].descriptionBrief + "</p></div>"
-          + "<div class='card-footer'><small  class='text-muted'> Native/Browser v2</small></div></div>";
-        if ((i+1) % 4 == 0) {
-          content += "</div></div>";
-        }
-
-      })
-
-
-      if (place.is($("#api"))) {
-        content += "<div id='footerParent'></div>";
-      }
-
-      place.html(content);
-    }
-
-    function showResult(result) {
-      // $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
-      alert(result);
-    }
-// 根据点击量进行推荐
-    function searchClickInit() {
-      var apiClick = $("#apiClick");
-
-      $.ajax({
-        url: "http://localhost:8080/api/api/recommend/clickNum",
-        type: "get",
-        success: function (data) {
-          if (data != null && data.length!=0) {
-            cardContent(apiClick, data);
-            apiClick.prepend("<h3>点击率排名</h3>");
-          }
-        }
-      })
-    }
-// 根据收藏量进行推荐
-    function searchCollectionInit() {
-      var apiCollectionInit = $("#apiCollection");
-
-      $.ajax({
-        url: "http://localhost:8080/api/api/recommend/collectionNum",
-        type: "get",
-        success: function (data) {
-          if (data != null && data.length!=0) {
-            cardContent(apiCollectionInit, data);
-            apiCollectionInit.prepend("<h3>收藏量排名</h3>");
-          }
-        }
-      })
-    }
-// 根据搜索类型选择最多相关种类进行推荐
-    function searchInit(url){
-      var apiCategory=$("#apiCategory");
-      $.ajax({
-        url:url,
-        type:"get",
-        success:function(data){
-          if (data != null && data.length!=0) {
-            cardContent(apiCategory, data);
-            console.log(data)
-            apiCategory.prepend("<h3>相关推荐</h3>");
-          }
-        }
-      })
-    }
-
-    function updateClickNum(){
-      $("#api").click(function(e){
-        var id=$(e.target).parents(".card").data("id");
-        if(typeof(id)=="undefined"||id==null){
-          return false;
-        }
-        $.ajax({
-          url:"http://localhost:8080/api/apiInfo/id/clickNum",
-          type:"put",
-          data:{
-            "id":parseInt(id)
-          },
-          success:function(){
-
-          },
-          error:function(){
-            showResult("updateClickNum失败！");
-          }
-        })
-      })
-    }
-  </script>
+  <script src="../jquery/Search.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
     integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+  <script src="assets/js/parallax.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+
 </body>
 
 </html>
