@@ -73,8 +73,8 @@
                   <p class="lead font-weight-bold " id="userEmail"></p>
                 </div>
                 <div>
-                  <button class="btn btn-dark" href="#">修改个人信息</button>
-                  <button class="btn btn-dark" href="#">修改密码</button>
+                  <button class="btn btn-dark" id="updateUserInfo">修改个人信息</button>
+                  <button class="btn btn-dark" id="updatePassword">修改密码</button>
                 </div>
               </div>
             </div>
@@ -125,6 +125,50 @@
 
   </div>
 
+  <div class="modal fade" id="modal1" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header pb-0">
+          <h4 class="modal-title text-dark mx-auto">
+            <b>更改个人信息</b>
+          </h4>
+          <button type="button" class="close text-danger pt-4 ml-0" data-dismiss="modal">
+            <span>
+              <i class="now-ui-icons ui-1_simple-remove lg"></i>
+            </span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group"> <label for="addName">Your Name</label> <input type="text" class="form-control"
+            id="addName" placeholder="name" required="required">
+          <small id="nameNote1" class="form-text text-muted"></small>
+        </div>
+        <div class="form-group"> <label for="addCompany">Your Company</label> <input type="text" class="form-control"
+            id="addCompany" placeholder="company"> </div>
+        </div>
+        <div class="modal-footer d-flex flex-row justify-content-between">
+          <button type="button" class="btn btn-secondary">Nice Button</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="modal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+      <div class="modal-content text-center bg-primary">
+        <div class="modal-body">
+          <button class="btn btn-light btn-lg btn-icon rounded shadow" type="button">
+            <i class="now-ui-icons users_circle-08 text-primary x2"></i>
+          </button>
+          <div id="userConent"></div>
+          <button type="button" class="btn btn-primary mr-3" data-dismiss="modal" id="okUpdate">更改</button>
+          <button type="button" class="btn btn-primary ml-3" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
     integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
     crossorigin="anonymous"></script>

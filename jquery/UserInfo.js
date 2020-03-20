@@ -9,6 +9,7 @@ $(document).ready(userInit());
 $(document).ready(menuInit());
 $(document).ready(addAPI());
 $(document).ready(cancelConcern());
+$(document).ready(updateUser());
 // 个人中心初始化
 function userInit() {
   $.ajax({
@@ -75,7 +76,7 @@ function addAPI() {
       "versions": $.trim(addVersions.val()),
       "description": $.trim(addDescription.val()),
       "userId": stateData.id,
-      "email":stateData.email
+      "email": stateData.email
     };
     if (addData.description.length == 0) {
       addData.descriptionBrief = "";
@@ -214,26 +215,26 @@ function concernCardContent(list) {
   content += "<div id='" + footerParent + "'></div>";
   updatePlace.html(content);
 }
- // 用户收藏或取消
- function cancelConcern() {
-    $(document).on("click", "button[data-btn='concern']", function () {
-      var btn = $(this);
-        $.ajax({
-          url: "http://localhost:8080/api/userConcern/id",
-          type: "delete",
-          data: {
-            "id": btn.data("id")
-          },
-          success: function (flag) {
-            if (flag) {
-              btn.html("<i class='fa fa-heart-o fa-lg' aria-hidden='true'></i>");
-              btn.parents(".card").slideUp(1000)
-              // btn.parents(".card").fadeOut(1000)
-            }
-          }
-        })
+// 用户收藏或取消
+function cancelConcern() {
+  $(document).on("click", "button[data-btn='concern']", function () {
+    var btn = $(this);
+    $.ajax({
+      url: "http://localhost:8080/api/userConcern/id",
+      type: "delete",
+      data: {
+        "id": btn.data("id")
+      },
+      success: function (flag) {
+        if (flag) {
+          btn.html("<i class='fa fa-heart-o fa-lg' aria-hidden='true'></i>");
+          btn.parents(".card").slideUp(1000)
+          // btn.parents(".card").fadeOut(1000)
+        }
+      }
     })
-  }
+  })
+}
 
 // 根据列表填充表格内容
 function tableContent(list) {
@@ -248,6 +249,139 @@ function tableContent(list) {
   updatePlace.html(content);
   // $("#footerParent").empty();
 
+}
+
+
+function updateUser() {
+  var updateClick=$("#okUpdate");
+  $("#updateUserInfo").click(function () {
+    $('#modal').modal('show');
+    var content = "<div class='form-group'> <label for='updateName'>Your Name</label> <input type='text' class='form-control' id='updateName' placeholder='name' required='required'>"
+      + "<small id='nameNote' class='form-text text-muted'></small></div><div class='form-group'> <label for='updateCompany'>Your Company</label> <input type='text' class='form-control'"
+      + "id='updateCompany' placeholder='company'> </div>";
+    $("#userConent").html(content);
+    updateClick.off();
+    updateClick.click(function () {
+
+      var name = $("#updateName");
+      var company = $("#updateCompany");
+      if (!checkUserInfo(name)) {
+        return false;
+      }
+      $.ajax({
+        url: "http://localhost:8080/api/user/name/id",
+        type: "put",
+        data: {
+          "name": name.val(),
+          "company": company.val(),
+          "id": stateData.id
+        },
+        success: function (flag) {
+          if (flag) {
+            alert("更新用户信息成功!");
+            stateData.name = name.val();
+            stateData.company = company.val();
+            sessionStorage.setItem("stateData", JSON.stringify(stateData));
+            userInit();
+          } else {
+            alert("更新用户信息失败!");
+          }
+        },
+        error: function () {
+          alert("连接服务器失败!");
+        }
+      })
+    })
+  });
+  $("#updatePassword").click(function () {
+    $('#modal').modal('show');
+    var content = "<div class='form-group'> <label for='password'>Your Password</label> <input type='Password' class='form-control' id='password' placeholder='输入密码' required='required'>"
+      + "</div><div class='form-group'> <label for='updateConfirmPassword'>Confirm Password</label> <input type='Password' class='form-control'"
+      + "id='updateConfirmPassword' placeholder='重复输入密码' required='required'> <small id='passwordNote' class='form-text text-muted'></small></div>";
+    $("#userConent").html(content);
+    updateClick.off();
+    updateClick.click(function () {
+      var password = $("#password");
+      var confirmPassword = $("#updateConfirmPassword");
+      if (!checkUserPassword(password, confirmPassword)) {
+        return false;
+      }
+      $.ajax({
+        url: "http://localhost:8080/api/user/password/id",
+        type: "put",
+        data: {
+          "password": password.val(),
+          "id": stateData.id
+        },
+        success: function (flag) {
+          if (flag) {
+            alert("更新用户密码成功!");
+            stateData.password = password.val();
+            sessionStorage.setItem("stateData", JSON.stringify(stateData));
+            var emailContent="<h1>请注意！</h1><p>您的密码刚刚发生更改！</p>"
+            var emailDate={
+              "content":emailContent,
+              "to":stateData.email
+            };
+            sendEmail(emailDate);
+          } else {
+            alert("更新用户密码失败!");
+          }
+        },
+        error: function () {
+          alert("连接服务器失败!");
+        }
+      })
+    })
+  })
+}
+
+
+ // 发送邮件
+ function sendEmail(data) {
+    $.ajax({
+      url: "http://localhost:8080/api/email/",
+      type: "post",
+      data: data,
+      success: function (falg) {
+        if (falg) {
+          alert("成功发送邮件！");
+        } else {
+          alert("发送邮件失败！");
+        }
+      },
+      error: function () {
+        alert("连接服务器失败！");
+      }
+    })
+  }
+ 
+
+function checkUserInfo(name) {
+  var nameNote = $("#nameNote");
+  if ($.trim(name.val()) == "") {
+    name.focus();
+    nameNote.text("请输入名称!");
+    return false;
+  }
+  nameNote.text("");
+  return true;
+}
+
+function checkUserPassword(password, confirmPassword) {
+  var passwordNote = $("#passwordNote");
+  if (password.val() != confirmPassword.val()) {
+    password.focus();
+    passwordNote.text("密码不一致！");
+    return false;
+  }
+  if ($.trim(password.val()) == "") {
+    password.focus();
+    passwordNote.text("密码不能为空！");
+    return false;
+  }
+  passwordNote.text("");
+  return true;
 }
 
 function showResult(result) {

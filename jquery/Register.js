@@ -10,6 +10,7 @@ var passwordNote = $("#passwordNote");
 var emailNote = $("#emailNote");
 $(document).ready(stateManage());
 $(document).ready(registerManage());
+$(document).ready(slideVerify());
 // 切换登录模式
 function stateManage() {
   $("#state").click(function () {
@@ -29,11 +30,38 @@ function stateManage() {
   });
 }
 
+// 滑动验证码
+function slideVerify(){
+  $('#slider').slideVerify({
+    type : 1,		//类型
+    vOffset : 5,	//误差量，根据需求自行调整
+    barSize : {
+      width : '300px',
+      height : '40px',
+    },
+    ready : function() {
+    },
+    success : function() {
+      $("#sliderParent").html("<div class='form-row'><div class='form-group'><input type='text'class='form-control' id='vail' required='required'>"
+        +"<small id='emailVailNote' class='form-text text-muted'></small></div><div class='form-group'><button id='sendVail' class='btn btn-primary'>发送验证码</button></div></div>");
+        $("#sendVail").click(function(){
+          sendEmailVail($("#email").val());
+          $("#loginBtn").removeAttr("disabled");
+        })
+    },
+    error : function() {
+    }
+    
+  });
 
+}
 
 function registerManage() {
   form.submit(function (e) {
     e.preventDefault();
+    if(!equalVail($("#vail").val(),$("#emailVailNote"))){
+        return false;
+    }
     if ($("#state").data("state") == "user") {
       registerUser();
     } else {
