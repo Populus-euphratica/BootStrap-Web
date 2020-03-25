@@ -76,7 +76,8 @@ function addAPI() {
       "versions": $.trim(addVersions.val()),
       "description": $.trim(addDescription.val()),
       "userId": stateData.id,
-      "email": stateData.email
+      "email": stateData.email,
+      "date": getDate()
     };
     if (addData.description.length == 0) {
       addData.descriptionBrief = "";
@@ -260,11 +261,14 @@ function updateUser() {
       + "<small id='nameNote' class='form-text text-muted'></small></div><div class='form-group'> <label for='updateCompany'>Your Company</label> <input type='text' class='form-control'"
       + "id='updateCompany' placeholder='company'> </div>";
     $("#userConent").html(content);
+    var name = $("#updateName");
+    var company = $("#updateCompany");
+    name.val(stateData.name);
+    company.val(stateData.company);
     updateClick.off();
     updateClick.click(function () {
 
-      var name = $("#updateName");
-      var company = $("#updateCompany");
+
       if (!checkUserInfo(name)) {
         return false;
       }
@@ -383,6 +387,21 @@ function checkUserPassword(password, confirmPassword) {
   passwordNote.text("");
   return true;
 }
+
+function getDate() {
+  var myDate = new Date;
+  var year = myDate.getFullYear(); //获取当前年
+  var month = myDate.getMonth() + 1; //获取当前月
+  var strDate = myDate.getDate(); //获取当前日
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+}
+if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+}
+return "" + year + "-" + month + "-" + strDate;
+}
+
 
 function showResult(result) {
   // $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
