@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+    <script src="assets/js/navbar-ontop.js"></script>
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+                data-toggle="collapse" data-target="#navbar12">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar12"><a class="navbar-brand d-none d-md-block" href="#">
+            <i class="fa d-inline fa-lg fa-circle"></i>
+            <b> BRAND</b>
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link text-primary" href="ApiManage.html">API管理</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="UserManage.html">用户管理</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="APINewsManage.html">资讯管理</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a id="message" class="nav-link text-primary" href="MessageManage.html"><i
+                        class="fa fa-bell-slash-o" aria-hidden="true"></i>Message</a></li>
+                <li class="nav-item"><a id="state" class="nav-link text-primary" href="#"><i
+                        class="fa fa-user fa-fw"></i>Log
+                    in</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="py-0 pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row align-items-center">
+                    <h1 class="" id="title" contenteditable="true">标题</h1>
+                    <span id="versions" class="badge badge-secondary badge-pill mr-1" contenteditable="true">版本号</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-0 pt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <h3 class="" id="category" contenteditable="true">种类</h3>
+                    <small>tips:如果有多个种类，请在种类之间用###隔开</small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-0 pt-2">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <p class="lead" id="description" contenteditable="true">这是正文内容！请在此处填写该API的描述。</p>
+            </div>
+            <div class="col-md-4">
+                <div class="row justify-content-center">
+                    <div class="d-flex justify-content-center align-items-center custom-file"
+                         style="float:left;width:200px;height:200px;border:2px solid #c3c3c3;overflow:hidden">
+
+                        <img src="" width="150" data-src="" height="150" id="logo" class="img-fluid d-block" alt=""
+                             style="display: inline;">
+                        <input type="file" class="custom-file-input" id="updateLogo" alt="" style="display: none;"
+                               accept="image/gif,image/jpeg,image/jpg,image/png,image/svg">
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="pt-3">
+                        <button class="btn btn-primary" id="cancle">还原</button>
+                    </div>
+                    <small id="logoNote"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="py-0 pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 font-weight-normal font-weight-bold" id="apiSummary">
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="py-0 pt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-3 font-weight-bold ">
+                <button class="btn btn-primary btn-block" type="button" id="submit"><i class="fa fa-check"
+                                                                                       aria-hidden="true"></i> 同意
+                </button>
+            </div>
+            <div class="col-md-3 font-weight-bold ">
+                <button class="btn btn-primary btn-block" type="button" id="cancleSubmit"><i class="fa fa-times"
+                                                                                             aria-hidden="true"></i>拒绝
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center d-md-flex align-items-center"><i
+                    class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
+                <ul class="nav mx-md-auto d-flex justify-content-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                </ul>
+                <div class="row">
+                    <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2">
+                        <a
+                                href="#">
+                            <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
+                        </a> <a href="#">
+                        <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
+                    </a> <a href="#">
+                        <i class="d-block fa fa-twitter text-muted fa-lg ml-2"></i>
+                    </a></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="mt-2 mb-0">© 2014-2018 Pingendo. All rights reserved</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">回复</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">回复内容：</span>
+                    </div>
+                    <textarea class="form-control" aria-label="With textarea" id="replyContent" rows="10"
+                              placeholder="回复内容"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="determine" class="btn btn-primary btn-block" data-dismiss="modal">
+                    <i class=" fa fa-send-o (alias)"></i>确定
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="assets/js/parallax.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+</body>
+<script>
+    var versionsId = sessionStorage.getItem("versionsId");
+    var stateData = JSON.parse(sessionStorage.getItem("stateData"));
+    var replyContent = $("#replyContent");
+    var email = sessionStorage.getItem("email");
+    var apiSummaryArray = {
+        Endpoint: "api端点",
+        Portal: "api门户/主页",
+        PrimaryCategory: "主要类别",
+        SecondaryCategories: "次要类别",
+        APIProvider: "api提供商",
+        SSLSupport: "ssl支持",
+        APIForum: "api论坛/留言板",
+        TwitterURL: "twitter url",
+        SupportEmailAddress: "提供支持电子邮件地址",
+        InteractiveConsoleURL: "交互式控制台url",
+        AuthenticationModel: "身份验证模型",
+        VersionStatus: "版本状态",
+        APIDesign: "api设计/说明是否专有？",
+        Scope: "范围",
+        DeviceSpecific: "设备特定",
+        DocsHomePageURL: "文件首页网址",
+        ArchitecturalStyle: "建筑风格",
+        SupportedRequestFormats: "支持的请求格式",
+        SupportedResponseFormats: "支持的响应格式",
+        UnofficialAPI: "这是非官方的api吗？",
+        HypermediaAPI: "这是hypermedia api吗？",
+        RestrictedAccess: "限制访问（需要供应商认证）"
+    };
+
+
+    $(document).ready(init());
+    $(document).ready(APIUpdateManage());
+    $(document).ready(updateLogoImage());
+    $(document).ready(cancleLogo());
+
+    // 登录的管理员信息初始化
+
+    function init() {
+
+        var state = sessionStorage.getItem("state");
+        var login = sessionStorage.getItem("login");
+        if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData) || state != "admin") {
+            window.location.href = "Login.html";
+        }
+
+        $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
+        messageNum()
+    }
+
+    // 获取未处理消息总数
+    function messageNum() {
+        $.ajax({
+            url: "http://localhost:8080/api/admin/message/sum",
+            type: "get",
+            success: function (messageNum) {
+                if (messageNum > 0) {
+                    $("#message").html("<i class='fa fa-bell-o' aria-hidden='true'></i>Message");
+                }
+            }
+        })
+    }
+
+
+    // 判断管理员进行添加API操作还是编辑API操作
+    function APIUpdateManage() {
+
+        versionsInit();
+        $("#submit").on("click", function () {
+            replyContent.val("<h1>恭喜您</h1><p>您提交的<br />名为：" + $.trim($("#title").text()) + "<br />类别：" + $.trim($("#category").text()) + "<br />版本号：" + $.trim($("#versions").text()) + "<br />顺利通过我们审核，现已成功加入到API数据库，感谢您！</p>")
+            $('#exampleModal').modal('show');
+            $("#determine").off();
+            $("#determine").click(function () {
+                logoSubmit();
+            })
+        })
+        $("#cancleSubmit").on("click", function () {
+            replyContent.val("<h1>对不起</h1><p>您提交的<br />名为：" + $.trim($("#title").text()) + "<br />类别：" + $.trim($("#category").text()) + "<br />版本号：" + $.trim($("#versions").text()) + "<br />未能通过我们审核！")
+            $('#exampleModal').modal('show');
+            $("#determine").off();
+            $("#determine").click(function () {
+                $.ajax({
+                    url: "http://localhost:8080/api/uploadVersions/id/decide",
+                    type: "put",
+                    data: {
+                        "id": versionsId
+                    },
+                    success: function (flag) {
+                        if (flag) {
+                            alert("拒绝!!!");
+                            var emailData = {
+                                "content": replyContent.val(),
+                                "to": email
+                            };
+                            sendEmail(emailData);
+                        } else {
+                            alert("拒绝失败！！！");
+                        }
+                    },
+                    error: function () {
+                        alert("连接服务器失败！！！");
+                    }
+                })
+            })
+        })
+    }
+
+
+    // 编辑API版本信息及详情的操作逻辑实现
+    function updateAPIVersionsAndSummary() {
+
+
+        var updateVersionsData = {
+            "name": $.trim($("#title").text()),
+            "description": $.trim($("#description").text()),
+            "category": $.trim($("#category").text()),
+            "versions": $.trim($("#versions").text()),
+            "id": parseInt(versionsId)
+        };
+        var updateSummaryData = {
+            "APIVersionsId": parseInt(versionsId),
+            "Endpoint": $.trim($("#Endpoint").text()),
+            "Portal": $.trim($("#Portal").text()),
+            "PrimaryCategory": $.trim($("#PrimaryCategory").text()),
+            "SecondaryCategories": $.trim($("#SecondaryCategories").text()),
+            "APIProvider": $.trim($("#APIProvider").text()),
+            "SSLSupport": $.trim($("#SSLSupport").text()),
+            "APIForum": $.trim($("#APIForum").text()),
+            "TwitterURL": $.trim($("#TwitterURL").text()),
+            "SupportEmailAddress": $.trim($("#SupportEmailAddress").text()),
+            "InteractiveConsoleURL": $.trim($("#InteractiveConsoleURL").text()),
+            "AuthenticationModel": $.trim($("#AuthenticationModel").text()),
+            "VersionStatus": $.trim($("#VersionStatus").text()),
+            "APIDesign": $.trim($("#APIDesign").text()),
+            "Scope": $.trim($("#Scope").text()),
+            "DeviceSpecific": $.trim($("#DeviceSpecific").text()),
+            "DocsHomePageURL": $.trim($("#DocsHomePageURL").text()),
+            "ArchitecturalStyle": $.trim($("#ArchitecturalStyle").text()),
+            "SupportedRequestFormats": $.trim($("#SupportedRequestFormats").text()),
+            "SupportedResponseFormats": $.trim($("#SupportedResponseFormats").text()),
+            "UnofficialAPI": $.trim($("#UnofficialAPI").text()),
+            "HypermediaAPI": $.trim($("#HypermediaAPI").text()),
+            "RestrictedAccess": $.trim($("#RestrictedAccess").text())
+        };
+        console.log(updateVersionsData);
+               $.ajax({
+            url: "http://localhost:8080/api/uploadVersions/id",
+            type: "put",
+            data: JSON.stringify({
+                "uploadAPIVersions": updateVersionsData,
+                "uploadAPISummary": updateSummaryData
+            }),
+            dataType: "json",
+            contentType: "application/json;charset=utf-8",
+            success: function (flag) {
+
+                if (flag) {
+                    alert("编辑成功！！！");
+                    $.ajax({
+                        url: "http://localhost:8080/api/apiVersions/upload",
+                        type: "post",
+                        data: {
+                            "uploadVersionsId": versionsId
+                        },
+                        success: function (flag) {
+                            if (flag) {
+                                alert("成功添加!!!");
+                                var emailData = {
+                                    "content": replyContent.val(),
+                                    "to": email
+                                };
+                                sendEmail(emailData);
+                            } else {
+                                alert("添加失败！！！");
+                            }
+                        },
+                        error: function () {
+                            alert("连接服务器失败！！！");
+                        }
+                    })
+
+                } else {
+                    alert("编辑失败！！！");
+                }
+            },
+            error: function () {
+                alert("连接服务器失败！！！");
+            }
+        })
+
+    }
+
+
+    // 发送邮件
+    function sendEmail(data) {
+        $.ajax({
+            url: "http://localhost:8080/api/email/",
+            type: "post",
+            data: data,
+            success: function (falg) {
+                if (falg) {
+                    alert("成功发送邮件！");
+                    history.back(-1);
+                } else {
+                    alert("发送邮件失败！");
+                    history.back(-1);
+                }
+            },
+            error: function () {
+                alert("连接服务器失败！");
+                history.back(-1);
+            }
+        });
+    }
+
+    // 编辑API时进行界面初始化
+    function versionsInit() {
+        if (versionsId == undefined || versionsId == null) {
+            alert(versionsId)
+            history.back(-1);
+        }
+        $.ajax({
+            url: "http://localhost:8080/api/uploadVersions/id",
+            type: "get",
+            data: {
+                "id": versionsId
+            },
+            success: function (data) {
+                if(data.istrue){
+                    history.back(-1);
+                }
+                $("#title").html(data.name);
+                $("#versions").html(data.versions);
+                $("#category").html(data.category);
+                $("#description").html(data.description);
+                // data.logo=decodeURIComponent(data.logo);
+                imageURL = "UserAPILogo/" + data.logo;
+                $("#logo").data("name", decodeURIComponent(data.logo));
+                $("#logo").attr("src", imageURL);
+                $("#logo").data("src", imageURL);
+
+            }
+        });
+
+        $.ajax({
+            url: "http://localhost:8080/api/uploadSummary/APIVersionsId",
+            type: "get",
+            data: {
+                "APIVersionsId": versionsId
+            },
+            success: function (data) {
+                var content = "<h2>API详细信息</h2><div class='table-responsive'><table class='table table-borderless'><tbody>";
+                $.each(apiSummaryArray, function (i, val) {
+                    content += "<tr><td>" + val + "</td>";
+                    content += "<td contenteditable='true' id='" + i + "'>" + data[i] + "</td></tr>";
+                });
+                content += "</tbody></table></div>";
+                $("#apiSummary").html(content);
+            }
+        })
+    }
+
+    // logo事件绑定
+    function updateLogoImage() {
+        $("#updateLogo").on("change", function () {
+            logoPre();
+        });
+        $("#logo").click(function () {
+            $("#updateLogo").click();
+        })
+        $("#logo").on("error", function () {
+            $("#logo").attr("src", "image/logo.png");
+            $("#logo").data("src", "image/logo.png");
+            istrueUpdateLogo = false;
+        })
+    }
+
+    // 还原logo
+    function cancleLogo() {
+        $("#cancle").click(function () {
+            var odatasrc = $("#logo").data("src");
+            $("#logo").attr("src", odatasrc);
+            $("#updateLogo").val("");
+            $("#updateLogo")[0].files[0] = undefined
+            istrueUpdateLogo = false;
+        });
+
+
+    }
+
+    // logo更换后进行预览
+    function logoPre() {
+
+        var f = document.getElementById('updateLogo').files[0];
+        src = window.URL.createObjectURL(f);
+        document.getElementById('logo').src = src;
+    }
+
+    // 提交logo更改
+    function logoSubmit() {
+        var name = $("#logo").data("name");
+        if ($("#updateLogo")[0].files[0] != undefined) {
+            alert(123)
+            var type = "file";          //后台接收时需要的参数名称，自定义即可
+            var formData = new FormData();
+
+            formData.append(type, $("#updateLogo")[0].files[0], name);
+            $.ajax({
+                type: "POST",           //因为是传输文件，所以必须是post
+                url: "http://localhost:8080/api/uploadLogo/",        //对应的后台处理类的地址
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    updateAPIVersionsAndSummary();
+                },
+                error: function () {
+                }
+            });
+        } else {
+            alert(1245)
+            $.ajax({
+                type: "POST",           //因为是传输文件，所以必须是post
+                url: "http://localhost:8080/api/userUploadLogo/upload",         //对应的后台处理类的地址
+                data: {
+                    "logo":name
+                },
+                success: function (data) {
+                    updateAPIVersionsAndSummary();
+                },
+                error: function () {
+                }
+            });
+        }
+
+    }
+
+</script>
+
+</html>

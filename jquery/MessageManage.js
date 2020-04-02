@@ -17,8 +17,9 @@
  $(document).ready(init());
  function init() {
 
+   var state = sessionStorage.getItem("state");
    var login = sessionStorage.getItem("login");
-   if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)) {
+   if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)||state!="admin") {
      window.location.href = "Login.html";
    }
 
@@ -45,6 +46,7 @@
  $(document).ready(clickApply());
  $(document).ready(clickFeedBack());
  $(document).ready(clickAPI());
+ $(document).ready(clickAPIVersions());
 
  // 激发未处理申请事件
  function messageInit() {
@@ -99,7 +101,7 @@
        footerParent = "footerParentAlreadyFeedBack";
        reFresh()
      } else if (operation == "comingAPI") {
-       searchUrl = "http://localhost:8080/api/userUpload/istrue";
+       searchUrl = "http://localhost:8080/api/uploadAPI/istrue";
        searchType = "get";
        data1 = {
          "istrue": false,
@@ -109,7 +111,7 @@
        footerParent = "footerParentComingAPI";
        reFresh()
      } else if (operation == "alreadyAPI") {
-       searchUrl = "http://localhost:8080/api/userUpload/istrue";
+       searchUrl = "http://localhost:8080/api/uploadAPI/istrue";
        searchType = "get";
        data1 = {
          "istrue": true,
@@ -117,6 +119,26 @@
        };
        updatePlace = $("#list-alreadyAPI");
        footerParent = "footerParentAlreadyAPI";
+       reFresh()
+     }else if (operation == "comingAPIVersions") {
+       searchUrl = "http://localhost:8080/api/uploadVersions/istrue";
+       searchType = "get";
+       data1 = {
+         "istrue": false,
+         pageNum: pageNum
+       };
+       updatePlace = $("#list-comingAPIVersions");
+       footerParent = "footerParentComingAPIVersions";
+       reFresh()
+     } else if (operation == "alreadyAPIVersions") {
+       searchUrl = "http://localhost:8080/api/uploadVersions/istrue";
+       searchType = "get";
+       data1 = {
+         "istrue": true,
+         pageNum: pageNum
+       };
+       updatePlace = $("#list-alreadyAPIVersions");
+       footerParent = "footerParentAlreadyAPIVersions";
        reFresh()
      }
 
@@ -133,6 +155,8 @@
      success: function (data) {
        if (data > 0) {
          $("#applyNum").html("<span class='badge badge-success badge-pill'>" + data + "</span>");
+       }else {
+         $("#applyNum").html("");
        }
      }
    });
@@ -145,11 +169,13 @@
      success: function (data) {
        if (data > 0) {
          $("#feedBackNum").html("<span class='badge badge-success badge-pill'>" + data + "</span>");
+       }else {
+         $("#feedBackNum").html("");
        }
      }
    });
    $.ajax({
-     url: "http://localhost:8080/api/userUpload/istrue/sum",
+     url: "http://localhost:8080/api/uploadAPI/istrue/sum",
      type: "get",
      data: {
        "istrue": false
@@ -157,29 +183,62 @@
      success: function (data) {
        if (data > 0) {
          $("#APINum").html("<span class='badge badge-success badge-pill'>" + data + "</span>")
+       }else {
+         $("#APINum").html("");
        }
      }
    })
-
+   $.ajax({
+     url: "http://localhost:8080/api/uploadVersions/istrue/sum",
+     type: "get",
+     success: function (data) {
+       if (data > 0) {
+         $("#APIVersionsNum").html("<span class='badge badge-success badge-pill'>" + data + "</span>")
+       }else {
+         $("#APIVersionsNum").html("");
+       }
+     }
+   })
  }
 
  // 更新上传API审核面板内容
  function updateAPIContent(list) {
    var content = "";
    $.each(list, function (i, val) {
-     content += "<div class='col-md-12 pb-3'><div class='card'><div class='card-body'><div class='d-flex w-100 justify-content-between'><h5 class='card-title'><strong>" + val.name + "</strong></h5>"
-       + "<small>" + val.date + "</small></div><div class='d-flex w-100 justify-content-between'><p>种类：" + val.category + "</p><p>版本：" + val.versions + "</p></div>"
-       + "<p class='card-text'>简介：" + val.descriptionBrief + "</p><div name='chooseApply' class='d-flex w-100 justify-content-between' data-id='" + val.id + "'data-email='" + val.email + "'data-category='" + val.category
-       + "'data-versions='" + val.versions + "'data-name='" + val.name + "'><a href='#'>查看详情页</a>";
-
+       content += "<div class='col-md-12 pb-3'><div class='card'><div class='card-body'><div class='d-flex w-100 justify-content-between'><h5 class='card-title'><strong>" + val.name + "</strong></h5>"
+           + "<small>" + val.date + "</small></div><div class='d-flex w-100 justify-content-between'><p>种类：" + val.category + "</p></div>"
+           + "<p class='card-text'>简介：" + val.descriptionBrief + "</p><div name='chooseApply' class='d-flex w-100 justify-content-end' data-id='" + val.id + "'data-email='" + val.email + "'data-category='" + val.category
+           + "'data-name='" + val.name + "'>";
 
      if (!data1.istrue) {
        content += "<div><a href='#' data-agree-api='yes' class='card-link'>同意</a><a href='#' data-agree-api='no' class='card-link mr-3'>拒绝</a></div></div></div></div></div>";
      } else {
        if (val.decide) {
-         content += "<div><p   class='card-link'>已同意</p></div></div></div></div></div>";
+         content += "<div><p   class='card-link mr-3'>已同意</p></div></div></div></div></div>";
        } else {
          content += "<div><p   class='card-link mr-3'>已拒绝</p></div></div></div></div></div>";
+
+       }
+     }
+   })
+   content += "<div id='" + footerParent + "'></div>";
+   updatePlace.html(content);
+ }
+
+ // 更新上传APIVersions审核面板内容
+ function updateAPIVersionsContent(list) {
+   var content = "";
+   $.each(list, function (i, val) {
+       content += "<div class='col-md-12 pb-3'><div class='card'><div class='card-body'><h5 class='card-title'><strong>" + val.name + "</strong></h5>"
+           + "<div class='d-flex w-100 justify-content-between'><p>种类：" + val.category + "</p><a href='#' data-versions-id='"+val.versionsId+"'data-email='" + val.email + "'>版本：" + val.versions + "</a></div>"
+           + "<p class='card-text'>简介：" + val.descriptionBrief + "</p><div class='d-flex w-100 justify-content-end'>";
+     if (!data1.istrue) {
+       content += "</div></div></div></div>";
+     } else {
+       if (val.decide) {
+         content += "<p   class='card-link mr-3'>已同意</p></div></div></div></div>";
+       } else {
+         content += "<p   class='card-link mr-3'>已拒绝</p></div></div></div></div>";
 
        }
      }
@@ -236,7 +295,7 @@
  }
  // 申请面板点击处理逻辑
  function clickApply() {
-   $(document).on("click", "a[data-agree-apply]", function () {
+   $(document).on("click", "#list-comingApply a[data-agree-apply]", function () {
      var apply = $(this.parentNode);
      var choose = $(this).data("agree-apply");
      var str = "";
@@ -254,25 +313,35 @@
  }
  // 审核API面板点击处理逻辑
  function clickAPI() {
-   $(document).on("click", "a[data-agree-api]", function () {
+   $(document).on("click", "#list-comingAPI a[data-agree-api]", function () {
      var api = $(this.parentNode.parentNode);
      var choose = $(this).data("agree-api");
      var str = "";
      var istrue = true;
      if (choose == "yes") {
-       str = "<h1>恭喜您</h1><p>您提交的<br />名为：" + api.data("name") + "<br />类别：" + api.data("category") + "<br />版本号：" + api.data("versions") + "<br />顺利通过我们审核，现已成功加入到API数据库，感谢您！</p>";
+       str = "<h1>恭喜您</h1><p>您提交的<br />名为：" + api.data("name") + "<br />类别：" + api.data("category") + "<br />顺利通过我们审核，现已成功加入到API数据库，感谢您！</p>";
        istrue = true;
      } else {
-       str = "<h1>对不起</h1><p>您提交的<br />名为：" + api.data("name") + "<br />类别：" + api.data("category") + "<br />版本号：" + api.data("versions") + "<br />未能通过我们审核！";
+       str = "<h1>对不起</h1><p>您提交的<br />名为：" + api.data("name") + "<br />类别：" + api.data("category") + "<br />未能通过我们审核！";
        istrue = false;
      }
      replyContent.val(str);
      APIManage(api, istrue);
    })
  }
+
+ // 审核APIVersions面板点击处理逻辑
+ function clickAPIVersions() {
+   $(document).on("click", "#list-comingAPIVersions a[data-versions-id]", function () {
+     alert(123)
+      sessionStorage.setItem("email",$(this).data("email"));
+      sessionStorage.setItem("versionsId",$(this).data("versions-id"));
+      window.location.href="AdminAPIUpdate.html";
+   })
+ }
  // 反馈面板点击处理逻辑
  function clickFeedBack() {
-   $(document).on("click", "a[data-agree-reply]", function () {
+   $(document).on("click", "#list-comingFeedBack a[data-agree-reply]", function () {
      var apply = $(this.parentNode);
      var choose = $(this).data("agree-reply");
      var id = apply.data("id");
@@ -291,6 +360,7 @@
  // 实现发送邮件以及更新feedBack数据库记录
  function feedBackManage(email, istrue, id) {
    $('#exampleModal').modal('show');
+   $("#determine").off();
    $("#determine").click(function () {
      if (!istrue) {
        replyContent.val("")
@@ -305,9 +375,9 @@
        success: function (falg) {
          if (falg) {
            alert("添加成功!");
-           if (!istrue) {
-             return;
-           }
+           // if (!istrue) {
+           //   return;
+           // }
            var emailData = {
              "content": replyContent.val(),
              "to": email
@@ -413,7 +483,7 @@
    $("#determine").click(function () {
      if (istrue) {
        $.ajax({
-         url: "http://localhost:8080/api/api/userUpload",
+         url: "http://localhost:8080/api/api/uploadAPI",
          type: "post",
          data: {
            "id": api.data("id")
@@ -436,7 +506,7 @@
      }
      else {
        $.ajax({
-         url: "http://localhost:8080/api/userUpload/id",
+         url: "http://localhost:8080/api/uploadAPI/id",
          type: "put",
          data: {
            "id": api.data("id")
@@ -461,9 +531,11 @@
    })
  }
 
+
+
+
  // 发送邮件
  function sendEmail(data) {
-   console.log(data)
    $.ajax({
      url: "http://localhost:8080/api/email/",
      type: "post",
@@ -479,11 +551,14 @@
        alert("连接服务器失败！");
      }
    })
+   reFresh();
  }
 
 
  // 获取申请的分页数据
  function updateContent() {
+   numInit();
+   messageNum();
    $.ajax({
      url: searchUrl,
      type: searchType,
@@ -495,7 +570,9 @@
          } else if (operation == "comingFeedBack" || operation == "alreadyFeedBack") {
            updatePlace.html(updateFeedBackContent(data.list));
          } else if (operation == "comingAPI" || operation == "alreadyAPI") {
-           updatePlace.html(updateAPIContent(data.list));
+           updateAPIContent(data.list);
+         }else if (operation == "comingAPIVersions" || operation == "alreadyAPIVersions"){
+           updateAPIVersionsContent(data.list);
          }
 
          if (data.pages > 1) {
@@ -564,8 +641,6 @@
  }
  // 刷新界面
  function reFresh() {
-   numInit();
-   messageNum();
    if (!updateContent()) {
      updatePlace.html("");
    }

@@ -8,31 +8,31 @@ var searchType = "";
 var searchValue = "";
 var data1 = {};
 
-  // 登录的管理员信息初始化
-  var stateData = JSON.parse(sessionStorage.getItem("stateData"));
-  $(document).ready(init());
-  function init() {
-
-    var login = sessionStorage.getItem("login");
-    if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)) {
-      window.location.href = "Login.html";
-    }
-
-    $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
-    messageNum()
+// 登录的管理员信息初始化
+var stateData = JSON.parse(sessionStorage.getItem("stateData"));
+$(document).ready(init());
+function init() {
+  var state = sessionStorage.getItem("state");
+  var login = sessionStorage.getItem("login");
+  if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)||state!="admin") {
+    window.location.href = "Login.html";
   }
+
+  $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
+  messageNum()
+}
 // 获取未处理消息总数
-  function messageNum(){
-    $.ajax({
-      url:"http://localhost:8080/api/admin/message/sum",
-      type:"get",
-      success:function(messageNum){
-        if(messageNum>0){
-          $("#message").html("<i class='fa fa-bell-o' aria-hidden='true'></i>Message");
-        }
+function messageNum() {
+  $.ajax({
+    url: "http://localhost:8080/api/admin/message/sum",
+    type: "get",
+    success: function (messageNum) {
+      if (messageNum > 0) {
+        $("#message").html("<i class='fa fa-bell-o' aria-hidden='true'></i>Message");
       }
-    })
-  }
+    }
+  })
+}
 
 // 实现搜索功能
 function search() {
@@ -82,6 +82,7 @@ $(document).ready(dropdownMenu());
 $(document).ready(search());
 $(document).ready(addAPI());
 $(document).ready(APIManager());
+$(document).ready(ToAPIVersions());
 // 实现与服务器的沟通，主要为了减少代码量
 function ajaxAPI(data1) {
   $.ajax({
@@ -147,12 +148,13 @@ function footerContent(pageNum, hasPreviousPage, hasNextPage, navigatepageNums) 
 function footerEnterAPI(data1) {
   $("#footer").click(function (event) {
     pageNum = $(event.target).data("pagenum");
-    reFresh(data1);
+    data1.pageNum = pageNum;
+    reFresh();
   })
 }
 // 刷新界面
-function reFresh(data1) {
-  data1.pageNum = pageNum;
+function reFresh() {
+  
   messageNum();
   $.ajax({
     url: searchUrl,
@@ -180,33 +182,44 @@ function dropdownMenu() {
 // 根据列表填充表格内容
 function tableContent(list) {
   var content = "";
-  $.each(list, function (i, val) {
-    content += "<tr data-id=" + list[i].id + "><th><input type='checkbox'></th><td data-toggle='modal' data-target='#exampleModal'>" + list[i].name +
-      "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].descriptionBrief + "</td><td data-toggle='modal' data-target='#exampleModal'>"
-      + list[i].category + "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].versions + "</td></tr>";
-  })
-  $("#api").html(content);
-  $("#footerParent").empty();
+  if (list.length > 0) {
+    content = "<div class='table-responsive'><table class='table table-bordered text-justify text-wrap'><thead class='thead-dark'><tr><th style=''>#</th>"
+      + "<th>API Name</th><th>Description</th><th>Category</th><th>Versions</th></tr></thead><tbody id='api'>";
+    $.each(list, function (i, val) {
+      content += "<tr data-id=" + list[i].id + "><th><input type='checkbox'></th><td data-toggle='modal' data-target='#exampleModal'>" + list[i].name +
+        "</td><td data-toggle='modal' data-target='#exampleModal'>" + list[i].descriptionBrief + "</td><td data-toggle='modal' data-target='#exampleModal'>"
+        + list[i].category + "</td><td data-update-versions='no' data-api-id='" + val.id + "'></td></tr>";
+    })
+    content += "</tbody></table></div><div id='footerParent'></div>"
+  } else {
+    content = "<h1>什么都没有发现！</h1>";
+  }
+  $("#tabone").html(content);
+  updateVersionsContent();
 
 }
 // 负责控制面板里编辑和删除功能的实现
 
 function APIManager() {
-  $("#api").click(function (event) {
+  $("#tabone").click(function (event) {
     var operation = $("#operation .nav-link.active").data("operation");
     var id = $(event.target.parentNode).data("id");
     if (operation == "update") {
 
-      $(".modal-title").val = "编辑API";
+      $(".modal-title").text("编辑API");
       $(".modal-body").html(updateAPIModel());
       $("#determine").text("编辑");
       updateAPI(id);
     } else if (operation == "delete") {
-
-      $(".modal-title").val = "删除API";
+      $(".modal-title").text("删除API");
       $(".modal-body").html("<p>您确定要删除这条API吗？</p>");
       $("#determine").text("删除");
       deleteAPI(id);
+    } else if (operation == "addVersions") {
+      $(".modal-title").text("添加API版本");
+      $(".modal-body").html("<p>您确定要为该API添加一个新版本吗？</p>");
+      $("#determine").text("确定");
+      addVersions(id);
     }
   })
 }
@@ -222,29 +235,18 @@ function updateAPI(id) {
     success: function (data) {
       var updateName = $("#updateName");
       var updateCategory = $("#updateCategory");
-      var updateDescription = $("#updateDescription");
-      var updateVersions = $("#updateVersions");
+      var updateDescriptionBrief = $("#updateDescriptionBrief");
       updateName.val(data.name);
       updateCategory.val(data.category);
-      updateVersions.val(data.versions);
-      updateDescription.text(data.description);
+      updateDescriptionBrief.text(data.descriptionBrief);
       $("#determine").off();
       $("#determine").click(function () {
         var updateData = {
           "name": updateName.val(),
           "category": updateCategory.val(),
-          "versions": updateVersions.val(),
-          "description": updateDescription.text(),
+          "descriptionBrief": updateDescriptionBrief.text(),
           "id": data.id
         };
-        if (updateData.description.length == 0) {
-          updateData.descriptionBrief = "";
-        } else if (updateData.description.length > 300) {
-          updateData.descriptionBrief = updateData.description.substring(0, 200) + "...";
-        } else {
-          updateData.descriptionBrief = updateData.description;
-        }
-        data = {};
         $.ajax({
           url: "http://localhost:8080/api/api/id",
           type: "put",
@@ -254,7 +256,7 @@ function updateAPI(id) {
           success: function (flag) {
             if (flag) {
               showResult("更新成功!!!");
-              reFresh(data1);
+              reFresh();
             } else {
               showResult("更新失败");
             }
@@ -288,10 +290,11 @@ function deleteAPI(id) {
       success: function (flag) {
         if (flag) {
           showResult("删除成功!!!");
-          reFresh(data1);
+
         } else {
           showResult("删除失败");
         }
+        reFresh();
 
       },
       error: function () {
@@ -307,8 +310,7 @@ function addAPI() {
   $("#addSubmit").click(function () {
     var addName = $("#addName");
     var addCategory = $("#addCategory");
-    var addDescription = $("#addDescription");
-    var addVersions = $("#addVersions");
+    var addDescriptionBrief = $("#addDescriptionBrief");
     if ($.trim(addName.val()) == "") {
       showResult("请输入值")
       return;
@@ -316,32 +318,21 @@ function addAPI() {
     var addData = {
       "name": $.trim(addName.val()),
       "category": $.trim(addCategory.val()),
-      "versions": $.trim(addVersions.val()),
-      "description": $.trim(addDescription.val())
+      "descriptionBrief": $.trim(addDescriptionBrief.val())
     };
-    if (addData.description.length == 0) {
-      addData.descriptionBrief = "";
-    } else if (addData.description.length > 300) {
-      addData.descriptionBrief = addData.description.substring(0, 200) + "...";
-    } else {
-      addData.descriptionBrief = addData.description;
-    }
     $.ajax({
       url: "http://localhost:8080/api/api/",
       type: "post",
       data: JSON.stringify(addData),
       contentType: "application/json;charset=utf-8",
-      dataType: "text",
-      success: function (flag) {
+      success: function (APIId) {
         addName.val("");
         addCategory.val("");
-        addDescription.val("");
-        addVersions.val("");
-        if (flag) {
-          showResult("添加成功!!!");
-        } else {
-          showResult("添加失败");
-        }
+        addDescriptionBrief.val("");
+        sessionStorage.setItem("APIId", APIId);
+        sessionStorage.setItem("API", "add");
+        window.location.href = "APIUpdate.html";
+
       },
       error: function () {
         showResult("添加失败error");
@@ -349,14 +340,86 @@ function addAPI() {
     })
   })
 }
+// 实现添加API新版本的功能
+function addVersions(id) {
 
+  $("#determine").off();
+  $("#determine").click(function () {
+    sessionStorage.setItem("APIId", id);
+    sessionStorage.setItem("API", "add");
+    window.location.href = "APIUpdate.html";
+  })
+}
+
+function updateVersionsContent() {
+  $("td[data-update-versions='no']").each(function (i, event) {
+    var id = $(this).data("api-id");
+    $.ajax({
+      url: "http://localhost:8080/api/apiVersions/APIId",
+      type: "get",
+      data: {
+        "APIId": id
+      },
+      success: function (data) {
+        console.log(data);
+        var versionsContent = "";
+        if (data.length == 1) {
+          versionsContent = "<a class='text-decoration-none'  href='#'  data-versions-logo='" + data[0].logo + "'  data-versions-id=" + data[0].id + ">" + data[0].versions + "</a>";
+        } else if (data.length > 1) {
+          versionsContent = "<a  class='dropdown-toggle  text-decoration-none'  data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>选择一个版本</a><div class='dropdown-menu'>"
+          $.each(data, function (i, val) {
+            versionsContent += "<a class='dropdown-item text-decoration-none' data-versions-logo='" + val.logo + "'  data-versions-id='" + val.id + "'href='#'>" + val.versions + "</a>";
+          })
+          versionsContent += "</div>";
+        } else {
+
+        }
+        $(this).data("update-versions", "yes");
+        $(event).html(versionsContent)
+      }
+    })
+
+  })
+
+}
+
+// 绑定点击版本的行为
+function ToAPIVersions() {
+  $(document).on("click", "a[data-versions-id]", function () {
+    var operation = $("#operation .nav-link.active").data("operation");
+    if (operation == "update") {
+      sessionStorage.setItem("versionsId", $(this).data("versions-id"));
+      sessionStorage.setItem("API", "update");
+      window.location.href = "APIUpdate.html";
+    } else if (operation == "delete") {
+      $.ajax({
+        url: "http://localhost:8080/api/apiVersions/id",
+        type: "delete",
+        data: {
+          "id": $(this).data("versions-id"),
+          "logo": $(this).data("versions-logo")
+        },
+        success: function (flag) {
+          if (flag) {
+            alert("成功删除该版本！！！");
+          } else {
+            alert("删除失败！！！");
+          }
+          reFresh()
+        },
+        error: function () {
+          alert("连接服务器失败！！！");
+        }
+      })
+    }
+  })
+}
 
 function updateAPIModel() {
   var content = "<h1 class='mb-4 text-center'>编辑API</h1><form><div class='form-group'> <input type='text' class='form-control' id='updateName' name='name'"
-    + "placeholder='API Name' required='required'> </div><div class='form-row'><div class='form-group col-md-6'> <input type='text' class='form-control'"
-    + " id='updateVersions' name='versions' placeholder='Versions'> </div><div class='form-group col-md-6'> <input type='text' class='form-control'"
-    + " id='updateCategory'name='category' placeholder='Category'> </div></div><div class='form-group'> <textarea class='form-control' id='updateDescription' name='description' rows='3'"
-    + "placeholder='Description'></textarea> </div></form>"
+    + "placeholder='API Name' required='required'> </div><div class='form-group'><input type='text' class='form-control'"
+    + " id='updateCategory'name='category' placeholder='Category'> </div><div class='form-group'> <textarea class='form-control' id='updateDescriptionBrief' name='descriptionBrief' rows='3'"
+    + "placeholder='DescriptionBrief'></textarea> </div></form>"
   return content;
 }
 

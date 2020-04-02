@@ -4,122 +4,154 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+            integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+            crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-        type="text/css">
-    <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
+          type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+    <script src="assets/js/navbar-ontop.js"></script>
     <script src="../jquery/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+            crossorigin="anonymous"></script>
+
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-        <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top mb-5">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button"
                 data-toggle="collapse" data-target="#navbar12">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="#">
-                    <i class="fa d-inline fa-lg fa-circle"></i>
-                    <b> BRAND</b>
-                </a>
-                <ul class="navbar-nav mx-auto">
-                    <li class="nav-item"> <a class="nav-link text-primary" href="Feedback.html">意见反馈</a></li>
-                    <li class="nav-item"> <a class="nav-link text-primary" href="Home.html">首页</a> </li>
-                    <li class="nav-item"> <a class="nav-link text-primary" href="APINews.html">资讯动态</a> </li>
-                    <li class="nav-item"> <a class="nav-link text-primary" href="Search.html">WebAPI</a> </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item"> <a href="#" id="state" data-state="User" class="nav-link text-primary">
-                            <i class='fa fa-user-circle-o' aria-hidden='true'></i>User Sign</a> </li>
-                </ul>
-            </div>
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar12"><a class="navbar-brand d-none d-md-block" href="#">
+            <i class="fa d-inline fa-lg fa-circle"></i>
+            <b> BRAND</b>
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link text-primary" href="Feedback.html">意见反馈</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="Home.html">首页</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="APINews.html">资讯动态</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="Search.html">WebAPI</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="UserInfo.html" id="state" data-state="User" class="nav-link text-primary">
+                    <i class='fa fa-user-circle-o d-inline fa-lg' aria-hidden='true'></i>User Sign</a></li>
+            </ul>
         </div>
-    </nav>
-    <div class="py-5 text-center"
-        style="background-image: url(&quot;image/image4.jpg&quot;); background-position: right bottom; background-size: cover; background-repeat: repeat; background-attachment: fixed;">
-        <div class="container">
-            <div class="row justify-content-center align-items-center" style="">
-                <div class="bg-white p-4 col-10 mx-auto mx-md-0 col-lg-6">
-                    <h1>资讯查找</h1>
-                    <form class="form-inline d-flex justify-content-center">
-                        <div class="input-group"> <input type="search" class="form-control" placeholder="please input"
-                                id="searchContent">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+    </div>
+</nav>
+<div class="py-5 text-center"
+     style="background-image: url(&quot;image/image4.jpg&quot;); background-position: right bottom; background-size: cover; background-repeat: repeat; background-attachment: fixed;">
+    <div class="container">
+        <div class="row justify-content-center align-items-center" style="height: 20rem">
+            <div class="bg-white p-4 col-10 mx-auto mx-md-0 col-lg-6">
+                <h1>资讯查找</h1>
+                <form class="form-inline d-flex justify-content-center">
+                    <div class="input-group"><input type="search" class="form-control" placeholder="please input"
+                                                    id="searchContent">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                                     data-toggle="dropdown" aria-expanded="false"></button>
-                                <div class="input-group-append"> <button class="btn btn-primary" id="search"
-                                        type="button" contenteditable="true">Search</button> </div>
-                                <div class="dropdown-menu" id="dropdownMenu" x-placement="bottom-start"
-                                    style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                    <a class="dropdown-item" data-menu="name" href="#">资讯名称</a>
-                                    <a class="dropdown-item" data-menu="author" href="#">作者</a>
-                                    <a class="dropdown-item" data-menu="category" href="#">类别</a>
-                                    <a class="dropdown-item" data-menu="date" href="#">日期</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" data-menu="dateSection" href="#">日期区间</a>
-                                </div>
+                            <div class="input-group-append">
+                                <button class="btn btn-primary" id="search"
+                                        type="button" contenteditable="true">Search
+                                </button>
+                            </div>
+                            <div class="dropdown-menu" id="dropdownMenu" x-placement="bottom-start"
+                                 style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                                <a class="dropdown-item" data-menu="name" href="#">资讯名称</a>
+                                <a class="dropdown-item" data-menu="author" href="#">作者</a>
+                                <a class="dropdown-item" data-menu="category" href="#">类别</a>
+                                <a class="dropdown-item" data-menu="date" href="#">日期</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" data-menu="dateSection" href="#">日期区间</a>
                             </div>
                         </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="py-5">
-        <div class="container">
-
-
-            <div id="tab1" class="d-flex justify-content-center">
-
-                <div id="footerParent">
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-
-
-
-    <div class="py-3">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12 text-center d-md-flex align-items-center"> <i
-                        class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
-                    <ul class="nav mx-md-auto d-flex justify-content-center">
-                        <li class="nav-item"> <a class="nav-link active" href="#">Home</a> </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Features</a> </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">Pricing</a> </li>
-                        <li class="nav-item"> <a class="nav-link" href="#">About</a> </li>
-                    </ul>
-                    <div class="row">
-                        <div
-                            class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2">
-                            <a href="#">
-                                <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
-                            </a> <a href="#">
-                                <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
-                            </a> <a href="#">
-                                <i class="d-block fa fa-twitter text-muted fa-lg ml-2"></i>
-                            </a> </div>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="mt-2 mb-0">© 2014-2018 Pingendo. All rights reserved</p>
-                </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
+<div class="py-5">
+    <div class="container">
 
 
-    <script src="../jquery/APINews.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
-        crossorigin="anonymous"></script>
+        <div id="tab1" class="d-flex justify-content-center">
 
+            <div id="footerParent">
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center d-md-flex align-items-center"><i
+                    class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
+                <ul class="nav mx-md-auto d-flex justify-content-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                </ul>
+                <div class="row">
+                    <div
+                            class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2">
+                        <a href="#">
+                            <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
+                        </a> <a href="#">
+                        <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
+                    </a> <a href="#">
+                        <i class="d-block fa fa-twitter text-muted fa-lg ml-2"></i>
+                    </a></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="mt-2 mb-0">© 2014-2018 Pingendo. All rights reserved</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="modal" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content text-center bg-primary">
+            <div class="modal-body">
+                <button class="btn btn-light btn-lg btn-icon rounded shadow" type="button">
+                    <i class="now-ui-icons users_circle-08 text-primary x2"></i>
+                </button>
+                <div class='form-group'> <label for='dateStart'>开始时间</label>
+                    <input type='date' class='form-control' id='dateStart' placeholder='开始时间' required='required'>
+                </div>
+                <div class='form-group'> <label for='dateEnd'>截止时间</label>
+                    <input type='date' class='form-control' id='dateEnd' placeholder='截止时间' required='required'>
+                </div>
+                <small id='dateNote' class='form-text text-muted'></small>
+                <div id="userConent"></div>
+                <button type="button" class="btn btn-primary mr-3" data-dismiss="modal" id="ok">确定</button>
+                <button type="button" class="btn btn-primary ml-3" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/js/parallax.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+
+
+<script src="../jquery/APINews.js"></script>
 </body>
 
 </html>

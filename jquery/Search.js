@@ -1,4 +1,5 @@
-
+// 登录的用户信息初始化
+var stateData = JSON.parse(sessionStorage.getItem("stateData"));
 
 // 定义全局变量方便下面进行页面刷新和实现页面跳转
 var pageNum = 1;
@@ -12,18 +13,18 @@ var rowCacheDate = [];
 
 
 
-var stateData = JSON.parse(sessionStorage.getItem("stateData"));
 $(document).ready(init());
+
+
 function init() {
 
-  var login = sessionStorage.getItem("login");
-  if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)) {
-    window.location.href = "Login.html";
-  }
+    var state = sessionStorage.getItem("state");
+    var login = sessionStorage.getItem("login");
+    if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData) || state != "user") {
+        window.location.href = "Login.html";
+    }
 
-  $("#state").html("<i class='fa fa-user-circle-o' aria-hidden='true'></i>" + stateData.name);
-
-
+    $("#state").html("<i class='fa fa-user-circle-o d-inline fa-lg' aria-hidden='true'></i>" + stateData.name);
 }
 
 
@@ -237,11 +238,11 @@ function updateVersionsContent(){
       success: function (data) {
         var versionsContent = "";
         if (data.length == 1) {
-          versionsContent = "<a class='card-link' href='#' data-versions-id=" + data[0].id + ">" + data[0].versions + "</a>";
-        } else {
-          versionsContent="<a  class='dropdown-toggle card-link'  data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>选择一个版本</a><div class='dropdown-menu'>"
+          versionsContent = "<a class='card-link stretched-link'  href='#' data-versions-id=" + data[0].id + ">" + data[0].versions + "</a>";
+        } else if (data.length > 1) {
+          versionsContent="<a  class='dropdown-toggle  card-link'  data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>选择一个版本</a><div class='dropdown-menu'>"
           $.each(data, function (i, val) {
-            versionsContent+="<a class='dropdown-item' data-versions-id='" + val.id + "'href='#'>"+val.versions+"</a>";
+            versionsContent+="<a class='dropdown-item stretched-link' data-versions-id='" + val.id + "'href='#'>"+val.versions+"</a>";
           })
           versionsContent += "</div>";
         }

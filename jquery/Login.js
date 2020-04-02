@@ -80,7 +80,6 @@ function remember() {
     email.val($.cookie("email"));
     password.val($.cookie("password"));
     $("#remember").attr("checked", 'checked');
-    alert(password)
   }
   $("#loginFrom").submit(function (e) {
     e.preventDefault();

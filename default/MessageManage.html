@@ -2,126 +2,164 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    type="text/css">
-  <link rel="stylesheet" href="../css/bootstrap-4.3.1.css">
-  <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+    <script src="assets/js/navbar-ontop.js"></script>
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button"
-        data-toggle="collapse" data-target="#navbar12">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="#">
-          <i class="fa d-inline fa-lg fa-circle"></i>
-          <b> BRAND</b>
-        </a>
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"> <a class="nav-link text-primary" href="ApiManage.html">API管理</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="UserManage.html">用户管理</a> </li>
-          <li class="nav-item"> <a class="nav-link text-primary" href="APINewsManage.html">资讯管理</a> </li>
-        </ul>
-        <ul class="navbar-nav">
-          <li class="nav-item"> <a id="message" class="nav-link text-primary" href="MessageManage.html"><i
-                class="fa fa-bell-slash-o" aria-hidden="true"></i>Message</a> </li>
-          <li class="nav-item"> <a id="state" class="nav-link text-primary" href="#"><i class="fa fa-user fa-fw"></i>Log
-              in</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="py-5">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top mb-5">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="row">
-            <div class="col-4">
-              <div class="list-group" id="list-tab" role="tablist">
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active"
-                  id="list-comingApply-list" data-toggle="list" href="#list-comingApply" role="tab" aria-controls="home"
-                  aria-selected="true" data-operation="comingApply">申请管理员 <div id="applyNum"></div></a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  id="list-alreadyApply-list" data-toggle="list" href="#list-alreadyApply" role="tab"
-                  aria-controls="profile" aria-selected="false" data-operation="alreadyApply">已处理申请 </a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  id="list-comingFeedBack-list" data-toggle="list" href="#list-comingFeedBack" role="tab"
-                  aria-controls="profile" aria-selected="false" data-operation="comingFeedBack">未处理反馈 <div
-                    id="feedBackNum"></div></a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  id="list-alreadyFeedBack-list" data-toggle="list" href="#list-alreadyFeedBack" role="tab"
-                  aria-controls="profile" aria-selected="false" data-operation="alreadyFeedBack">已处理反馈 </a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  id="list-comingAPI-list" data-toggle="list" href="#list-comingAPI" role="tab" aria-controls="profile"
-                  aria-selected="false" data-operation="comingAPI">审核API <div id="APINum"></div></a>
-                <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
-                  id="list-alreadyAPI-list" data-toggle="list" href="#list-alreadyAPI" role="tab"
-                  aria-controls="profile" aria-selected="false" data-operation="alreadyAPI">已审核API </a>
-              </div>
-            </div>
-            <div class="col-8">
-              <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade active show" id="list-comingApply" role="tabpanel"
-                  aria-labelledby="list-comingApply-list"></div>
-                <div class="tab-pane fade" aria-labelledby="list-alreadyApply-list" id="list-alreadyApply"
-                  role="tabpanel">
-                </div>
-                <div class="tab-pane fade" id="list-comingFeedBack" role="tabpanel"
-                  aria-labelledby="list-comingFeedBack-list"></div>
-                <div class="tab-pane fade" aria-labelledby="list-alreadyFeedBack-list" id="list-alreadyFeedBack"
-                  role="tabpanel"></div>
-                <div class="tab-pane fade" aria-labelledby="list-comingAPI-list" id="list-comingAPI" role="tabpanel">
-                </div>
-                <div class="tab-pane fade" aria-labelledby="list-alreadyAPI-list" id="list-alreadyAPI" role="tabpanel">
-                </div>
-              </div>
-            </div>
-          </div>
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+                data-toggle="collapse" data-target="#navbar12">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar12"><a class="navbar-brand d-none d-md-block" href="#">
+            <i class="fa d-inline fa-lg fa-circle"></i>
+            <b> BRAND</b>
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link text-primary" href="ApiManage.html">API管理</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="UserManage.html">用户管理</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="APINewsManage.html">资讯管理</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a id="message" class="nav-link text-primary" href="MessageManage.html"><i
+                        class="fa d-inline fa-lg fa-bell-slash-o" aria-hidden="true"></i>Message</a></li>
+                <li class="nav-item"><a id="state" class="nav-link text-primary" href="#"><i
+                        class="fa d-inline fa-lg fa-user fa-fw"></i>Log
+                    in</a>
+                </li>
+            </ul>
         </div>
-      </div>
     </div>
+</nav>
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="list-group" id="list-tab" role="tablist">
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center active"
+                               id="list-comingApply-list" data-toggle="list" href="#list-comingApply" role="tab"
+                               aria-controls="home"
+                               aria-selected="true" data-operation="comingApply">申请管理员
+                                <div id="applyNum"></div>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-alreadyApply-list" data-toggle="list" href="#list-alreadyApply" role="tab"
+                               aria-controls="profile" aria-selected="false" data-operation="alreadyApply">已处理申请 </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-comingFeedBack-list" data-toggle="list" href="#list-comingFeedBack" role="tab"
+                               aria-controls="profile" aria-selected="false" data-operation="comingFeedBack">未处理反馈
+                                <div
+                                        id="feedBackNum"></div>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-alreadyFeedBack-list" data-toggle="list" href="#list-alreadyFeedBack" role="tab"
+                               aria-controls="profile" aria-selected="false" data-operation="alreadyFeedBack">已处理反馈 </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-comingAPI-list" data-toggle="list" href="#list-comingAPI" role="tab"
+                               aria-controls="profile"
+                               aria-selected="false" data-operation="comingAPI">审核上传API
+                                <div id="APINum"></div>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-alreadyAPI-list" data-toggle="list" href="#list-alreadyAPI" role="tab"
+                               aria-controls="profile" aria-selected="false" data-operation="alreadyAPI">已审核API </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-comingAPIVersions-list" data-toggle="list" href="#list-comingAPIVersions" role="tab"
+                               aria-controls="profile"
+                               aria-selected="false" data-operation="comingAPIVersions">审核上传API版本
+                                <div id="APIVersionsNum"></div>
+                            </a>
+                            <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center"
+                               id="list-alreadyAPIVersions-list" data-toggle="list" href="#list-alreadyAPIVersions" role="tab"
+                               aria-controls="profile" aria-selected="false" data-operation="alreadyAPIVersions">已审核API版本 </a>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade active show" id="list-comingApply" role="tabpanel"
+                                 aria-labelledby="list-comingApply-list"></div>
+                            <div class="tab-pane fade" aria-labelledby="list-alreadyApply-list" id="list-alreadyApply"
+                                 role="tabpanel">
+                            </div>
+                            <div class="tab-pane fade" id="list-comingFeedBack" role="tabpanel"
+                                 aria-labelledby="list-comingFeedBack-list"></div>
+                            <div class="tab-pane fade" aria-labelledby="list-alreadyFeedBack-list"
+                                 id="list-alreadyFeedBack"
+                                 role="tabpanel"></div>
+                            <div class="tab-pane fade" aria-labelledby="list-comingAPI-list" id="list-comingAPI"
+                                 role="tabpanel">
+                            </div>
+                            <div class="tab-pane fade" aria-labelledby="list-alreadyAPI-list" id="list-alreadyAPI"
+                                 role="tabpanel">
+                            </div>
+                            <div class="tab-pane fade" aria-labelledby="list-comingAPIVersions-list" id="list-comingAPIVersions"
+                                 role="tabpanel">
+                            </div>
+                            <div class="tab-pane fade" aria-labelledby="list-alreadyAPIVersions-list" id="list-alreadyAPIVersions"
+                                 role="tabpanel">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">回复</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">回复内容：</span>
-              </div>
-              <textarea class="form-control" aria-label="With textarea" id="replyContent" rows="10"
-                placeholder="回复内容"></textarea>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="determine" class="btn btn-outline-primary btn-block" data-dismiss="modal"><i
-                class=" fa fa-send-o (alias)"></i>确定</button>
-          </div>
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">回复</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">回复内容：</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" id="replyContent" rows="10"
+                                  placeholder="回复内容"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="determine" class="btn btn-outline-primary btn-block" data-dismiss="modal">
+                        <i
+                                class=" fa fa-send-o (alias)"></i>确定
+                    </button>
+                </div>
 
+            </div>
         </div>
-      </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
-      integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
-      style=""></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
-      style=""></script>
 </body>
+<script src="assets/js/parallax.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"
+        style=""></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"
+        style=""></script>
+
 <script src="../jquery/MessageManage.js"></script>
 
 </html>

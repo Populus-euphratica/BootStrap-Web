@@ -2,182 +2,198 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    type="text/css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
-  <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
-  <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
-  <script src="assets/js/navbar-ontop.js"></script>
-  <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+    <script src="assets/js/navbar-ontop.js"></script>
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
-    <div class="container justify-content-center"> <button class="navbar-toggler navbar-toggler-right border-0"
-        type="button" data-toggle="collapse" data-target="#navbar9">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse text-center justify-content-center" id="navbar9">
-        <ul class="navbar-nav">
-          <li class="nav-item mx-2"> <a class="nav-link" href="#">Products</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="#">FAQ</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link navbar-brand mr-0 text-white" href="#"><i
-                class="fa d-inline fa-lg fa-stop-circle-o"></i>
-              <b> BRAND</b></a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="#">About us</a> </li>
-          <li class="nav-item mx-2"> <a class="nav-link" href="#">Contacts </a> </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <div class="py-5">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top mb-5">
     <div class="container">
-      <div class="row">
-        <div class="col-md-12">
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+                data-toggle="collapse" data-target="#navbar12">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar12"><a class="navbar-brand d-none d-md-block" href="#">
+            <i class="fa d-inline fa-lg fa-circle"></i>
+            <b> BRAND</b>
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link text-primary" href="Feedback.html">意见反馈</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="Home.html">首页</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="APINews.html">资讯动态</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="Search.html">WebAPI</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a href="UserInfo.html" id="state" data-state="User" class="nav-link text-primary">
+                    <i class='fa fa-user-circle-o d-inline fa-lg' aria-hidden='true'></i>User Sign</a></li>
+            </ul>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="py-0">
+</nav>
+<div class="py-5">
     <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <ul class="nav nav-pills flex-column" id="menu">
-            <li class="nav-item"> <a href="" class="nav-link active" data-toggle="pill" data-target="#tabone" id="info"
-                data-menu="info">个人中心</a> </li>
-            <li class="nav-item"> <a class="nav-link" href="" data-toggle="pill" data-target="#tabtwo" id="concern"
-                data-menu="concern">我的收藏</a> </li>
-            <li class="nav-item"> <a href="" class="nav-link" data-toggle="pill" data-target="#tabthree" id="upload"
-                data-menu="upload">上传历史</a> </li>
-            <li class="nav-item"><a class="nav-link " href="" data-target="#tabfour" data-toggle="pill">上传API</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-9">
-          <div class="tab-content">
-            <div class="tab-pane fade active show" id="tabone" role="tabpanel">
-              <div class="mx-auto p-4 col-md-7">
-                <div class="form-row">
-                  <p class="lead font-weight-bold ">昵称：</p>
-                  <p class="lead font-weight-bold " id="userName"></p>
-                </div>
-                <div class="form-row">
-                  <p class="lead font-weight-bold ">公司：</p>
-                  <p class="lead font-weight-bold " id="userCompany"></p>
-                </div>
-                <div class="form-row">
-                  <p class="lead font-weight-bold ">邮箱：</p>
-                  <p class="lead font-weight-bold " id="userEmail"></p>
-                </div>
-                <div>
-                  <button class="btn btn-dark" id="updateUserInfo">修改个人信息</button>
-                  <button class="btn btn-dark" id="updatePassword">修改密码</button>
-                </div>
-              </div>
+        <div class="row">
+            <div class="col-md-12">
             </div>
-            <div class="tab-pane fade" id="tabtwo" role="tabpanel"></div>
-
-            <div class="tab-pane fade" id="tabthree" role="tabpanel"></div>
-
-            <div class="tab-pane fade" id="tabfour" role="tabpanel">
-              <div class="mx-auto p-4 col-md-7">
-                <h1 class="mb-4 text-center">上传API</h1>
-                <form>
-                  <div class="form-group"> <input type="text" class="form-control" id="addName" name="name"
-                      placeholder="API Name" required="required"> </div>
-                  <div class="form-row">
-                    <div class="form-group col-md-6"> <input type="text" class="form-control" id="addVersions"
-                        name="versions" placeholder="Versions"> </div>
-                    <div class="form-group col-md-6"> <input type="text" class="form-control" id="addCategory"
-                        name="category" placeholder="Category"> </div>
-                  </div>
-                  <div class="form-group">
-                    <textarea class="form-control" id="addDescription" rows="3" name="description"
-                      placeholder="Description"></textarea> </div>
-                </form>
-                <button id="addSubmit" class="btn btn-outline-primary btn-block">Add</button>
-
-              </div>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
+<div class="py-0">
+    <div class="container">
+        <div class="row">
+            <div class="col-3">
+                <ul class="nav nav-pills flex-column" id="menu">
+                    <li class="nav-item">
+                        <a href="" class="nav-link active" data-toggle="pill" data-target="#tabone" id="info"
+                           data-menu="info">个人中心</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="" data-toggle="pill" data-target="#tabtwo"
+                                            id="concern"
+                                            data-menu="concern">我的收藏</a></li>
+                    <li data-toggle="collapse" class="nav-item" data-target="#uploadMenu">
+                        <a class="nav-link" href="" data-toggle="pill">上传</a>
+                        <div class="collapse multi-collapse col-10 pt-3" id="uploadMenu">
+                            <ul class="nav nav-pills flex-column">
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" data-toggle="pill" data-target="#tabthree" id="upload"
+                                       data-menu="upload">上传历史</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link" data-toggle="pill" data-target="#tabfour"
+                                       id="uploadVersions" data-menu="uploadVersions">上传版本</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link " href="" data-target="#tabfive"
+                                                        data-toggle="pill">上传API简介</a>
+                                </li>
+                            </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-9">
+                <div class="tab-content">
+                    <div class="tab-pane fade active show" id="tabone" role="tabpanel">
+                        <div class="mx-auto p-4 col-md-7">
+                            <div class="form-row">
+                                <p class="lead font-weight-bold ">昵称：</p>
+                                <p class="lead font-weight-bold " id="userName"></p>
+                            </div>
+                            <div class="form-row">
+                                <p class="lead font-weight-bold ">公司：</p>
+                                <p class="lead font-weight-bold " id="userCompany"></p>
+                            </div>
+                            <div class="form-row">
+                                <p class="lead font-weight-bold ">邮箱：</p>
+                                <p class="lead font-weight-bold " id="userEmail"></p>
+                            </div>
+                            <div>
+                                <button class="btn btn-dark" id="updateUserInfo">修改个人信息</button>
+                                <button class="btn btn-dark" id="updatePassword">修改密码</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="tabtwo" role="tabpanel"></div>
+
+                    <div class="tab-pane fade" id="tabthree" role="tabpanel">
+                      <div id="tabthreeFootParent"></div>
+                    </div>
+                    <div class="tab-pane fade" id="tabfour" role="tabpanel"></div>
+                    <div class="tab-pane fade" id="tabfive" role="tabpanel">
+                        <div class="mx-auto p-4 col-md-7">
+                            <h1 class="mb-4 text-center">上传API</h1>
+                            <form>
+                                <div class="form-group"><input type="text" class="form-control" id="addName" name="name"
+                                                               placeholder="API Name" required="required"></div>
+
+                                    <div class="form-group"><input type="text" class="form-control"
+                                                                            id="addCategory"
+                                                                            name="category" placeholder="Category">
+                                    </div>
+                                <div class="form-group">
+                    <textarea class="form-control" id="addDescriptionBrief" rows="3" name="descriptionBrief"
+                              placeholder="DescriptionBrief"></textarea></div>
+                            </form>
+                            <button id="addSubmit" class="btn btn-outline-primary btn-block">Add</button>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="py-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-          </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
     <div class="py-0">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-          </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                </div>
+            </div>
         </div>
-      </div>
     </div>
 
-  </div>
+</div>
 
-  <div class="modal fade" id="modal1" aria-hidden="true" style="display: none;">
+<div class="modal fade" id="modal1" aria-hidden="true" style="display: none;">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header pb-0">
-          <h4 class="modal-title text-dark mx-auto">
-            <b>更改个人信息</b>
-          </h4>
-          <button type="button" class="close text-danger pt-4 ml-0" data-dismiss="modal">
+        <div class="modal-content">
+            <div class="modal-header pb-0">
+                <h4 class="modal-title text-dark mx-auto">
+                    <b>添加版本</b>
+                </h4>
+                <button type="button" class="close text-danger pt-4 ml-0" data-dismiss="modal">
             <span>
               <i class="now-ui-icons ui-1_simple-remove lg"></i>
             </span>
-          </button>
+                </button>
+            </div>
+            <div class="modal-body">
+              <p class="text-center">您确定要为该API添加一个新版本吗？</p>
+                <div class="modal-footer d-flex flex-row justify-content-between">
+                    <button type="button" id="determine" class="btn btn-secondary">是的</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
         </div>
-        <div class="modal-body">
-          <div class="form-group"> <label for="addName">Your Name</label> <input type="text" class="form-control"
-            id="addName" placeholder="name" required="required">
-          <small id="nameNote1" class="form-text text-muted"></small>
-        </div>
-        <div class="form-group"> <label for="addCompany">Your Company</label> <input type="text" class="form-control"
-            id="addCompany" placeholder="company"> </div>
-        </div>
-        <div class="modal-footer d-flex flex-row justify-content-between">
-          <button type="button" class="btn btn-secondary">Nice Button</button>
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-      </div>
     </div>
-  </div>
 
 
-  <div class="modal fade" id="modal" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-sm" role="document">
-      <div class="modal-content text-center bg-primary">
-        <div class="modal-body">
-          <button class="btn btn-light btn-lg btn-icon rounded shadow" type="button">
-            <i class="now-ui-icons users_circle-08 text-primary x2"></i>
-          </button>
-          <div id="userConent"></div>
-          <button type="button" class="btn btn-primary mr-3" data-dismiss="modal" id="okUpdate">更改</button>
-          <button type="button" class="btn btn-primary ml-3" data-dismiss="modal">关闭</button>
+    <div class="modal fade" id="modal" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content text-center bg-primary">
+                <div class="modal-body">
+                    <button class="btn btn-light btn-lg btn-icon rounded shadow" type="button">
+                        <i class="now-ui-icons users_circle-08 text-primary x2"></i>
+                    </button>
+                    <div id="userConent"></div>
+                    <button type="button" class="btn btn-primary mr-3" data-dismiss="modal" id="okUpdate">更改</button>
+                    <button type="button" class="btn btn-primary ml-3" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-    crossorigin="anonymous"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-    crossorigin="anonymous"></script>
-  <script src="assets/js/parallax.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
-  </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="assets/js/parallax.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+</div>
 </body>
 <script src="../jquery/UserInfo.js"></script>
 

@@ -8,13 +8,14 @@
 // 登录的管理员信息初始化
 var stateData = JSON.parse(sessionStorage.getItem("stateData"));
 $(document).ready(init());
+ $(document).ready( onClickDate());
 function init() {
 
- var login = sessionStorage.getItem("login");
- if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)) {
-   window.location.href = "Login.html";
- }
-
+  var state = sessionStorage.getItem("state");
+  var login = sessionStorage.getItem("login");
+  if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)||state!="admin") {
+    window.location.href = "Login.html";
+  }
  $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
  messageNum()
 }
@@ -32,7 +33,22 @@ function messageNum(){
 }
 
 
-
+ function onClickDate() {
+   $("a[data-menu='dateSection']").on("click",function () {
+     $('#modal').modal('show');
+   })
+   $("#ok").click(function () {
+     searchUrl = "http://localhost:8080/api/apiNews/dateSection";
+     searchType = "get";
+     data1 = {
+       "date1": $("#dateStart").val(),
+       "date2":$("#dateEnd").val(),
+       "pageNum": pageNum
+     };
+     console.log(data1);
+     ajaxAPI(data1);
+   })
+ }
 
  // 实现搜索功能
  function search() {
@@ -71,19 +87,11 @@ function messageNum(){
          "pageNum": pageNum
        };
        ajaxAPI(data1);
-     } else if (searchValue == "data") {
+     } else if (searchValue == "date") {
        searchUrl = "http://localhost:8080/api/apiNews/data";
        searchType = "get";
        data1 = {
-         "data": searchContent,
-         "pageNum": pageNum
-       };
-       ajaxAPI(data1);
-     } else if (searchValue == "dateSection") {
-       searchUrl = "http://localhost:8080/api/apiNews/dateSection";
-       searchType = "get";
-       data1 = {
-         "dateSection": searchContent,
+         "date": searchContent,
          "pageNum": pageNum
        };
        ajaxAPI(data1);
