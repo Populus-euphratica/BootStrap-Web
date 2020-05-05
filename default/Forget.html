@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="container">
+        <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+                data-toggle="collapse" data-target="#navbar12">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbar12"><a class="navbar-brand d-none d-md-block" href="#">
+            <i class="fa d-inline fa-lg fa-circle"></i>
+            <b> BRAND</b>
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link text-primary" href="#" contenteditable="true">WebAPI</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="#">首页</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="#">新闻动态</a></li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"><a id="state" data-state="user" class="nav-link text-primary"><i
+                        class="fa fa-user fa-fw"></i>Admin Register</a></li>
+                <li class="nav-item"><a class="nav-link text-primary" href="Login.html"><i class="fa fa-sign-in"
+                                                                                           aria-hidden="true"></i>登录</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+
+<div class="py-5 text-center">
+    <div class="container">
+        <div class="row">
+            <div class="mx-auto col-lg-6 col-10">
+                <h1 id="title">找回密码</h1>
+                <p class="mb-3 pb-5">请输入您的账号，我们会将密码发送到您的邮箱。</p>
+                <form class="text-left" id="register">
+                    <div class="form-row">
+                        <div class="form-group col-md-8"> <input type="email"
+                             class="form-control" id="email" required="required" placeholder="请输入您的邮箱">
+                            <small id="emailNote" class="form-text text-muted"></small>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <button type="button" class="btn btn-primary btn-block"  id="TencentCaptcha"
+                                    data-appid="2029808606"
+                                    data-cbfn="verrifyCallBack">查询
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="py-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center d-md-flex align-items-center"><i
+                    class="d-block fa fa-stop-circle fa-2x mr-md-5 text-primary"></i>
+                <ul class="nav mx-md-auto d-flex justify-content-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Pricing</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                </ul>
+                <div class="row">
+                    <div class="col-md-12 d-flex align-items-center justify-content-md-between justify-content-center my-2">
+                        <a
+                                href="#">
+                            <i class="d-block fa fa-facebook-official text-muted fa-lg mx-2"></i>
+                        </a> <a href="#">
+                        <i class="d-block fa fa-instagram text-muted fa-lg mx-2"></i>
+                    </a> <a href="#">
+                        <i class="d-block fa fa-twitter text-muted fa-lg ml-2"></i>
+                    </a></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <p class="mt-2 mb-0">© 2014-2018 Pingendo. All rights reserved</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+<script src="assets/js/parallax.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+</body>
+<script>
+    function verrifyCallBack(res) {
+        var ip = returnCitySN["cip"];
+        if (res.ret === 0) {
+            // alert(res.ticket)   // 票据
+            $.ajax({
+                url: "http://localhost:8080/api/admin/loginVerify",
+                data: {
+                    "ticket": res.ticket,
+                    "randstr": res.randstr,
+                    "userIp": ip
+                },
+                type: "post",
+                success: function (data) {
+                    forget();
+                }
+            })
+        }
+    }
+
+    function forget() {
+        var email=$.trim($("#email").val());
+        var emailNote=$("#emailNote");
+        if (email==""){
+            emailNote.val("邮箱不能为空！");
+            return false;
+        }
+        emailNote.val("");
+        $.ajax({
+            url:"http://localhost:8080/api/user/email",
+            type:"get",
+            data:{
+                "email":email
+            },
+            success:function (emailData) {
+                console.log(emailData.id)
+                if (emailData.id == null){
+                    emailNote.val("没有该邮箱注册的用户！");
+                    return false;
+                }else {
+                    var content="<h1>尊敬的"+emailData.name+"</h1><p>您申请查询该账户的密码，您的密码为：</p><p>"+emailData.password+"</p><p>如果该操作不是您本人提交，请尽快更改密码，以确保账户安全。</p>"
+                    var sendEmailData={
+                        "content":content,
+                        "to":email
+                    };
+                    sendEmail(sendEmailData);
+                }
+            }
+        })
+    }
+
+
+    // 发送邮件
+    function sendEmail(data) {
+        $.ajax({
+            url: "http://localhost:8080/api/email/",
+            type: "post",
+            data: data,
+            success: function (falg) {
+                if (falg) {
+                    alert("成功发送邮件！");
+                } else {
+                    alert("发送邮件失败！");
+                }
+            },
+            error: function () {
+                alert("连接服务器失败！");
+            }
+        })
+    }
+</script>
+</html>

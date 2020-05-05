@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+          type="text/css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.min.css">
+    <link rel="stylesheet" href="now-ui-kit.css" type="text/css">
+    <link rel="stylesheet" href="assets/css/nucleo-icons.css" type="text/css">
+    <script src="assets/js/navbar-ontop.js"></script>
+    <script src="../jquery/jquery-3.4.1.min.js"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top mb-5">
+    <div class="container"> <button class="navbar-toggler navbar-toggler-right border-0" type="button"
+                                    data-toggle="collapse" data-target="#navbar12">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+        <div class="collapse navbar-collapse" id="navbar12"> <a class="navbar-brand d-none d-md-block" href="#">
+            <i class="fa d-inline fa-lg fa-circle"></i>
+            <b> BRAND</b>
+        </a>
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"> <a class="nav-link text-primary" href="ApiManage.html">API管理</a> </li>
+                <li class="nav-item"> <a class="nav-link text-primary" href="UserManage.html">用户管理</a> </li>
+                <li class="nav-item"> <a class="nav-link text-primary" href="APINewsManage.html">资讯管理</a> </li>
+            </ul>
+            <ul class="navbar-nav">
+                <li class="nav-item"> <a id="message" class="nav-link text-primary" href="MessageManage.html"><i
+                        class="fa d-inline fa-lg fa-bell-slash-o" aria-hidden="true"></i>Message</a> </li>
+                <li class="nav-item"> <a id="state" class="nav-link text-primary" href="AdminInfo.html"><i class="fa d-inline fa-lg fa-user fa-fw"></i>Log
+                    in</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                        <div class="mx-auto p-4 col-md-7">
+                            <div class="form-row">
+                                <p class="lead font-weight-bold ">昵称：</p>
+                                <p class="lead font-weight-bold " id="adminName"></p>
+                            </div>
+                            <div>
+                                <button class="btn btn-dark" id="updateUserInfo">修改个人信息</button>
+                                <button class="btn btn-dark" id="updatePassword">修改密码</button>
+                            </div>
+                        </div>
+                    </div>
+        </div>
+    </div>
+</div>
+
+
+
+    <div class="modal fade" id="modal" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content text-center bg-primary">
+                <div class="modal-body">
+                    <button class="btn btn-light btn-lg btn-icon rounded shadow" type="button">
+                        <i class="now-ui-icons users_circle-08 text-primary x2"></i>
+                    </button>
+                    <div id="adminConent"></div>
+                    <button type="button" class="btn btn-primary mr-3" data-dismiss="modal" id="okUpdate">更改</button>
+                    <button type="button" class="btn btn-primary ml-3" data-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script src="assets/js/parallax.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js"></script>
+</div>
+</body>
+<script>
+    // 登录的管理员信息初始化
+    var stateData = JSON.parse(sessionStorage.getItem("stateData"));
+    $(document).ready(init());
+    $(document).ready(updateAdmin());
+    $(document).ready(adminInit());
+    function init() {
+        var state = sessionStorage.getItem("state");
+        var login = sessionStorage.getItem("login");
+        if (login != "true" || typeof (stateData) == "undefined" || $.isEmptyObject(stateData)||state!="admin") {
+            window.location.href = "Login.html";
+        }
+
+        $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + stateData.name);
+        messageNum()
+    }
+    // 获取未处理消息总数
+    function messageNum() {
+        $.ajax({
+            url: "http://localhost:8080/api/admin/message/sum",
+            type: "get",
+            success: function (messageNum) {
+                if (messageNum > 0) {
+                    $("#message").html("<i class='fa fa-bell-o' aria-hidden='true'></i>Message");
+                }
+            }
+        })
+    }
+
+    function updateAdmin() {
+        var updateClick = $("#okUpdate");
+        $("#updateUserInfo").click(function () {
+            $('#modal').modal('show');
+            var content = "<div class='form-group'> <label for='updateName'>Your Name</label> <input type='text' class='form-control' id='updateName' placeholder='name' required='required'>"
+                + "<small id='nameNote' class='form-text text-muted'></small></div>";
+            $("#adminConent").html(content);
+            var name = $("#updateName");
+            name.val(stateData.name);
+            updateClick.off();
+            updateClick.click(function () {
+
+                if (!checkAdminInfo(name)) {
+                    return false;
+                }
+                $.ajax({
+                    url: "http://localhost:8080/api/admin/name/id",
+                    type: "put",
+                    data: {
+                        "name": name.val(),
+                        "id": stateData.id
+                    },
+                    success: function (flag) {
+                        if (flag) {
+                            alert("更新用户信息成功!");
+                            stateData.name = name.val();
+                            sessionStorage.setItem("stateData", JSON.stringify(stateData));
+                            adminInit();
+                        } else {
+                            alert("更新用户信息失败!");
+                        }
+                    },
+                    error: function () {
+                        alert("连接服务器失败!");
+                    }
+                })
+            })
+        });
+        $("#updatePassword").click(function () {
+            $('#modal').modal('show');
+            var content = "<div class='form-group'> <label for='password'>Your Password</label> <input type='Password' class='form-control' id='password' placeholder='输入密码' required='required'>"
+                + "</div><div class='form-group'> <label for='updateConfirmPassword'>Confirm Password</label> <input type='Password' class='form-control'"
+                + "id='updateConfirmPassword' placeholder='重复输入密码' required='required'> <small id='passwordNote' class='form-text text-muted'></small></div>";
+            $("#adminConent").html(content);
+            updateClick.off();
+            updateClick.click(function () {
+                var password = $("#password");
+                var confirmPassword = $("#updateConfirmPassword");
+                if (!checkAdminPassword(password, confirmPassword)) {
+                    return false;
+                }
+                $.ajax({
+                    url: "http://localhost:8080/api/admin/password/id",
+                    type: "put",
+                    data: {
+                        "password": password.val(),
+                        "id": stateData.id
+                    },
+                    success: function (flag) {
+                        if (flag) {
+                            alert("更新用户密码成功!");
+                            stateData.password = password.val();
+                            sessionStorage.setItem("stateData", JSON.stringify(stateData));
+                            var emailContent = "<h1>请注意！</h1><p>您的密码刚刚发生更改！</p>"
+                            var emailDate = {
+                                "content": emailContent,
+                                "to": stateData.email
+                            };
+                            sendEmail(emailDate);
+                        } else {
+                            alert("更新用户密码失败!");
+                        }
+                    },
+                    error: function () {
+                        alert("连接服务器失败!");
+                    }
+                })
+            })
+        })
+    }
+
+    function checkAdminInfo(name) {
+        var nameNote = $("#nameNote");
+        if ($.trim(name.val()) == "") {
+            name.focus();
+            nameNote.text("请输入名称!");
+            return false;
+        }
+        nameNote.text("");
+        return true;
+    }
+
+    function checkAdminPassword(password, confirmPassword) {
+        var passwordNote = $("#passwordNote");
+        if (password.val() != confirmPassword.val()) {
+            password.focus();
+            passwordNote.text("密码不一致！");
+            return false;
+        }
+        if ($.trim(password.val()) == "") {
+            password.focus();
+            passwordNote.text("密码不能为空！");
+            return false;
+        }
+        passwordNote.text("");
+        return true;
+    }
+
+    function adminInit() {
+        $.ajax({
+            url: "http://localhost:8080/api/admin/id",
+            type: "get",
+            data: {
+                "id": stateData.id
+            },
+            success: function (data) {
+                $("#adminName").html(data.name);
+                $("#state").html("<i class='fa fa-user fa-fw' aria-hidden='true'></i>" + data.name);
+            }
+        })
+
+    }
+    // 发送邮件
+    function sendEmail(data) {
+        $.ajax({
+            url: "http://localhost:8080/api/email/",
+            type: "post",
+            data: data,
+            success: function (falg) {
+                if (falg) {
+                    alert("成功发送邮件！");
+                } else {
+                    alert("发送邮件失败！");
+                }
+            },
+            error: function () {
+                alert("连接服务器失败！");
+            }
+        })
+    }
+</script>
+
+</html>

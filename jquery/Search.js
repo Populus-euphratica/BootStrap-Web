@@ -84,9 +84,9 @@ $(document).ready(dropdownMenu());
 $(document).ready(search());
 $(document).ready(searchClickInit());
 $(document).ready(searchCollectionInit());
-$(document).ready(updateClickNum());
 $(document).ready(cancelConcern());
 $(document).ready(ToAPIVersions());
+$(document).ready(historyRecommend());
 
 // 实现与服务器的沟通，主要为了减少代码量
 function ajaxAPI(data1) {
@@ -256,8 +256,14 @@ function updateVersionsContent(){
 }
 
 function ToAPIVersions(){
-  $(document).on("click","a[data-versions-id]",function(){
+  $(document).on("click","a[data-versions-id]",function(e){
     sessionStorage.setItem("versionsId",$(this).data("versions-id"));
+    var id = $(e.target).parents(".card").data("id");
+    if (typeof (id) == "undefined" || id == null) {
+      return false;
+    }
+    updateClickNum(id);
+    addHistory(id);
     window.location.href = "API.html";
   })
 }
@@ -342,7 +348,8 @@ function cancelConcern() {
         type: "post",
         data: JSON.stringify({
           "userId": stateData.id,
-          "userConcern": btn.data("id")
+          "userConcern": btn.data("id"),
+          "date":getDate()
         }),
         contentType: "application/json;charset=utf-8",
         success: function (data) {
@@ -371,12 +378,8 @@ function searchInit(url) {
   })
 }
 
-function updateClickNum() {
-  $("#api").click(function (e) {
-    var id = $(e.target).parents(".card").data("id");
-    if (typeof (id) == "undefined" || id == null) {
-      return false;
-    }
+function updateClickNum(id) {
+
     $.ajax({
       url: "http://localhost:8080/api/apiInfo/id/clickNum",
       type: "put",
@@ -390,5 +393,50 @@ function updateClickNum() {
         showResult("updateClickNum失败！");
       }
     })
+}
+
+function getDate() {
+  var myDate = new Date;
+  var year = myDate.getFullYear(); //获取当前年
+  var month = myDate.getMonth() + 1; //获取当前月
+  var strDate = myDate.getDate(); //获取当前日
+  if (month >= 1 && month <= 9) {
+    month = "0" + month;
+  }
+  if (strDate >= 0 && strDate <= 9) {
+    strDate = "0" + strDate;
+  }
+  return "" + year + "-" + month + "-" + strDate;
+}
+
+function addHistory(apiId) {
+  $.ajax({
+    url:"http://localhost:8080/api/history/",
+    type:"post",
+    contentType: "application/json;charset=utf-8",
+    data:JSON.stringify({
+      "userId":stateData.id,
+      "apiId":apiId,
+      "date":getDate()
+    }),
+    success:function (flag) {
+    }
+  })
+}
+
+function historyRecommend() {
+  $.ajax({
+    url: "http://localhost:8080/api/history/userId",
+    type: "get",
+    data:{
+      "userId":stateData.id
+    },
+    success: function (data) {
+      if (data != null && data.length != 0) {
+        cardContent($(".modal-body"), data);
+        $('#modal1').modal('show');
+      }
+
+    }
   })
 }

@@ -110,7 +110,7 @@ function messageNum(){
  $(document).ready(search());
  $(document).ready(addAPINews());
  $(document).ready(APINewsManager());
-
+$(document).ready(APINewsInfo());
  // 实现与服务器的沟通，主要为了减少代码量
  function ajaxAPI(data1) {
    $.ajax({
@@ -465,4 +465,11 @@ function messageNum(){
 
  function showResult(result) {
    $('<div>').appendTo('body').addClass('alert alert-success').html('操作成功').show().delay(1500).fadeOut();
+ }
+
+ function APINewsInfo() {
+   $(document).on("click","li[data-id]",function () {
+     sessionStorage.setItem("APINewsId",$(this).data("id"));
+     window.location.href="AdminAPINewsInfo.html";
+   })
  }

@@ -32,7 +32,7 @@ function sendFeedBack() {
             "theme": $.trim(theme.val()),
             "content": $.trim(content.val()),
             "istrue": false,
-            "userid": stateData.id,
+            "userId": stateData.id,
             "date": getDate()
         }
         $.ajax({

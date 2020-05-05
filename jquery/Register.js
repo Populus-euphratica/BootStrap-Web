@@ -131,8 +131,8 @@ function registerUser() {
     data: {
       "email": $.trim(email.val())
     },
-    success: function (emailDate) {
-      if (emailDate.id != null) {
+    success: function (emailData) {
+      if (emailData.id != null) {
         emailNote.text("该邮箱已被其他人使用");
         email.focus();
         return;
@@ -146,7 +146,12 @@ function registerUser() {
           success: function (data) {
             if (data) {
               alert("注册成功！");
-              window.location.href = "login.html";
+              var content="<h1>尊敬的"+registerData.name+"用户</h1><p>您现在已经成功申请本Web API推荐网站的账户，祝您使用愉快！</p>"
+              var sendEmailData={
+                "content":content,
+                "to":registerData.email
+              };
+              sendEmail(sendEmailData);
             } else {
               alert("注册失败！");
             }
@@ -174,8 +179,8 @@ function registerAdmin() {
     data: {
       "email": $.trim(email.val())
     },
-    success: function (emailDate) {
-      if (emailDate.id != null) {
+    success: function (emailData) {
+      if (emailData.id != null) {
         emailNote.text("该邮箱已被其他人使用");
         email.focus();
         return;
@@ -214,6 +219,24 @@ function registerAdmin() {
   })
 }
 
+// 发送邮件
+function sendEmail(data) {
+  $.ajax({
+    url: "http://localhost:8080/api/email/",
+    type: "post",
+    data: data,
+    success: function (falg) {
+      if (falg) {
+        alert("成功发送邮件！");
+      } else {
+        alert("发送邮件失败！");
+      }
+    },
+    error: function () {
+      alert("连接服务器失败！");
+    }
+  })
+}
 
 function getDate() {
   var myDate = new Date;

@@ -24,6 +24,7 @@ function userInit() {
         },
         success: function (data) {
             $("#userName").html(data.name);
+            $("#state").html("<i class='fa fa-user-circle-o d-inline fa-lg' aria-hidden='true'></i>" + data.name);
             $("#userCompany").html(data.company);
             $("#userEmail").html(data.email);
         }

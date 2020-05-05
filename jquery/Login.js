@@ -90,6 +90,23 @@ function remember() {
       $.cookie("email", null);
       $.cookie("password", null);
     }
-    loginWeb();
   });
 };
+
+function verrifyCallBack(res){
+  var ip=returnCitySN["cip"];
+  if(res.ret === 0){
+    // alert(res.ticket)   // 票据
+    $.ajax({
+      url:"http://localhost:8080/api/admin/loginVerify",
+      data:{"ticket":res.ticket,
+        "randstr":res.randstr,
+        "userIp":ip
+      },
+      type:"post",
+      success:function (data) {
+        loginWeb();
+      }
+    })
+  }
+}
