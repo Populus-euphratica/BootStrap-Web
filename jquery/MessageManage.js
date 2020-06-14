@@ -370,6 +370,7 @@
        type: "put",
        data: {
          "reply": replyContent.val(),
+         "decide":istrue,
          "id": id
        },
        success: function (falg) {

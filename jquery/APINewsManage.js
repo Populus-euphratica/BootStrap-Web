@@ -225,14 +225,14 @@ $(document).ready(APINewsInfo());
      var operation = $("#operation .nav-link.active").data("operation");
      var id = $(event.target).parents("li").data("id");
      if (operation == "update") {
-       $(".modal-title").text("编辑API资讯");
-       $(".modal-body").html(updateAPINewsModel());
-       $("#determine").text("编辑");
+       $("#exampleModal .modal-title").text("编辑API资讯");
+       $("#exampleModal .modal-body").html(updateAPINewsModel());
+       $("#exampleModal #determine").text("编辑");
        updateAPINews(id);
      } else if (operation == "delete") {
-       $(".modal-title").text("删除API资讯");
-       $(".modal-body").html("<p>您确定要删除这条API资讯吗？</p>");
-       $("#determine").text("删除");
+       $("#exampleModal .modal-title").text("删除API资讯");
+       $("#exampleModal .modal-body").html("<p>您确定要删除这条API资讯吗？</p>");
+       $("#exampleModal #determine").text("删除");
        deleteAPINews(id);
      } else if (operation == "add") {
        addAPINews();
@@ -267,8 +267,8 @@ $(document).ready(APINewsInfo());
        updateContent.text(apiNews.content);
 
        $('#exampleModal').modal('show');
-       $("#determine").off();
-       $("#determine").click(function () {
+       $("#exampleModal #determine").off();
+       $("#exampleModal #determine").click(function () {
          if (!check(updateName, updateCategory, updateAuthor, updateDate, "update")) {
            return false;
          }
@@ -469,7 +469,9 @@ $(document).ready(APINewsInfo());
 
  function APINewsInfo() {
    $(document).on("click","li[data-id]",function () {
-     sessionStorage.setItem("APINewsId",$(this).data("id"));
-     window.location.href="AdminAPINewsInfo.html";
+     if ( $("#operation .nav-link.active").data("operation")=="select") {
+       sessionStorage.setItem("APINewsId", $(this).data("id"));
+       window.location.href = "AdminAPINewsInfo.html";
+     }
    })
  }

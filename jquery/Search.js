@@ -74,6 +74,7 @@ function search() {
         "pageSize": pageSize
       };
       ajaxAPI(data1);
+      alert("123")
       searchInit("http://localhost:8080/api/api/recommend/all");
     }
   });
@@ -300,7 +301,7 @@ function searchClickInit() {
     success: function (data) {
       if (data != null && data.length != 0) {
         cardContent(apiClick, data);
-        apiClick.prepend("<h3>点击率排名</h3>");
+        apiClick.prepend("<h3>点击量排名</h3>");
       }
     }
   })

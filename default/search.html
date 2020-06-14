@@ -42,8 +42,7 @@
       <div class="row" style="">
         <div class="mx-auto col-lg-6">
           <h1> I enjoy with my whole heart</h1>
-          <p class="mb-4">Yet I feel that I never was a greater artist than now. When, while the lovely valley teems
-            with vapour around me, and the meridian sun strikes.</p>
+          <p class="mb-4">Thank you for using this Web API recommendation system, I hope this system can bring you some help.</p>
           <form class="form-inline d-flex justify-content-center" id="Serchfrom">
             <div class="input-group"> <input type="search" id="searchContent" class="form-control form-control-lg"
                 placeholder="please input">
@@ -51,7 +50,7 @@
                 <div class="btn-group">
                   <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                     data-toggle="dropdown" aria-expanded="false"></button>
-                  <button class="btn btn-primary" type="submit">Subscribe</button>
+                  <button class="btn btn-primary" type="submit">Search</button>
                   <div id="dropdownMenu" class="dropdown-menu" x-placement="bottom-start"
                     style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                     <a class="dropdown-item" data-menu="name">name</a>
@@ -63,12 +62,12 @@
               </div>
             </div>
           </form>
-          <p class="small">We'll never share your mail with anyone.</p>
+          <p class="small">We will not share your search history with anyone.</p>
         </div>
       </div>
     </div>
   </div>
-  <div class="py-5" style="">
+  <div class="py-5" id="showAPI">
     <div class="container" id="api">
     </div>
     <div class="container" id="apiCategory">
@@ -109,6 +108,26 @@
       </div>
     </div>
   </div>
+
+<div class="modal fade" id="modal1" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header pb-0">
+        <h4 class="modal-title text-dark mx-auto">
+          <b>Web API推荐</b>
+        </h4>
+        <button type="button" class="close text-danger pt-4 ml-0" data-dismiss="modal">
+            <span>
+              <i class="now-ui-icons ui-1_simple-remove lg"></i>
+            </span>
+        </button>
+      </div>
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+
+
 
   <script src="../jquery/Search.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
